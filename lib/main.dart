@@ -1,3 +1,4 @@
+import 'package:emodiary/screen/Diary/diary_writing_screen.dart';
 import 'package:emodiary/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -31,12 +32,14 @@ class MyApp extends StatelessWidget {
       ],
       theme: ThemeData(
         useMaterial3: true,
+        fontFamily: 'Pretendard',
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/",
+      initialRoute: "/diary",
       getPages: [
         GetPage(name: '/', page: () => const HomeScreen()),
+        GetPage(name: "/diary", page: () => const DiaryWritingScreen()),
       ],
     );
   }
