@@ -1,4 +1,4 @@
-import 'package:emodiary/screen/Diary/diary_writing_screen.dart';
+import 'package:emodiary/screen/Diary/Writing/diary_writing_screen.dart';
 import 'package:emodiary/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
