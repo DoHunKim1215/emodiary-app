@@ -1,5 +1,5 @@
 import 'package:emodiary/screen/Diary/Writing/diary_writing_screen.dart';
-import 'package:emodiary/screen/home_screen.dart';
+import 'package:emodiary/screen/root_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "/diary",
       getPages: [
-        GetPage(name: '/', page: () => const HomeScreen()),
+        GetPage(name: '/', page: () => const RootScreen()),
         GetPage(name: "/diary", page: () => const DiaryWritingScreen()),
       ],
     );
