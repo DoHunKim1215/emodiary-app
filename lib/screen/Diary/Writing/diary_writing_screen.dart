@@ -70,7 +70,7 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
             Get.back();
           },
           confirmAction: () {
-            Get.toNamed("/diary/loading");
+            Get.toNamed("/writing/loading");
           },
         );
       },

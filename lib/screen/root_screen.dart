@@ -29,7 +29,7 @@ class RootScreen extends StatelessWidget {
             shape: const CircleBorder(),
             elevation: 0,
             onPressed: () {
-              Get.toNamed("/diary");
+              Get.toNamed("/writing");
             },
             backgroundColor: const Color(0xFF7541EF),
             child: SvgPicture.asset("assets/icons/diary.svg",

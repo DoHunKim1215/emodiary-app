@@ -38,16 +38,16 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/diary/loading",
+      initialRoute: "/writing/select",
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
-        GetPage(name: "/diary", page: () => const DiaryWritingScreen()),
+        GetPage(name: "/writing", page: () => const DiaryWritingScreen()),
         GetPage(
-          name: "/diary/loading",
+          name: "/writing/loading",
           page: () => const DiaryWritingLoadingScreen(),
         ),
         GetPage(
-          name: "/diary/select",
+          name: "/writing/select",
           page: () => const DiaryWritingSelectPictureScreen(),
         ),
       ],

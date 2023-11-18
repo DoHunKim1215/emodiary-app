@@ -26,7 +26,7 @@ class _DiaryWritingLoadingScreenState extends State<DiaryWritingLoadingScreen> {
       });
 
       if (_.tick == 3) {
-        Get.toNamed("/diary/select");
+        Get.toNamed("/writing/select");
       }
     });
   }
