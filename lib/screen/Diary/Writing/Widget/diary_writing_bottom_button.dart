@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-class BottomButton extends StatelessWidget {
-  final String text;
+class DiaryWritingBottomButton extends StatelessWidget {
   final void Function()? onPressed;
 
-  const BottomButton({
+  const DiaryWritingBottomButton({
     super.key,
-    required this.text,
-    required this.onPressed,
+    this.onPressed,
   });
 
   @override
@@ -17,20 +15,21 @@ class BottomButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        backgroundColor: backgroundColor,
+        backgroundColor:
+            disabled ? const Color(0xFFF5F7FA) : const Color(0xFF7541EF),
         splashFactory: NoSplash.splashFactory,
         padding: const EdgeInsets.symmetric(
           vertical: 18.0,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
       ),
       child: Text(
-        text,
+        disabled ? "일기를 작성하면 그림을 볼 수 있어요!" : "그림 일기를 받아볼게요!",
         style: TextStyle(
-          color: color,
-          fontSize: 20.0,
+          color: disabled ? const Color(0xFFAAB2BD) : const Color(0xFFFFFFFF),
+          fontSize: 18.0,
           fontWeight: FontWeight.w600,
           height: 1,
         ),
