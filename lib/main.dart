@@ -1,4 +1,5 @@
 import 'package:emodiary/screen/Diary/Loading/diary_writing_loading_screen.dart';
+import 'package:emodiary/screen/Diary/SelectPicture/diary_writing_select_picture_screen.dart';
 import 'package:emodiary/screen/Diary/Writing/diary_writing_screen.dart';
 import 'package:emodiary/screen/root_screen.dart';
 import 'package:flutter/material.dart';
@@ -37,13 +38,18 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/",
+      initialRoute: "/diary/loading",
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
         GetPage(name: "/diary", page: () => const DiaryWritingScreen()),
         GetPage(
-            name: "/diary/loading",
-            page: () => const DiaryWritingLoadingScreen()),
+          name: "/diary/loading",
+          page: () => const DiaryWritingLoadingScreen(),
+        ),
+        GetPage(
+          name: "/diary/select",
+          page: () => const DiaryWritingSelectPictureScreen(),
+        ),
       ],
     );
   }

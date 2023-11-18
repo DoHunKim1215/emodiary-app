@@ -88,7 +88,7 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: DiaryAppBar(
-              title: '2023.06',
+              title: '2023.11.19',
               onPressed: onTapBack,
             ),
           ),
