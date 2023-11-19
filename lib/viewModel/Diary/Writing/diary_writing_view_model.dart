@@ -8,8 +8,23 @@ class DiaryWritingViewModel extends GetxController {
   late TextEditingController _titleEditingController;
   late TextEditingController _contentEditingController;
 
+  RxnInt selectedPicture = RxnInt(null);
+  RxBool isShownPicture = true.obs;
+
   TextEditingController get titleCtrl => _titleEditingController;
   TextEditingController get contentCtrl => _contentEditingController;
+
+  @override
+  void onInit() {
+    super.onInit();
+    initTextController();
+  }
+
+  @override
+  void onClose() {
+    disposeTextController();
+    super.onClose();
+  }
 
   void initTextController() {
     _titleEditingController = TextEditingController();
@@ -24,5 +39,29 @@ class DiaryWritingViewModel extends GetxController {
   bool canSend() {
     return _titleEditingController.text.isNotEmpty &&
         _contentEditingController.text.isNotEmpty;
+  }
+
+  int? getSelectedPicture() {
+    return selectedPicture.value;
+  }
+
+  void setSelectedPicture(int selected) {
+    if (selected < 0 || 3 < selected) {
+      return;
+    }
+
+    selectedPicture.value = selected;
+  }
+
+  bool isSelected() {
+    return selectedPicture.value != null;
+  }
+
+  void flipCard() {
+    isShownPicture.value = !isShownPicture.value;
+  }
+
+  bool getIsShownPicture() {
+    return isShownPicture.value;
   }
 }

@@ -46,45 +46,48 @@ class DiaryWritingCard extends StatelessWidget {
               vertical: 18.0,
               horizontal: 22.0,
             ),
-            child: Stack(
-              children: [
-                for (int i = 0; i < 10; i++)
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(
-                      top: 8 + (i + 1) * 40,
+            child: SizedBox(
+              height: 440,
+              child: Stack(
+                children: [
+                  for (int i = 0; i < 10; i++)
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(
+                        top: 8 + (i + 1) * 40,
+                      ),
+                      height: 2,
+                      color: const Color(0xFFF1F0F5),
                     ),
-                    height: 2,
-                    color: const Color(0xFFF1F0F5),
-                  ),
-                TextField(
-                  controller: viewModel.contentCtrl,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 10,
-                  maxLength: DiaryWritingViewModel.contentMaxLength,
-                  style: const TextStyle(
-                    color: Color(0xFF434A54),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    height: 2.5,
-                  ),
-                  cursorColor: const Color(0xFF787A93),
-                  decoration: const InputDecoration(
-                    counterText: "",
-                    hintText:
-                        '오늘의 하루는 어떠셨나요?\n오늘 느낀 감정, 생각 모두 다 좋아요!\n생각나는대로 다 작성해보세요.',
-                    hintStyle: TextStyle(
-                      color: Color(0xFF787A93),
+                  TextField(
+                    controller: viewModel.contentCtrl,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 10,
+                    maxLength: DiaryWritingViewModel.contentMaxLength,
+                    style: const TextStyle(
+                      color: Color(0xFF434A54),
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       height: 2.5,
                     ),
-                    isDense: true,
-                    border: InputBorder.none,
+                    cursorColor: const Color(0xFF787A93),
+                    decoration: const InputDecoration(
+                      counterText: "",
+                      hintText:
+                          '오늘의 하루는 어떠셨나요?\n오늘 느낀 감정, 생각 모두 다 좋아요!\n생각나는대로 다 작성해보세요.',
+                      hintStyle: TextStyle(
+                        color: Color(0xFF787A93),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        height: 2.5,
+                      ),
+                      isDense: true,
+                      border: InputBorder.none,
+                    ),
+                    onChanged: refresh,
                   ),
-                  onChanged: refresh,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

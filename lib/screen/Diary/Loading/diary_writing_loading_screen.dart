@@ -20,7 +20,7 @@ class _DiaryWritingLoadingScreenState extends State<DiaryWritingLoadingScreen> {
   void initState() {
     super.initState();
 
-    _titleTimer = Timer.periodic(const Duration(seconds: 4), (_) {
+    _titleTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
         _titleToggle = !_titleToggle;
       });

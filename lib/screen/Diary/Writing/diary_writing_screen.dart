@@ -16,19 +16,10 @@ class DiaryWritingScreen extends StatefulWidget {
 }
 
 class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
-  final DiaryWritingViewModel vm = Get.put(DiaryWritingViewModel());
-
-  @override
-  void initState() {
-    super.initState();
-    vm.initTextController();
-  }
-
-  @override
-  void dispose() {
-    vm.disposeTextController();
-    super.dispose();
-  }
+  final DiaryWritingViewModel vm = Get.put(
+    DiaryWritingViewModel(),
+    permanent: true,
+  );
 
   void refresh(String _) {
     setState(() {});
@@ -49,7 +40,8 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
           },
           confirmAction: () {
             Get.back();
-            Get.back();
+            Get.delete<DiaryWritingViewModel>(force: true);
+            Get.offAllNamed("/");
           },
         );
       },
@@ -130,6 +122,8 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
                   children: [
                     Expanded(
                       child: DiaryWritingBottomButton(
+                        text: "그림 일기를 받아볼게요!",
+                        disabledText: "일기를 작성하면 그림을 볼 수 있어요!",
                         onPressed: vm.canSend() ? onTapSend : null,
                       ),
                     ),

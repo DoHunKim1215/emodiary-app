@@ -1,4 +1,5 @@
 import 'package:emodiary/screen/Diary/Loading/diary_writing_loading_screen.dart';
+import 'package:emodiary/screen/Diary/Saved/diary_writing_save_screen.dart';
 import 'package:emodiary/screen/Diary/SelectPicture/diary_writing_select_picture_screen.dart';
 import 'package:emodiary/screen/Diary/Writing/diary_writing_screen.dart';
 import 'package:emodiary/screen/root_screen.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
     FlutterNativeSplash.remove();
 
     return GetMaterialApp(
-      title: "JJoin",
+      title: "Emodiary",
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/writing/select",
+      initialRoute: "/writing",
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
         GetPage(name: "/writing", page: () => const DiaryWritingScreen()),
@@ -49,6 +50,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/writing/select",
           page: () => const DiaryWritingSelectPictureScreen(),
+        ),
+        GetPage(
+          name: "/writing/save",
+          page: () => DiaryWritingSaveScreen(),
         ),
       ],
     );

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class DiaryWritingBottomButton extends StatelessWidget {
   final void Function()? onPressed;
+  final String text;
+  final String disabledText;
 
   const DiaryWritingBottomButton({
     super.key,
     this.onPressed,
+    required this.text,
+    required this.disabledText,
   });
 
   @override
@@ -26,7 +30,7 @@ class DiaryWritingBottomButton extends StatelessWidget {
         ),
       ),
       child: Text(
-        disabled ? "일기를 작성하면 그림을 볼 수 있어요!" : "그림 일기를 받아볼게요!",
+        disabled ? disabledText : text,
         style: TextStyle(
           color: disabled ? const Color(0xFFAAB2BD) : const Color(0xFFFFFFFF),
           fontSize: 18.0,

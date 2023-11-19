@@ -1,10 +1,11 @@
 import 'package:emodiary/screen/Diary/SelectPicture/Widget/picture_box.dart';
 import 'package:emodiary/screen/Diary/Writing/Widget/diary_writing_bottom_button.dart';
+import 'package:emodiary/viewModel/Diary/Writing/diary_writing_view_model.dart';
 import 'package:emodiary/widget/Diary/diary_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../widget/Diary/diary_confirm_dialog.dart';
+import 'package:emodiary/widget/Diary/diary_confirm_dialog.dart';
 
 class DiaryWritingSelectPictureScreen extends StatefulWidget {
   const DiaryWritingSelectPictureScreen({super.key});
@@ -16,7 +17,7 @@ class DiaryWritingSelectPictureScreen extends StatefulWidget {
 
 class _DiaryWritingSelectPictureScreenState
     extends State<DiaryWritingSelectPictureScreen> {
-  int? _selectedPicture;
+  final DiaryWritingViewModel vm = Get.find<DiaryWritingViewModel>();
 
   void onTapBack() {
     showDialog(
@@ -25,15 +26,16 @@ class _DiaryWritingSelectPictureScreenState
       barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
       builder: (BuildContext context) {
         return DiaryConfirmDialog(
-          question: "일기를 다시 작성하시겠습니까?",
+          question: "일기 작성을 그만 하시겠습니까?",
           cancel: "취소",
-          confirm: "다시쓰기",
+          confirm: "그만쓰기",
           cancelAction: () {
             Get.back();
           },
           confirmAction: () {
             Get.back();
-            Get.until((Route route) => Get.currentRoute == "/writing");
+            Get.delete<DiaryWritingViewModel>(force: true);
+            Get.offAllNamed("/");
           },
         );
       },
@@ -41,7 +43,7 @@ class _DiaryWritingSelectPictureScreenState
   }
 
   void onTapSend() {
-    Get.toNamed("/");
+    Get.toNamed("/writing/save");
   }
 
   @override
@@ -110,62 +112,56 @@ class _DiaryWritingSelectPictureScreenState
                         ],
                       ),
                       /* Pictures */
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              PictureBox(
-                                imagePath: 'assets/images/ex1.png',
-                                isSelected: _selectedPicture == 0,
-                                onTap: () {
-                                  setState(() {
-                                    _selectedPicture = 0;
-                                  });
-                                },
-                              ),
-                              const SizedBox(
-                                width: 12,
-                              ),
-                              PictureBox(
-                                imagePath: 'assets/images/ex2.png',
-                                isSelected: _selectedPicture == 1,
-                                onTap: () {
-                                  setState(() {
-                                    _selectedPicture = 1;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Row(
-                            children: [
-                              PictureBox(
-                                imagePath: 'assets/images/ex3.png',
-                                isSelected: _selectedPicture == 2,
-                                onTap: () {
-                                  setState(() {
-                                    _selectedPicture = 2;
-                                  });
-                                },
-                              ),
-                              const SizedBox(
-                                width: 12,
-                              ),
-                              PictureBox(
-                                imagePath: 'assets/images/ex4.png',
-                                isSelected: _selectedPicture == 3,
-                                onTap: () {
-                                  setState(() {
-                                    _selectedPicture = 3;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
+                      Obx(
+                        () => Column(
+                          children: [
+                            Row(
+                              children: [
+                                PictureBox(
+                                  imagePath: 'assets/images/ex1.png',
+                                  isSelected: vm.getSelectedPicture() == 0,
+                                  onTap: () {
+                                    vm.setSelectedPicture(0);
+                                  },
+                                ),
+                                const SizedBox(
+                                  width: 12,
+                                ),
+                                PictureBox(
+                                  imagePath: 'assets/images/ex2.png',
+                                  isSelected: vm.getSelectedPicture() == 1,
+                                  onTap: () {
+                                    vm.setSelectedPicture(1);
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            Row(
+                              children: [
+                                PictureBox(
+                                  imagePath: 'assets/images/ex3.png',
+                                  isSelected: vm.getSelectedPicture() == 2,
+                                  onTap: () {
+                                    vm.setSelectedPicture(2);
+                                  },
+                                ),
+                                const SizedBox(
+                                  width: 12,
+                                ),
+                                PictureBox(
+                                  imagePath: 'assets/images/ex4.png',
+                                  isSelected: vm.getSelectedPicture() == 3,
+                                  onTap: () {
+                                    vm.setSelectedPicture(3);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -174,7 +170,9 @@ class _DiaryWritingSelectPictureScreenState
                   children: [
                     Expanded(
                       child: DiaryWritingBottomButton(
-                        onPressed: _selectedPicture == null ? null : onTapSend,
+                        disabledText: "오늘 하루와 어울리는 그림은 무엇인가요?",
+                        text: "이 그림으로 저장할래요!",
+                        onPressed: vm.isSelected() ? null : onTapSend,
                       ),
                     ),
                   ],
