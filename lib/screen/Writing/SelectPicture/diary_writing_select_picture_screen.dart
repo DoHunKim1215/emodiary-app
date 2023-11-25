@@ -57,7 +57,7 @@ class _DiaryWritingSelectPictureScreenState
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: DiaryAppBar(
               title: '나의 하루 그림일기',
-              onPressed: onTapBack,
+              onPressedLeading: onTapBack,
             ),
           ),
           body: Padding(

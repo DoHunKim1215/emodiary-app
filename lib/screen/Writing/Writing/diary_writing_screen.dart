@@ -62,7 +62,11 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
             Get.back();
           },
           confirmAction: () {
-            Get.toNamed("/writing/loading");
+            // Dev Only
+            Get.toNamed("/writing/select");
+            // ---
+
+            // Get.toNamed("/writing/loading");
           },
         );
       },
@@ -81,7 +85,7 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: DiaryAppBar(
               title: '2023.11.19',
-              onPressed: onTapBack,
+              onPressedLeading: onTapBack,
             ),
           ),
           body: Padding(

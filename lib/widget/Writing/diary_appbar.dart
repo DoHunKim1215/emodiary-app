@@ -3,12 +3,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class DiaryAppBar extends StatelessWidget {
   final String title;
-  final void Function() onPressed;
+  final void Function() onPressedLeading;
+  final bool enableShare;
+  final void Function()? onPressedAction;
 
   const DiaryAppBar({
     super.key,
     required this.title,
-    required this.onPressed,
+    required this.onPressedLeading,
+    this.enableShare = false,
+    this.onPressedAction,
   });
 
   @override
@@ -26,6 +30,7 @@ class DiaryAppBar extends StatelessWidget {
       surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
+      titleSpacing: 0,
       leadingWidth: 60,
       leading: IconButton(
         padding: EdgeInsets.zero,
@@ -38,8 +43,28 @@ class DiaryAppBar extends StatelessWidget {
           width: 24.0,
           height: 24.0,
         ),
-        onPressed: onPressed,
+        onPressed: onPressedLeading,
       ),
+      actions: onPressedAction == null
+          ? null
+          : [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  style: IconButton.styleFrom(
+                    splashFactory: NoSplash.splashFactory,
+                  ),
+                  icon: SvgPicture.asset(
+                    "assets/icons/share.svg",
+                    width: 20.0,
+                    height: 20.0,
+                  ),
+                  onPressed: onPressedAction,
+                ),
+              ),
+            ],
     );
   }
 }

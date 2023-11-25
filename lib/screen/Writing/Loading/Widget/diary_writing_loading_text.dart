@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:emodiary/widget/Writing/title_linear_fade_curve.dart';
+import 'package:emodiary/screen/Writing/Loading/Widget/title_linear_fade_curve.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DiaryWritingLoadingText extends StatefulWidget {
   const DiaryWritingLoadingText({super.key});

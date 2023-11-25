@@ -23,9 +23,12 @@ class DiaryWritingSaveScreen extends StatelessWidget {
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: DiaryAppBar(
               title: '나의 하루 그림일기',
-              onPressed: () {
+              onPressedLeading: () {
                 Get.delete<DiaryWritingViewModel>(force: true);
                 Get.offAllNamed("/");
+              },
+              onPressedAction: () {
+                print("Action!");
               },
             ),
           ),

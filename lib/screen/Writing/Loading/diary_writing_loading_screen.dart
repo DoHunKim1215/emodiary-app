@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:emodiary/screen/Writing/Loading/Widget/diary_writing_loading_text.dart';
 import 'package:flutter/material.dart';
 
