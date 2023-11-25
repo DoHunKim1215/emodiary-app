@@ -1,11 +1,10 @@
-import 'package:emodiary/screen/Diary/SelectPicture/Widget/picture_box.dart';
-import 'package:emodiary/screen/Diary/Writing/Widget/diary_writing_bottom_button.dart';
-import 'package:emodiary/viewModel/Diary/Writing/diary_writing_view_model.dart';
-import 'package:emodiary/widget/Diary/diary_appbar.dart';
+import 'package:emodiary/screen/Writing/SelectPicture/Widget/picture_box.dart';
+import 'package:emodiary/screen/Writing/Writing/Widget/diary_writing_bottom_button.dart';
+import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
+import 'package:emodiary/widget/Writing/diary_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:emodiary/widget/Diary/diary_confirm_dialog.dart';
+import 'package:emodiary/widget/Writing/diary_confirm_dialog.dart';
 
 class DiaryWritingSelectPictureScreen extends StatefulWidget {
   const DiaryWritingSelectPictureScreen({super.key});

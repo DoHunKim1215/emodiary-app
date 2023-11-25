@@ -1,7 +1,7 @@
-import 'package:emodiary/screen/Diary/Saved/Widget/diary_writing_save_back_card.dart';
-import 'package:emodiary/screen/Diary/Saved/Widget/diary_writing_save_card.dart';
-import 'package:emodiary/viewModel/Diary/Writing/diary_writing_view_model.dart';
-import 'package:emodiary/widget/Diary/diary_appbar.dart';
+import 'package:emodiary/screen/Writing/Saved/Widget/diary_writing_save_back_card.dart';
+import 'package:emodiary/screen/Writing/Saved/Widget/diary_writing_save_card.dart';
+import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
+import 'package:emodiary/widget/Writing/diary_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';

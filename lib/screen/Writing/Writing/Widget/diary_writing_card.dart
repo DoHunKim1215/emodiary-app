@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:emodiary/viewModel/Diary/Writing/diary_writing_view_model.dart';
+import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
 
 class DiaryWritingCard extends StatelessWidget {
   final DiaryWritingViewModel viewModel;
