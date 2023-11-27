@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
@@ -42,8 +43,9 @@ class DiaryWritingSaveCard extends StatelessWidget {
                           Expanded(
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
-                              child: Image.asset(
-                                "assets/images/ex${viewModel.getSelectedPicture()! + 1}.png",
+                              child: Image.memory(
+                                base64Decode(viewModel
+                                    .pictures[viewModel.getSelectedPicture()!]),
                                 fit: BoxFit.fitHeight,
                               ),
                             ),

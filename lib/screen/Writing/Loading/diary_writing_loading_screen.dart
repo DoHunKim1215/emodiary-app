@@ -1,5 +1,8 @@
 import 'package:emodiary/screen/Writing/Loading/Widget/diary_writing_loading_text.dart';
+import 'package:emodiary/util/function/log_on_dev.dart';
+import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DiaryWritingLoadingScreen extends StatefulWidget {
   const DiaryWritingLoadingScreen({super.key});
@@ -10,6 +13,18 @@ class DiaryWritingLoadingScreen extends StatefulWidget {
 }
 
 class _DiaryWritingLoadingScreenState extends State<DiaryWritingLoadingScreen> {
+  final DiaryWritingViewModel vm = Get.find<DiaryWritingViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    vm.diaryWritingProvider.getPictures().then((pictures) {
+      vm.setPictures(pictures);
+      Get.toNamed("/writing/select");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

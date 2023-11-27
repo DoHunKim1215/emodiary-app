@@ -62,11 +62,7 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
             Get.back();
           },
           confirmAction: () {
-            // Dev Only
-            Get.toNamed("/writing/select");
-            // ---
-
-            // Get.toNamed("/writing/loading");
+            Get.toNamed("/writing/loading");
           },
         );
       },

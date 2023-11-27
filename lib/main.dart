@@ -6,13 +6,17 @@ import 'package:emodiary/screen/Writing/SelectPicture/diary_writing_select_pictu
 import 'package:emodiary/screen/Writing/Writing/diary_writing_screen.dart';
 import 'package:emodiary/screen/root_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+void main() async {
+  /* Open .env file */
+  await dotenv.load(fileName: "assets/config/.env");
+
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
@@ -41,7 +45,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/login/process",
+      initialRoute: "/writing",
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
         GetPage(name: "/login", page: () => const SignUpEntryScreen()),

@@ -1,14 +1,20 @@
+import 'package:emodiary/provider/Writing/diary_writing_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DiaryWritingViewModel extends GetxController {
+  /* Title */
   static const int titleMaxLength = 40;
   static const int contentMaxLength = 1000;
 
   late TextEditingController _titleEditingController;
   late TextEditingController _contentEditingController;
 
+  final DiaryWritingProvider diaryWritingProvider = DiaryWritingProvider();
+
   RxnInt selectedPicture = RxnInt(null);
+  RxList<String> pictures = RxList<String>([]);
+
   RxBool isShownPicture = true.obs;
 
   TextEditingController get titleCtrl => _titleEditingController;
@@ -43,6 +49,11 @@ class DiaryWritingViewModel extends GetxController {
 
   int? getSelectedPicture() {
     return selectedPicture.value;
+  }
+
+  void setPictures(List<String> base64Pictures) {
+    pictures.value = base64Pictures;
+    pictures.refresh();
   }
 
   void setSelectedPicture(int selected) {

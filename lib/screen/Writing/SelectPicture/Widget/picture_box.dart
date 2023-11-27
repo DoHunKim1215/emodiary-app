@@ -1,30 +1,34 @@
+import 'dart:convert';
+
+import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class PictureBox extends StatelessWidget {
-  final String imagePath;
-  final bool isSelected;
-  final void Function() onTap;
+  final int pictureNumber;
+  final DiaryWritingViewModel viewModel;
 
   const PictureBox({
     super.key,
-    required this.imagePath,
-    required this.isSelected,
-    required this.onTap,
+    required this.pictureNumber,
+    required this.viewModel,
   });
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
       child: GestureDetector(
-        onTap: onTap,
+        onTap: () {
+          viewModel.setSelectedPicture(pictureNumber);
+        },
         child: Container(
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
             border: Border.all(
               width: 2.0,
-              color: isSelected
+              color: viewModel.getSelectedPicture() == pictureNumber
                   ? const Color(0xFF7541EF)
                   : const Color(0xFFCCD1D9),
             ),
@@ -33,7 +37,9 @@ class PictureBox extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(imagePath),
+                child: Image.memory(
+                  base64Decode(viewModel.pictures[pictureNumber]),
+                ),
               ),
               Positioned(
                 top: 12,
@@ -44,16 +50,19 @@ class PictureBox extends StatelessWidget {
                   height: 30,
                 ),
               ),
-              if (isSelected)
-                Positioned(
-                  top: 15,
-                  right: 15,
-                  child: SvgPicture.asset(
-                    "assets/icons/check-icon.svg",
-                    width: 24,
-                    height: 24,
-                  ),
-                )
+              Positioned(
+                top: 15,
+                right: 15,
+                child: Obx(
+                  () => viewModel.getSelectedPicture() == pictureNumber
+                      ? SvgPicture.asset(
+                          "assets/icons/check.svg",
+                          width: 24,
+                          height: 24,
+                        )
+                      : Container(),
+                ),
+              ),
             ],
           ),
         ),

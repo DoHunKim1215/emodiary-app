@@ -69,109 +69,111 @@ class _DiaryWritingSelectPictureScreenState
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       /* Title Text */
-                      const Column(
+                      vm.pictures.length < 4
+                          ? const Text(
+                              "그림을 받아오는데 실패했어요...",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                height: 1.625,
+                              ),
+                            )
+                          : const Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "마음에 드는 그림",
+                                      style: TextStyle(
+                                        color: Color(0xFF7541EF),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.625,
+                                      ),
+                                    ),
+                                    Text(
+                                      "을 골라",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.625,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "오늘 하루를 저장해보세요!",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.625,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                      /* Pictures */
+                      Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "마음에 드는 그림",
-                                style: TextStyle(
-                                  color: Color(0xFF7541EF),
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.625,
-                                ),
+                              PictureBox(
+                                pictureNumber: 0,
+                                viewModel: vm,
                               ),
-                              Text(
-                                "을 골라",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.625,
-                                ),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              PictureBox(
+                                pictureNumber: 1,
+                                viewModel: vm,
                               ),
                             ],
                           ),
+                          const SizedBox(
+                            height: 12,
+                          ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "오늘 하루를 저장해보세요!",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.625,
-                                ),
+                              PictureBox(
+                                pictureNumber: 2,
+                                viewModel: vm,
+                              ),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              PictureBox(
+                                pictureNumber: 3,
+                                viewModel: vm,
                               ),
                             ],
                           ),
                         ],
-                      ),
-                      /* Pictures */
-                      Obx(
-                        () => Column(
-                          children: [
-                            Row(
-                              children: [
-                                PictureBox(
-                                  imagePath: 'assets/images/ex1.png',
-                                  isSelected: vm.getSelectedPicture() == 0,
-                                  onTap: () {
-                                    vm.setSelectedPicture(0);
-                                  },
-                                ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                PictureBox(
-                                  imagePath: 'assets/images/ex2.png',
-                                  isSelected: vm.getSelectedPicture() == 1,
-                                  onTap: () {
-                                    vm.setSelectedPicture(1);
-                                  },
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Row(
-                              children: [
-                                PictureBox(
-                                  imagePath: 'assets/images/ex3.png',
-                                  isSelected: vm.getSelectedPicture() == 2,
-                                  onTap: () {
-                                    vm.setSelectedPicture(2);
-                                  },
-                                ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                PictureBox(
-                                  imagePath: 'assets/images/ex4.png',
-                                  isSelected: vm.getSelectedPicture() == 3,
-                                  onTap: () {
-                                    vm.setSelectedPicture(3);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      )
                     ],
                   ),
                 ),
                 Row(
                   children: [
                     Expanded(
-                      child: CommonBottomButton(
-                        disabledText: "오늘 하루와 어울리는 그림은 무엇인가요?",
-                        text: "이 그림으로 저장할래요!",
-                        onPressed: vm.isSelected() ? null : onTapSend,
+                      child: Obx(
+                        () => CommonBottomButton(
+                          disabledText: vm.pictures.length >= 4
+                              ? "오늘 하루와 어울리는 그림은 무엇인가요?"
+                              : "일기를 생성할 수 없어요...",
+                          text: "이 그림으로 저장할래요!",
+                          onPressed: vm.pictures.length >= 4 && vm.isSelected()
+                              ? onTapSend
+                              : null,
+                        ),
                       ),
                     ),
                   ],

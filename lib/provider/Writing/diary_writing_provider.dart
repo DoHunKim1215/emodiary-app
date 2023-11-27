@@ -1,4 +1,5 @@
 import 'package:emodiary/util/function/log_on_dev.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class DiaryWritingProvider extends GetConnect {
@@ -6,7 +7,6 @@ class DiaryWritingProvider extends GetConnect {
   void onInit() {
     super.onInit();
     httpClient
-      ..baseUrl = "http://localhost:8080/"
       ..defaultContentType = "application/json"
       ..timeout = const Duration(seconds: 30)
       ..addRequestModifier<dynamic>((request) {
@@ -30,15 +30,42 @@ class DiaryWritingProvider extends GetConnect {
       });
   }
 
-  Future<Response?> getPerson(String title, String content) async {
-    final String url = "/users/id";
-    final Response response = await get(url);
+  Future<List<String>> getPictures() async {
+    final requestBody = <String, dynamic>{
+      "prompt":
+          "beautiful summer weather, refreshing breeze, vibrant flowers, lush green trees beautiful, Hand-drawn, Pastel, Warm, Colored pencils, Soft, by Oscar-Claude Monet",
+      "negative_prompt": "sleeping cat, dog, human, ugly face, cropped",
+      "width": 384,
+      "height": 384,
+      "image_format": "png",
+      "return_type": "base64_string",
+      "samples": 4,
+    };
 
-    if (response.status.hasError) {
-      logOnDev("");
-      return Future.error(response.body);
-    } else {
-      return null;
+    final headers = <String, String>{
+      'Authorization': "KakaoAK ${dotenv.env['KARLO_REST_API_KEY']}",
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await post(
+        'https://api.kakaobrain.com/v2/inference/karlo/t2i',
+        requestBody,
+        headers: headers,
+      );
+
+      if (response.body == null) {
+        return [];
+      }
+
+      final images = response.body["images"] as List<dynamic>;
+
+      return List.generate(
+        images.length,
+        (index) => images[index]["image"] as String,
+      );
+    } on Exception catch (e) {
+      return [];
     }
   }
 }
