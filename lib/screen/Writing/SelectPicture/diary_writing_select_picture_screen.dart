@@ -2,6 +2,7 @@ import 'package:emodiary/screen/Writing/SelectPicture/Widget/picture_box.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:emodiary/widget/Writing/diary_writing_appbar.dart';
+import 'package:emodiary/widget/base/loading_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:emodiary/widget/Writing/diary_confirm_dialog.dart';
@@ -17,6 +18,7 @@ class DiaryWritingSelectPictureScreen extends StatefulWidget {
 class _DiaryWritingSelectPictureScreenState
     extends State<DiaryWritingSelectPictureScreen> {
   final DiaryWritingViewModel vm = Get.find<DiaryWritingViewModel>();
+  bool isLoading = false;
 
   void onTapBack() {
     showDialog(
@@ -42,31 +44,40 @@ class _DiaryWritingSelectPictureScreenState
   }
 
   void onTapSend() {
+    setState(() {
+      isLoading = true;
+    });
+
     vm.diaryWritingProvider
         .createDiary(
       vm.titleCtrl.text,
       vm.contentCtrl.text,
       vm.pictures[vm.getSelectedPicture()!],
     )
-        .then(
-      (value) {
-        Get.toNamed("/writing/save");
-      },
-    ).catchError(
-      (_) {
-        Get.delete<DiaryWritingViewModel>();
+        .then((value) {
+      setState(() {
+        isLoading = false;
+      });
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text('일기 생성에 실패했습니다...'),
-            duration: Duration(seconds: 3),
-          ),
-        );
+      Get.toNamed("/writing/save");
+    }).onError((error, stackTrace) {
+      setState(() {
+        isLoading = false;
+      });
 
-        Get.toNamed("/");
-      },
-    );
+      Get.snackbar(
+        '🥲 일기를 저장하는데 실패했습니다.',
+        '일기 내용이 적거나 의미가 분명하지 않으면 감정을 파악하기 힘들어요',
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        duration: const Duration(milliseconds: 1500),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFF5F5F9),
+        colorText: Colors.black,
+      );
+
+      Get.delete<DiaryWritingViewModel>(force: true);
+      Get.toNamed("/");
+    });
   }
 
   @override
@@ -81,7 +92,7 @@ class _DiaryWritingSelectPictureScreenState
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: DiaryWritingAppBar(
               title: '나의 하루 그림일기',
-              onPressedLeading: onTapBack,
+              onPressedLeading: isLoading ? null : onTapBack,
             ),
           ),
           body: Padding(
@@ -189,15 +200,18 @@ class _DiaryWritingSelectPictureScreenState
                   children: [
                     Expanded(
                       child: Obx(
-                        () => CommonBottomButton(
-                          disabledText: vm.pictures.length >= 4
-                              ? "오늘 하루와 어울리는 그림은 무엇인가요?"
-                              : "일기를 생성할 수 없어요...",
-                          text: "이 그림으로 저장할래요!",
-                          onPressed: vm.pictures.length >= 4 && vm.isSelected()
-                              ? onTapSend
-                              : null,
-                        ),
+                        () => isLoading
+                            ? const LoadingBottomButton()
+                            : CommonBottomButton(
+                                disabledText: vm.pictures.length >= 4
+                                    ? "오늘 하루와 어울리는 그림은 무엇인가요?"
+                                    : "일기를 생성할 수 없어요...",
+                                text: "이 그림으로 저장할래요!",
+                                onPressed:
+                                    vm.pictures.length >= 4 && vm.isSelected()
+                                        ? onTapSend
+                                        : null,
+                              ),
                       ),
                     ),
                   ],

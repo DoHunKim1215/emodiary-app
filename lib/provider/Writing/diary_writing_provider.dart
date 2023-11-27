@@ -30,10 +30,26 @@ class DiaryWritingProvider extends GetConnect {
       });
   }
 
-  Future<List<String>> getPictures() async {
+  Future<String> tokenize(String content) async {
     final requestBody = <String, dynamic>{
-      "prompt":
-          "beautiful summer weather, refreshing breeze, vibrant flowers, lush green trees beautiful, Hand-drawn, Pastel, Warm, Colored pencils, Soft, by Oscar-Claude Monet",
+      "content": content,
+    };
+
+    try {
+      final response = await post(
+        '${dotenv.env["REST_API_HOST"]}/diaries/tokenize',
+        requestBody,
+      );
+
+      return response.body["data"] as String;
+    } on Exception catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<List<String>> getPictures(String prompt) async {
+    final requestBody = <String, dynamic>{
+      "prompt": prompt,
       "negative_prompt": "sleeping cat, dog, human, ugly face, cropped",
       "width": 384,
       "height": 384,

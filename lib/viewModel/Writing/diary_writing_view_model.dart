@@ -45,9 +45,19 @@ class DiaryWritingViewModel extends GetxController {
     return selectedPictureIdx.value;
   }
 
-  void setPictures(List<String> base64Pictures) {
-    pictures.value = base64Pictures;
-    pictures.refresh();
+  Future<void> getPictures() async {
+    try {
+      final prompt =
+          await diaryWritingProvider.tokenize(_contentEditingController.text);
+      final pictures = await diaryWritingProvider.getPictures(prompt);
+
+      this.pictures.value = pictures;
+      this.pictures.refresh();
+
+      return Future.value();
+    } on Exception catch (e) {
+      return Future.error(e);
+    }
   }
 
   void setSelectedPicture(int selected) {

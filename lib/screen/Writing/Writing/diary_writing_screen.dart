@@ -5,6 +5,7 @@ import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:emodiary/widget/Writing/diary_writing_appbar.dart';
 import 'package:emodiary/widget/Writing/diary_confirm_dialog.dart';
+import 'package:emodiary/widget/base/loading_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
