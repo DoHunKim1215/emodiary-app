@@ -5,50 +5,44 @@ import 'package:get/get.dart';
 class DiaryWritingViewModel extends GetxController {
   /* Title */
   static const int titleMaxLength = 40;
-  static const int contentMaxLength = 1000;
 
   late TextEditingController _titleEditingController;
-  late TextEditingController _contentEditingController;
-
-  final DiaryWritingProvider diaryWritingProvider = DiaryWritingProvider();
-
-  RxnInt selectedPicture = RxnInt(null);
-  RxList<String> pictures = RxList<String>([]);
-
-  RxBool isShownPicture = true.obs;
-
   TextEditingController get titleCtrl => _titleEditingController;
+
+  /* Content */
+  static const int contentMaxLength = 1000;
+
+  late TextEditingController _contentEditingController;
   TextEditingController get contentCtrl => _contentEditingController;
+
+  /* Pictures */
+  RxList<String> pictures = RxList<String>([]);
+  RxnInt selectedPictureIdx = RxnInt(null);
+
+  /* Providers */
+  final DiaryWritingProvider diaryWritingProvider = DiaryWritingProvider();
 
   @override
   void onInit() {
     super.onInit();
-    initTextController();
-  }
-
-  @override
-  void onClose() {
-    disposeTextController();
-    super.onClose();
-  }
-
-  void initTextController() {
     _titleEditingController = TextEditingController();
     _contentEditingController = TextEditingController();
   }
 
-  void disposeTextController() {
+  @override
+  void onClose() {
     _titleEditingController.dispose();
     _contentEditingController.dispose();
+    super.onClose();
   }
 
-  bool canSend() {
+  bool canSendTitleAndContent() {
     return _titleEditingController.text.isNotEmpty &&
         _contentEditingController.text.isNotEmpty;
   }
 
   int? getSelectedPicture() {
-    return selectedPicture.value;
+    return selectedPictureIdx.value;
   }
 
   void setPictures(List<String> base64Pictures) {
@@ -61,18 +55,10 @@ class DiaryWritingViewModel extends GetxController {
       return;
     }
 
-    selectedPicture.value = selected;
+    selectedPictureIdx.value = selected;
   }
 
   bool isSelected() {
-    return selectedPicture.value != null;
-  }
-
-  void flipCard() {
-    isShownPicture.value = !isShownPicture.value;
-  }
-
-  bool getIsShownPicture() {
-    return isShownPicture.value;
+    return selectedPictureIdx.value != null;
   }
 }

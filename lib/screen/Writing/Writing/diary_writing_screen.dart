@@ -1,7 +1,7 @@
 import 'package:emodiary/screen/Writing/Writing/Widget/diary_title_field.dart';
 import 'package:emodiary/screen/Writing/Writing/Widget/diary_writing_back_card.dart';
 import 'package:emodiary/screen/Writing/Writing/Widget/diary_writing_card.dart';
-import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
+import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:emodiary/widget/Writing/diary_writing_appbar.dart';
 import 'package:emodiary/widget/Writing/diary_confirm_dialog.dart';
@@ -124,7 +124,8 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
                       child: CommonBottomButton(
                         text: "그림 일기를 받아볼게요!",
                         disabledText: "일기를 작성하면 그림을 볼 수 있어요!",
-                        onPressed: vm.canSend() ? onTapSend : null,
+                        onPressed:
+                            vm.canSendTitleAndContent() ? onTapSend : null,
                       ),
                     ),
                   ],

@@ -1,4 +1,4 @@
-import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
+import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

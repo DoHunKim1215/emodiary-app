@@ -1,16 +1,19 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
+import 'package:emodiary/viewModel/Writing/diary_writing_save_view_model.dart';
+import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DiaryWritingSaveCard extends StatelessWidget {
-  final DiaryWritingViewModel viewModel;
+  final DiaryWritingViewModel contentViewModel;
+  final DiaryWritingSaveViewModel saveViewModel;
 
   const DiaryWritingSaveCard({
     super.key,
-    required this.viewModel,
+    required this.contentViewModel,
+    required this.saveViewModel,
   });
 
   @override
@@ -37,15 +40,15 @@ class DiaryWritingSaveCard extends StatelessWidget {
             child: Obx(
               () => SizedBox(
                 height: 440,
-                child: viewModel.getIsShownPicture()
+                child: saveViewModel.getIsShownPicture()
                     ? Column(
                         children: [
                           Expanded(
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
                               child: Image.memory(
-                                base64Decode(viewModel
-                                    .pictures[viewModel.getSelectedPicture()!]),
+                                base64Decode(contentViewModel.pictures[
+                                    contentViewModel.getSelectedPicture()!]),
                                 fit: BoxFit.fitHeight,
                               ),
                             ),
@@ -55,7 +58,7 @@ class DiaryWritingSaveCard extends StatelessWidget {
                           ),
                           TextField(
                             readOnly: true,
-                            controller: viewModel.titleCtrl,
+                            controller: contentViewModel.titleCtrl,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             maxLength: DiaryWritingViewModel.titleMaxLength,
@@ -103,7 +106,7 @@ class DiaryWritingSaveCard extends StatelessWidget {
                           SingleChildScrollView(
                             child: TextField(
                               readOnly: true,
-                              controller: viewModel.contentCtrl,
+                              controller: contentViewModel.contentCtrl,
                               keyboardType: TextInputType.multiline,
                               maxLines: 10,
                               style: const TextStyle(

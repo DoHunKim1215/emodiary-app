@@ -1,6 +1,6 @@
 import 'package:emodiary/screen/Writing/SelectPicture/Widget/picture_box.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
-import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
+import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:emodiary/widget/Writing/diary_writing_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

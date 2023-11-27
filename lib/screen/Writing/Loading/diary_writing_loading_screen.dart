@@ -1,6 +1,5 @@
 import 'package:emodiary/screen/Writing/Loading/Widget/diary_writing_loading_text.dart';
-import 'package:emodiary/util/function/log_on_dev.dart';
-import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
+import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

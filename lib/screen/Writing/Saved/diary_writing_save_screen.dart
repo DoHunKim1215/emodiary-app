@@ -1,13 +1,17 @@
 import 'package:emodiary/screen/Writing/Saved/Widget/diary_writing_save_back_card.dart';
 import 'package:emodiary/screen/Writing/Saved/Widget/diary_writing_save_card.dart';
-import 'package:emodiary/viewModel/Writing/Writing/diary_writing_view_model.dart';
+import 'package:emodiary/viewModel/Writing/diary_writing_save_view_model.dart';
+import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:emodiary/widget/Writing/diary_writing_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class DiaryWritingSaveScreen extends StatelessWidget {
-  final DiaryWritingViewModel vm = Get.find<DiaryWritingViewModel>();
+  final DiaryWritingViewModel diaryWritingViewModel =
+      Get.find<DiaryWritingViewModel>();
+  final DiaryWritingSaveViewModel diaryWritingSaveViewModel =
+      Get.put(DiaryWritingSaveViewModel());
 
   DiaryWritingSaveScreen({super.key});
 
@@ -66,7 +70,8 @@ class DiaryWritingSaveScreen extends StatelessWidget {
                         children: [
                           const DiaryWritingSaveBackCard(),
                           DiaryWritingSaveCard(
-                            viewModel: vm,
+                            contentViewModel: diaryWritingViewModel,
+                            saveViewModel: diaryWritingSaveViewModel,
                           ),
                         ],
                       ),
@@ -79,7 +84,7 @@ class DiaryWritingSaveScreen extends StatelessWidget {
                     highlightColor: Colors.transparent,
                   ),
                   onPressed: () {
-                    vm.flipCard();
+                    diaryWritingSaveViewModel.flipCard();
                   },
                   icon: SvgPicture.asset(
                     "assets/icons/rotate-button-icon.svg",
