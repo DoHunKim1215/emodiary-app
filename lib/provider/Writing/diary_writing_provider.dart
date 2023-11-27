@@ -68,4 +68,28 @@ class DiaryWritingProvider extends GetConnect {
       return [];
     }
   }
+
+  Future createDiary(
+    String title,
+    String content,
+    String base64Image,
+  ) async {
+    final requestBody = {
+      "which_date": "2023-11-27",
+      "title": title,
+      "content": content,
+      "image_base64": base64Image,
+    };
+
+    try {
+      await post(
+        '${dotenv.env["REST_API_HOST"]}/diaries',
+        requestBody,
+      );
+
+      return Future.value(null);
+    } on Exception catch (e) {
+      return Future.error(e);
+    }
+  }
 }

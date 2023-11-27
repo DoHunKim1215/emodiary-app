@@ -42,7 +42,31 @@ class _DiaryWritingSelectPictureScreenState
   }
 
   void onTapSend() {
-    Get.toNamed("/writing/save");
+    vm.diaryWritingProvider
+        .createDiary(
+      vm.titleCtrl.text,
+      vm.contentCtrl.text,
+      vm.pictures[vm.getSelectedPicture()!],
+    )
+        .then(
+      (value) {
+        Get.toNamed("/writing/save");
+      },
+    ).catchError(
+      (_) {
+        Get.delete<DiaryWritingViewModel>();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text('일기 생성에 실패했습니다...'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+
+        Get.toNamed("/");
+      },
+    );
   }
 
   @override

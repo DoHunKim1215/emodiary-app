@@ -74,7 +74,7 @@ class DiaryWritingCard extends StatelessWidget {
                     decoration: const InputDecoration(
                       counterText: "",
                       hintText:
-                          '오늘의 하루는 어떠셨나요?\n오늘 느낀 감정, 생각 모두 다 좋아요!\n생각나는대로 다 작성해보세요.',
+                          '오늘의 하루는 어떠셨나요?\n오늘 느낀 감정, 생각 모두 다 좋아요!\n생각나는대로 다 작성해보세요.\n(최소 50자, 최대 1000자)',
                       hintStyle: TextStyle(
                         color: Color(0xFF787A93),
                         fontSize: 16,
