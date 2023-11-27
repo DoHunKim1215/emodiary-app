@@ -1,4 +1,4 @@
-import 'package:emodiary/util/log_on_dev.dart';
+import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:get/get.dart';
 
 class DiaryWritingProvider extends GetConnect {

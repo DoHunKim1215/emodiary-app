@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class DiaryWritingBottomButton extends StatelessWidget {
+class CommonBottomButton extends StatelessWidget {
   final void Function()? onPressed;
   final String text;
   final String disabledText;
 
-  const DiaryWritingBottomButton({
+  const CommonBottomButton({
     super.key,
     this.onPressed,
     required this.text,

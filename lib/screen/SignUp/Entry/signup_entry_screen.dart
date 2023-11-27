@@ -1,10 +1,10 @@
-import 'package:emodiary/util/log_on_dev.dart';
+import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/widget/base/no_splash_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LoginEntryScreen extends StatelessWidget {
-  const LoginEntryScreen({super.key});
+class SignUpEntryScreen extends StatelessWidget {
+  const SignUpEntryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +132,9 @@ class LoginEntryScreen extends StatelessWidget {
                       logOnDev("문의!");
                     },
                     style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
                       padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       backgroundColor: Colors.transparent,
                       splashFactory: NoSplash.splashFactory,
                     ),
