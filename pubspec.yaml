@@ -23,6 +23,7 @@ dependencies:
   intl: ^0.18.1
   table_calendar: ^3.0.9
   share: ^2.0.4
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:

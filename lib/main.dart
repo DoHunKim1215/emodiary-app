@@ -1,3 +1,4 @@
+import 'package:emodiary/screen/Diary/diary_read_screen.dart';
 import 'package:emodiary/screen/SignUp/Entry/signup_entry_screen.dart';
 import 'package:emodiary/screen/SignUp/Process/signup_process_screen.dart';
 import 'package:emodiary/screen/Writing/Loading/diary_writing_loading_screen.dart';
@@ -45,11 +46,12 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/writing",
+      initialRoute: "/diary",
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
         GetPage(name: "/login", page: () => const SignUpEntryScreen()),
         GetPage(name: "/login/process", page: () => SignUpProcessScreen()),
+        GetPage(name: "/diary", page: () => const DiaryReadScreen()),
         GetPage(name: "/writing", page: () => const DiaryWritingScreen()),
         GetPage(
           name: "/writing/loading",
