@@ -1,0 +1,13 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ico_clear">
+<circle id="Ellipse 104" cx="10" cy="10" r="10" fill="#E6E9ED"/>
+<g id="close">
+<mask id="mask0_1_1725" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="16" height="16">
+<rect id="Bounding box" x="2" y="2" width="16" height="16" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_1_1725)">
+<path id="close_2" d="M6.26665 14.6666L5.33331 13.7333L9.06665 9.99992L5.33331 6.26659L6.26665 5.33325L9.99998 9.06659L13.7333 5.33325L14.6666 6.26659L10.9333 9.99992L14.6666 13.7333L13.7333 14.6666L9.99998 10.9333L6.26665 14.6666Z" fill="white"/>
+</g>
+</g>
+</g>
+</svg>

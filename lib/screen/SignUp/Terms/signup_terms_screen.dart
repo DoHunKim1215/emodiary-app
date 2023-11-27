@@ -1,7 +1,6 @@
 import 'package:emodiary/screen/SignUp/Terms/Widget/all_agree_check_row.dart';
 import 'package:emodiary/screen/SignUp/Terms/Widget/signup_terms_title.dart';
 import 'package:emodiary/screen/SignUp/Terms/Widget/terms_check_rows.dart';
-import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/viewModel/SignUp/signup_terms_view_model.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +9,9 @@ import 'package:get/get.dart';
 class SignUpTermsScreen extends StatelessWidget {
   final SignUpTermsViewModel viewModel = Get.put(SignUpTermsViewModel());
 
-  SignUpTermsScreen({super.key});
+  final void Function() onTapNext;
 
-  void onTapNext() {
-    logOnDev("NEXT~");
-  }
+  SignUpTermsScreen({super.key, required this.onTapNext});
 
   @override
   Widget build(BuildContext context) {
