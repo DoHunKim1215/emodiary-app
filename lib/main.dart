@@ -1,12 +1,23 @@
+import 'package:emodiary/screen/Diary/diary_read_screen.dart';
+import 'package:emodiary/screen/SignUp/Entry/signup_entry_screen.dart';
+import 'package:emodiary/screen/SignUp/Process/signup_process_screen.dart';
+import 'package:emodiary/screen/Writing/Loading/diary_writing_loading_screen.dart';
+import 'package:emodiary/screen/Writing/Saved/diary_writing_save_screen.dart';
+import 'package:emodiary/screen/Writing/SelectPicture/diary_writing_select_picture_screen.dart';
+import 'package:emodiary/screen/Writing/Writing/diary_writing_screen.dart';
 import 'package:emodiary/screen/root_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+void main() async {
+  /* Open .env file */
+  await dotenv.load(fileName: "assets/config/.env");
+
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
@@ -20,7 +31,7 @@ class MyApp extends StatelessWidget {
     FlutterNativeSplash.remove();
 
     return GetMaterialApp(
-      title: "JJoin",
+      title: "Emodiary",
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -31,12 +42,29 @@ class MyApp extends StatelessWidget {
       ],
       theme: ThemeData(
         useMaterial3: true,
+        fontFamily: 'Pretendard',
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/",
+      initialRoute: "/login/process",
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
+        GetPage(name: "/login", page: () => const SignUpEntryScreen()),
+        GetPage(name: "/login/process", page: () => SignUpProcessScreen()),
+        GetPage(name: "/diary", page: () => const DiaryReadScreen()),
+        GetPage(name: "/writing", page: () => const DiaryWritingScreen()),
+        GetPage(
+          name: "/writing/loading",
+          page: () => const DiaryWritingLoadingScreen(),
+        ),
+        GetPage(
+          name: "/writing/select",
+          page: () => const DiaryWritingSelectPictureScreen(),
+        ),
+        GetPage(
+          name: "/writing/save",
+          page: () => DiaryWritingSaveScreen(),
+        ),
       ],
     );
   }
