@@ -23,7 +23,9 @@ dependencies:
   intl: ^0.18.1
   table_calendar: ^3.0.9
   share: ^2.0.4
+  dotted_border: ^2.1.0
   cached_network_image: ^3.3.0
+  syncfusion_flutter_charts: ^23.1.44
 
 dev_dependencies:
   flutter_test:

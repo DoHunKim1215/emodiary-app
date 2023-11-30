@@ -35,8 +35,8 @@ class CustomBottomNavigationBar
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                     icon: SvgPicture.asset(
-                      'assets/icons/user.svg',
-                      height: 30,
+                      'assets/icons/house.svg',
+                      height: 24,
                       colorFilter: controller.index == 0
                           ? const ColorFilter.mode(
                               Color(0xFF7541EF), BlendMode.srcATop)
@@ -46,8 +46,8 @@ class CustomBottomNavigationBar
                     label: "홈"),
                 BottomNavigationBarItem(
                     icon: SvgPicture.asset(
-                      'assets/icons/house.svg',
-                      height: 24,
+                      'assets/icons/user.svg',
+                      height: 30,
                       colorFilter: controller.index == 1
                           ? const ColorFilter.mode(
                               Color(0xFF7541EF), BlendMode.srcATop)
