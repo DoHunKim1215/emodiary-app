@@ -1,18 +1,44 @@
-import 'package:emodiary/viewModel/SignUp/signup_identify_view_model.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
-class SignUpIdentifyScreen extends StatelessWidget {
-  final SignUpIdentifyViewModel viewModel = Get.put(SignUpIdentifyViewModel());
-
+class SignUpIdentifyScreen extends StatefulWidget {
   final void Function() onTapNext;
 
-  SignUpIdentifyScreen({
+  const SignUpIdentifyScreen({
     super.key,
     required this.onTapNext,
   });
+
+  @override
+  State<SignUpIdentifyScreen> createState() => _SignUpIdentifyScreenState();
+}
+
+class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
+  static const int nickNameMaxLength = 20;
+  static const int telMaxLength = 11;
+
+  late TextEditingController _nickNameCtrl;
+  late TextEditingController _telCtrl;
+  bool isNotEmpty = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nickNameCtrl = TextEditingController();
+    _telCtrl = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nickNameCtrl.dispose();
+    _telCtrl.dispose();
+    super.dispose();
+  }
+
+  bool canSend() {
+    return _nickNameCtrl.text.isNotEmpty && _telCtrl.text.isNotEmpty;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +72,11 @@ class SignUpIdentifyScreen extends StatelessWidget {
                 ),
               ),
               TextField(
-                controller: viewModel.nickNameCtrl,
-                maxLength: SignUpIdentifyViewModel.nickNameMaxLength,
+                controller: _nickNameCtrl,
+                onChanged: (_) {
+                  setState(() {});
+                },
+                maxLength: nickNameMaxLength,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16.0,
@@ -63,8 +92,12 @@ class SignUpIdentifyScreen extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     height: 1.5,
                   ),
+                  suffixIconConstraints: const BoxConstraints(
+                    minHeight: 20,
+                    minWidth: 20,
+                  ),
                   suffixIcon: GestureDetector(
-                    onTap: viewModel.nickNameCtrl.clear,
+                    onTap: _nickNameCtrl.clear,
                     child: SvgPicture.asset(
                       "assets/icons/clear.svg",
                       width: 20,
@@ -103,8 +136,12 @@ class SignUpIdentifyScreen extends StatelessWidget {
                 ),
               ),
               TextField(
-                controller: viewModel.telCtrl,
-                maxLength: SignUpIdentifyViewModel.telMaxLength,
+                controller: _telCtrl,
+                onChanged: (_) {
+                  setState(() {});
+                },
+                maxLength: telMaxLength,
+                keyboardType: TextInputType.number,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16.0,
@@ -120,8 +157,12 @@ class SignUpIdentifyScreen extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     height: 1.5,
                   ),
+                  suffixIconConstraints: const BoxConstraints(
+                    minHeight: 20,
+                    minWidth: 20,
+                  ),
                   suffixIcon: GestureDetector(
-                    onTap: viewModel.nickNameCtrl.clear,
+                    onTap: _telCtrl.clear,
                     child: SvgPicture.asset(
                       "assets/icons/clear.svg",
                       width: 20,
@@ -154,8 +195,8 @@ class SignUpIdentifyScreen extends StatelessWidget {
               Expanded(
                 child: CommonBottomButton(
                   text: "다음",
-                  disabledText: "닉네임과 휴대폰 번호를 입혁해주세요!",
-                  onPressed: viewModel.canSend() ? onTapNext : null,
+                  disabledText: "닉네임과 휴대폰 번호를 입력해주세요!",
+                  onPressed: canSend() ? widget.onTapNext : null,
                 ),
               ),
             ],
