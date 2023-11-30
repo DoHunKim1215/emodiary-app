@@ -42,7 +42,7 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
           confirmAction: () {
             Get.back();
             Get.delete<DiaryWritingViewModel>(force: true);
-            Get.offAllNamed("/");
+            Get.back();
           },
         );
       },
