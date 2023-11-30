@@ -25,7 +25,7 @@ dependencies:
   share: ^2.0.4
   dotted_border: ^2.1.0
   cached_network_image: ^3.3.0
-  syncfusion_flutter_charts: ^23.1.44
+  fl_chart: ^0.64.0
 
 dev_dependencies:
   flutter_test:

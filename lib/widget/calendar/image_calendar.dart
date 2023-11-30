@@ -27,21 +27,8 @@ class _ImageCalendarState extends State<ImageCalendar> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 2,
-              offset: const Offset(0, 1), // 변경 가능한 값
-            ),
-          ],
-        ),
-        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      () => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: TableCalendar(
           // Base Info of Calendar
           locale: 'ko_KR',
