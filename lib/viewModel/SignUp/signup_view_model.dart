@@ -1,5 +1,6 @@
 import 'package:emodiary/screen/SignUp/Identify/signup_identify_screen.dart';
 import 'package:emodiary/screen/SignUp/InputId/signup_input_id_screen.dart';
+import 'package:emodiary/screen/SignUp/InputPassword/signup_input_password_screen.dart';
 import 'package:emodiary/screen/SignUp/Terms/signup_terms_screen.dart';
 import 'package:emodiary/util/enum/signup_process.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class SignUpViewModel extends GetxController {
       case 2:
         return SignUpInputIdScreen(onTapNext: gotoInputPassword);
       case 3:
-        return SignUpInputIdScreen(onTapNext: gotoInputPassword);
+        return SignUpInputPasswordScreen(onTapNext: gotoHome);
       default:
         assert(false, "🚨 [Assertion Error] Invalid Login Screen Index Value.");
     }
@@ -50,5 +51,9 @@ class SignUpViewModel extends GetxController {
 
   void gotoInputPassword() {
     currentIndex.value = ESignUpProcess.inputPassword.index;
+  }
+
+  void gotoHome() {
+    Get.offAllNamed("/");
   }
 }
