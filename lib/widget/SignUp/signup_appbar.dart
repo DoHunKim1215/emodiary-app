@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignUpAppBar extends StatelessWidget {
+  final String title;
   final void Function() onPressed;
 
   const SignUpAppBar({
     super.key,
+    required this.title,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text(
-        "회원가입",
-        style: TextStyle(
+      title: Text(
+        title,
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: Color(0xFF434A54),

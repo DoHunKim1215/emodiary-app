@@ -22,6 +22,7 @@ class SignUpProcessScreen extends StatelessWidget {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: SignUpAppBar(
+              title: "회원가입",
               onPressed: () {
                 logOnDev("BACK!");
               },
