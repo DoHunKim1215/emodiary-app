@@ -1,16 +1,30 @@
+import 'package:emodiary/viewModel/home/home_view_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
+import '../../../model/e_emotion.dart';
 
 class EmotionPieChart extends StatefulWidget {
-  const EmotionPieChart({super.key});
+  final HomeViewModel viewModel;
+  const EmotionPieChart({Key? key, required this.viewModel}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => PieChartSample3State();
+  State<EmotionPieChart> createState() => _EmotionPieChartState();
 }
 
-class PieChartSample3State extends State {
-  int touchedIndex = 0;
+class _EmotionPieChartState extends State<EmotionPieChart> {
+  late final HomeViewModel _viewModel;
+  late int touchedIndex;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _viewModel = widget.viewModel;
+    touchedIndex = -1;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,33 +34,32 @@ class PieChartSample3State extends State {
         aspectRatio: 1,
         child: PieChart(
           PieChartData(
-            pieTouchData: PieTouchData(
-              touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                setState(() {
-                  if (!event.isInterestedForInteractions ||
-                      pieTouchResponse == null ||
-                      pieTouchResponse.touchedSection == null) {
-                    touchedIndex = -1;
-                    return;
-                  }
-                  touchedIndex =
-                      pieTouchResponse.touchedSection!.touchedSectionIndex;
-                });
-              },
-            ),
-            borderData: FlBorderData(
-              show: false,
-            ),
-            sectionsSpace: 0,
-            centerSpaceRadius: 0,
-            sections: showingSections(),
-          ),
+              pieTouchData: PieTouchData(
+                touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                  setState(() {
+                    if (!event.isInterestedForInteractions ||
+                        pieTouchResponse == null ||
+                        pieTouchResponse.touchedSection == null) {
+                      touchedIndex = -1;
+                      return;
+                    }
+                    touchedIndex =
+                        pieTouchResponse.touchedSection!.touchedSectionIndex;
+                  });
+                },
+              ),
+              borderData: FlBorderData(
+                show: false,
+              ),
+              sectionsSpace: 0,
+              centerSpaceRadius: 0,
+              sections: showingSections(_viewModel.emotionScore)),
         ),
       ),
     );
   }
 
-  List<PieChartSectionData> showingSections() {
+  List<PieChartSectionData> showingSections(Map<EEmotion, RxInt> emotionScore) {
     return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
       final radius = isTouched ? 145.0 : 135.0;
@@ -56,7 +69,7 @@ class PieChartSample3State extends State {
         case 0:
           return PieChartSectionData(
             color: const Color(0xFFA0D468),
-            value: 60,
+            value: emotionScore[EEmotion.GOOD]!.toDouble(),
             showTitle: false,
             radius: radius,
             badgeWidget: _Badge(
@@ -69,7 +82,7 @@ class PieChartSample3State extends State {
         case 1:
           return PieChartSectionData(
             color: const Color(0xFFFFCE54),
-            value: 30,
+            value: emotionScore[EEmotion.SOSO]!.toDouble(),
             showTitle: false,
             radius: radius,
             badgeWidget: _Badge(
@@ -82,7 +95,7 @@ class PieChartSample3State extends State {
         case 2:
           return PieChartSectionData(
             color: const Color(0xFFED5565),
-            value: 10,
+            value: emotionScore[EEmotion.BAD]!.toDouble(),
             showTitle: false,
             radius: radius,
             badgeWidget: _Badge(

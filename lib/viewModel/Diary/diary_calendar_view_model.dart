@@ -3,7 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../calendar/calendar_info_model.dart';
 import '../../model/Diary/calendar_diary_model.dart';
-import '../../repository/home/diary_calendar_repository.dart';
+import '../../repository/diary/diary_calendar_repository.dart';
 
 class DiaryCalendarViewModel extends GetxController {
   final DiaryCalendarRepository repository;

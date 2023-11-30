@@ -1,5 +1,8 @@
+import 'package:emodiary/viewModel/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import '../../repository/home/home_repository.dart';
 import 'Widget/diary_card.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
@@ -13,9 +16,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final HomeViewModel _viewModel;
   @override
   void initState() {
     super.initState();
+    _viewModel = Get.put(
+      HomeViewModel(
+        repository: HomeRepository(),
+      ),
+    );
   }
 
   @override
@@ -95,54 +104,58 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Center(
-                          child: Text(
-                            "7일째 일기 작성 중",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        const Center(
-                          child: Text(
-                            "2023년 12월의 감정 호수",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 45),
-                        const EmotionPieChart(),
-                        const SizedBox(height: 40),
-                        Container(
-                          width: double.infinity,
-                          height: 2,
-                          color: Colors.grey[300],
-                        ),
-                        // 양쪽 정렬
-                        const Spacer(),
-                        Center(
-                          child: const Text(
-                            "2023년 12월은 무난하게 흘러가는 한 달이네요.",
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF434A54)),
-                          ),
-                        ),
-                        Center(
-                          child: const Text(
-                            "다음에는 어떤 즐거운 일이 생길까요?",
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF434A54)),
-                          ),
-                        )
-                      ],
-                    ),
+                    child: Obx(() => _viewModel.isLoadingEmotionScore
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Center(
+                                child: Text(
+                                  "7일째 일기 작성 중",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              const Center(
+                                child: Text(
+                                  "2023년 12월의 감정 호수",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 45),
+                              EmotionPieChart(viewModel: _viewModel),
+                              const SizedBox(height: 40),
+                              Container(
+                                width: double.infinity,
+                                height: 2,
+                                color: Colors.grey[300],
+                              ),
+                              // 양쪽 정렬
+                              const Spacer(),
+                              Center(
+                                child: const Text(
+                                  "2023년 12월은 무난하게 흘러가는 한 달이네요.",
+                                  style: TextStyle(
+                                      fontSize: 15, color: Color(0xFF434A54)),
+                                ),
+                              ),
+                              Center(
+                                child: const Text(
+                                  "다음에는 어떤 즐거운 일이 생길까요?",
+                                  style: TextStyle(
+                                      fontSize: 15, color: Color(0xFF434A54)),
+                                ),
+                              )
+                            ],
+                          )),
                   ),
                 ),
               ],
