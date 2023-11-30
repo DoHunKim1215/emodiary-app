@@ -49,18 +49,18 @@ class PieChartSample3State extends State {
   List<PieChartSectionData> showingSections() {
     return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
-      final radius = isTouched ? 150.0 : 140.0;
+      final radius = isTouched ? 145.0 : 135.0;
       final widgetSize = isTouched ? 45.0 : 40.0;
 
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: Color(0xFFFFDD8E),
+            color: const Color(0xFFA0D468),
             value: 60,
             showTitle: false,
             radius: radius,
             badgeWidget: _Badge(
-              'assets/icons/emoji-emoticon-happy.svg',
+              'assets/icons/emotion-good.svg',
               size: widgetSize,
               borderColor: Colors.grey,
             ),
@@ -68,12 +68,12 @@ class PieChartSample3State extends State {
           );
         case 1:
           return PieChartSectionData(
-            color: Color(0xFFFFFF92),
+            color: const Color(0xFFFFCE54),
             value: 30,
             showTitle: false,
             radius: radius,
             badgeWidget: _Badge(
-              'assets/icons/emoji-emoticon-love.svg',
+              'assets/icons/emotion-soso.svg',
               size: widgetSize,
               borderColor: Colors.grey,
             ),
@@ -81,12 +81,12 @@ class PieChartSample3State extends State {
           );
         case 2:
           return PieChartSectionData(
-            color: Color(0xFFFFB1FF),
+            color: const Color(0xFFED5565),
             value: 10,
             showTitle: false,
             radius: radius,
             badgeWidget: _Badge(
-              'assets/icons/emoji-emoticon-upset.svg',
+              'assets/icons/emotion-bad.svg',
               size: widgetSize,
               borderColor: Colors.grey,
             ),
@@ -120,7 +120,7 @@ class _Badge extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(
           color: borderColor,
-          width: 2,
+          width: 1,
         ),
         boxShadow: <BoxShadow>[
           BoxShadow(
@@ -135,6 +135,8 @@ class _Badge extends StatelessWidget {
       child: Center(
         child: SvgPicture.asset(
           svgAsset,
+          height: size * .8,
+          width: size * .8,
         ),
       ),
     );

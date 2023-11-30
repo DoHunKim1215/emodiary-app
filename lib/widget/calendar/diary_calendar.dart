@@ -1,21 +1,21 @@
-import 'package:emodiary/viewmodel/home/home_view_model.dart';
+import 'package:emodiary/viewModel/Diary/diary_calendar_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import 'image_calendar_item.dart';
+import 'diary_calendar_item.dart';
 
-class ImageCalendar extends StatefulWidget {
-  final HomeViewModel viewModel;
-  const ImageCalendar({required this.viewModel, Key? key}) : super(key: key);
+class DiaryCalendar extends StatefulWidget {
+  final DiaryCalendarViewModel viewModel;
+  const DiaryCalendar({required this.viewModel, Key? key}) : super(key: key);
 
   @override
-  State<ImageCalendar> createState() => _ImageCalendarState();
+  State<DiaryCalendar> createState() => _DiaryCalendarState();
 }
 
-class _ImageCalendarState extends State<ImageCalendar> {
-  late final HomeViewModel _viewModel;
+class _DiaryCalendarState extends State<DiaryCalendar> {
+  late final DiaryCalendarViewModel _viewModel;
 
   @override
   void initState() {
@@ -42,8 +42,6 @@ class _ImageCalendarState extends State<ImageCalendar> {
 
           // UI Customization
           headerStyle: const HeaderStyle(
-            formatButtonVisible: false,
-            titleCentered: true,
             titleTextStyle: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -57,6 +55,20 @@ class _ImageCalendarState extends State<ImageCalendar> {
               color: Colors.black,
             ),
           ),
+
+          availableCalendarFormats: const {
+            CalendarFormat.week: '한 주씩 보기',
+            CalendarFormat.month: '한 달씩 보기',
+          },
+
+          onFormatChanged: (format) {
+            if (_viewModel.calendarFormat != format) {
+              // Call `setState()` when updating calendar format
+              setState(() {
+                _viewModel.updateCalendarFormat(format);
+              });
+            }
+          },
 
           selectedDayPredicate: (day) =>
               isSameDay(_viewModel.selectedDate, day),
@@ -78,15 +90,18 @@ class _ImageCalendarState extends State<ImageCalendar> {
               return Obx(
                 () => _viewModel.isLoadingCalendarImages
                     ? Container()
-                    : ImageCalendarItem(
+                    : DiaryCalendarItem(
                         date: day,
                         isOutSide: false,
-                        isToday: false,
+                        isSelected: false,
                         imageUrl: _viewModel
                                 .calendarImages[
                                     DateFormat('yyyy-MM-dd').format(day)]
                                 ?.value ??
                             "",
+                        onTap: (date) {
+                          _viewModel.updateSelectedDate(date);
+                        },
                       ),
               );
             },
@@ -94,15 +109,18 @@ class _ImageCalendarState extends State<ImageCalendar> {
               return Obx(
                 () => _viewModel.isLoadingCalendarImages
                     ? Container()
-                    : ImageCalendarItem(
+                    : DiaryCalendarItem(
                         date: day,
                         isOutSide: true,
-                        isToday: false,
+                        isSelected: false,
                         imageUrl: _viewModel
                                 .calendarImages[
                                     DateFormat('yyyy-MM-dd').format(day)]
                                 ?.value ??
                             "",
+                        onTap: (date) {
+                          _viewModel.updateSelectedDate(date);
+                        },
                       ),
               );
             },
@@ -110,15 +128,37 @@ class _ImageCalendarState extends State<ImageCalendar> {
               return Obx(
                 () => _viewModel.isLoadingCalendarImages
                     ? Container()
-                    : ImageCalendarItem(
+                    : DiaryCalendarItem(
                         date: day,
                         isOutSide: false,
-                        isToday: true,
+                        isSelected: true,
                         imageUrl: _viewModel
                                 .calendarImages[
                                     DateFormat('yyyy-MM-dd').format(day)]
                                 ?.value ??
                             "",
+                        onTap: (date) {
+                          _viewModel.updateSelectedDate(date);
+                        },
+                      ),
+              );
+            },
+            todayBuilder: (context, day, focusedDay) {
+              return Obx(
+                () => _viewModel.isLoadingCalendarImages
+                    ? Container()
+                    : DiaryCalendarItem(
+                        date: day,
+                        isOutSide: false,
+                        isSelected: false,
+                        imageUrl: _viewModel
+                                .calendarImages[
+                                    DateFormat('yyyy-MM-dd').format(day)]
+                                ?.value ??
+                            "",
+                        onTap: (date) {
+                          _viewModel.updateSelectedDate(date);
+                        },
                       ),
               );
             },

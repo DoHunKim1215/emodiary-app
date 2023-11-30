@@ -1,8 +1,9 @@
 import 'package:intl/intl.dart';
 
 import '../../calendar/datetime_util.dart';
+import '../../model/Diary/calendar_diary_model.dart';
 
-class HomeRepository {
+class DiaryCalendarRepository {
   Map<String, String> getCalendarImages(DateTime focusedDate) {
     DateTime firstDayOfMonth = DateTimeUtil.getFirstDayOfCalendar(focusedDate);
     DateTime lastDayOfMonth = DateTimeUtil.getLastDayOfCalendar(focusedDate);
@@ -20,6 +21,22 @@ class HomeRepository {
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQijnpaljet5Rxk83NpjZLPxCIo40R5nVko3bvHWgzQ&s";
       } else {
         result[DateFormat("yyyy-MM-dd").format(date)] = "";
+      }
+    }
+
+    return result;
+  }
+
+  List<CalendarDiaryModel> fetchDiaries(DateTime selectedDate) {
+    List<CalendarDiaryModel> result = [];
+
+    if (selectedDate.day % 3 == 0) {
+      for (int i = 0; i < 5; i++) {
+        result.add(CalendarDiaryModel(
+          id: i,
+          imageUrl:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQijnpaljet5Rxk83NpjZLPxCIo40R5nVko3bvHWgzQ&s",
+        ));
       }
     }
 

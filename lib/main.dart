@@ -1,3 +1,4 @@
+import 'package:emodiary/screen/Diary/diary_calendar_screen.dart';
 import 'package:emodiary/screen/Diary/diary_read_screen.dart';
 import 'package:emodiary/screen/SignUp/Entry/signup_entry_screen.dart';
 import 'package:emodiary/screen/SignUp/Process/signup_process_screen.dart';
@@ -51,19 +52,31 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => const RootScreen()),
         GetPage(name: "/login", page: () => const SignUpEntryScreen()),
         GetPage(name: "/login/process", page: () => SignUpProcessScreen()),
-        GetPage(name: "/diary", page: () => const DiaryReadScreen()),
-        GetPage(name: "/writing", page: () => const DiaryWritingScreen()),
         GetPage(
-          name: "/writing/loading",
-          page: () => const DiaryWritingLoadingScreen(),
-        ),
-        GetPage(
-          name: "/writing/select",
-          page: () => const DiaryWritingSelectPictureScreen(),
-        ),
-        GetPage(
-          name: "/writing/save",
-          page: () => DiaryWritingSaveScreen(),
+          name: "/diary",
+          page: () => const DiaryReadScreen(),
+          children: [
+            GetPage(name: "/calendar", page: () => const DiaryCalendarScreen()),
+            GetPage(name: "/search", page: () => const DiaryCalendarScreen()),
+            GetPage(
+              name: "/writing",
+              page: () => const DiaryWritingScreen(),
+              children: [
+                GetPage(
+                  name: "/loading",
+                  page: () => const DiaryWritingLoadingScreen(),
+                ),
+                GetPage(
+                  name: "/select",
+                  page: () => const DiaryWritingSelectPictureScreen(),
+                ),
+                GetPage(
+                  name: "/save",
+                  page: () => DiaryWritingSaveScreen(),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     );

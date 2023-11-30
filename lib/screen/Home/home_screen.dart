@@ -1,9 +1,5 @@
-import 'package:emodiary/repository/home/home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-
-import '../../viewmodel/home/home_view_model.dart';
 import 'Widget/diary_card.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
@@ -17,20 +13,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final HomeViewModel _viewModel;
-  List<Color> gradientColors = [
-    Colors.yellow,
-    Colors.red,
-  ];
-
   @override
   void initState() {
     super.initState();
-    _viewModel = Get.put(
-      HomeViewModel(
-        repository: HomeRepository(),
-      ),
-    );
   }
 
   @override
@@ -82,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const Spacer(),
                         SvgPicture.asset(
-                          "assets/icons/emoji-emoticon-happy.svg",
+                          "assets/icons/emotion-happy.svg",
                           width: 100,
                           height: 100,
                         ),
@@ -94,8 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: const EdgeInsets.only(top: 180, left: 20, right: 20),
                   height: foundation.defaultTargetPlatform ==
                           foundation.TargetPlatform.android
-                      ? 455
-                      : 485,
+                      ? 475
+                      : 505,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -115,7 +100,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         const Center(
                           child: Text(
-                            "이번달의 감정 그래프",
+                            "7일째 일기 작성 중",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        const Center(
+                          child: Text(
+                            "2023년 12월의 감정 호수",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -125,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 45),
                         const EmotionPieChart(),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 40),
                         Container(
                           width: double.infinity,
                           height: 2,
@@ -133,15 +127,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         // 양쪽 정렬
                         const Spacer(),
-                        const Center(
-                          child: Text(
-                            "7일째 일기 작성 중",
+                        Center(
+                          child: const Text(
+                            "2023년 12월은 무난하게 흘러가는 한 달이네요.",
                             style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey,
-                            ),
+                                fontSize: 15, color: Color(0xFF434A54)),
                           ),
                         ),
+                        Center(
+                          child: const Text(
+                            "다음에는 어떤 즐거운 일이 생길까요?",
+                            style: TextStyle(
+                                fontSize: 15, color: Color(0xFF434A54)),
+                          ),
+                        )
                       ],
                     ),
                   ),
