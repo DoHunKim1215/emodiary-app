@@ -49,7 +49,6 @@ class PieChartSample3State extends State {
   List<PieChartSectionData> showingSections() {
     return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 20.0 : 16.0;
       final radius = isTouched ? 150.0 : 140.0;
       final widgetSize = isTouched ? 45.0 : 40.0;
 

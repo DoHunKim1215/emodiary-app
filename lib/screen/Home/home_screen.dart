@@ -1,12 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emodiary/repository/home/home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../viewmodel/home/home_view_model.dart';
-import 'Home/Widget/diary_card.dart';
-import 'Home/emotion_pie_chart.dart';
+import '../../viewmodel/home/home_view_model.dart';
+import 'Widget/diary_card.dart';
+import 'package:flutter/foundation.dart' as foundation;
+
+import 'Widget/emotion_pie_chart.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -91,7 +92,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 180, left: 20, right: 20),
-                  height: 460,
+                  height: foundation.defaultTargetPlatform ==
+                          foundation.TargetPlatform.android
+                      ? 455
+                      : 485,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -127,15 +131,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 2,
                           color: Colors.grey[300],
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Center(
-                            child: Text(
-                              "7일째 일기 작성 중",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.grey,
-                              ),
+                        // 양쪽 정렬
+                        const Spacer(),
+                        const Center(
+                          child: Text(
+                            "7일째 일기 작성 중",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey,
                             ),
                           ),
                         ),
