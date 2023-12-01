@@ -21,6 +21,7 @@ class HomeRepository {
       EEmotion.BAD: 0,
       EEmotion.SOSO: 0,
       EEmotion.GOOD: 0,
+      EEmotion.NONE: 0,
     };
 
     for (DateTime date = firstDayOfMonth;
@@ -33,6 +34,7 @@ class HomeRepository {
       } else {
         result[EEmotion.GOOD] = result[EEmotion.GOOD]! + 1;
       }
+      // result[EEmotion.NONE] = result[EEmotion.NONE]! + 1;
     }
 
     return result;
