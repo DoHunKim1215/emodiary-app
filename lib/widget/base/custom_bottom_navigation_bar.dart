@@ -1,27 +1,29 @@
+import 'package:emodiary/viewModel/Root/root_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-class CustomBottomNavigationBar
-    extends GetView<CustomBottomNavigationBarController> {
+class CustomBottomNavigationBar extends GetView<RootViewModel> {
   const CustomBottomNavigationBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(CustomBottomNavigationBarController());
+    final viewModel = Get.find<RootViewModel>();
+
     return Obx(() => Theme(
           data: ThemeData(
             highlightColor: Colors.transparent,
             splashFactory: NoSplash.splashFactory,
           ),
           child: BottomAppBar(
+            elevation: 0,
             shape: const CircularNotchedRectangle(),
             notchMargin: 7.0,
             clipBehavior: Clip.antiAlias,
             child: BottomNavigationBar(
               elevation: 0,
-              currentIndex: controller.index,
-              onTap: controller.changeIndex,
+              currentIndex: viewModel.selectedIndex,
+              onTap: viewModel.changeIndex,
 
               // 아이템의 색상
               unselectedItemColor: Colors.grey[400],
@@ -35,9 +37,9 @@ class CustomBottomNavigationBar
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                     icon: SvgPicture.asset(
-                      'assets/icons/user.svg',
-                      height: 30,
-                      colorFilter: controller.index == 0
+                      'assets/icons/house.svg',
+                      height: 24,
+                      colorFilter: viewModel.selectedIndex == 0
                           ? const ColorFilter.mode(
                               Color(0xFF7541EF), BlendMode.srcATop)
                           : ColorFilter.mode(
@@ -46,9 +48,9 @@ class CustomBottomNavigationBar
                     label: "홈"),
                 BottomNavigationBarItem(
                     icon: SvgPicture.asset(
-                      'assets/icons/house.svg',
-                      height: 24,
-                      colorFilter: controller.index == 1
+                      'assets/icons/user.svg',
+                      height: 30,
+                      colorFilter: controller.selectedIndex == 1
                           ? const ColorFilter.mode(
                               Color(0xFF7541EF), BlendMode.srcATop)
                           : ColorFilter.mode(
@@ -59,16 +61,5 @@ class CustomBottomNavigationBar
             ),
           ),
         ));
-  }
-}
-
-class CustomBottomNavigationBarController extends GetxController {
-  final RxInt selectedIndex = 0.obs;
-
-  static CustomBottomNavigationBarController get to => Get.find();
-  int get index => selectedIndex.value;
-
-  void changeIndex(int index) {
-    selectedIndex(index);
   }
 }
