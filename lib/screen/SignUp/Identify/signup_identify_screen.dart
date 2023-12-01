@@ -1,3 +1,4 @@
+import 'package:emodiary/screen/SignUp/Identify/Widget/already_signup_bottom_sheet.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,6 +39,15 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
 
   bool canSend() {
     return _nickNameCtrl.text.isNotEmpty && _telCtrl.text.isNotEmpty;
+  }
+
+  void showAlreadySignUpBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlreadySignUpBottomSheet();
+      },
+    );
   }
 
   @override
@@ -196,7 +206,8 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
                 child: CommonBottomButton(
                   text: "다음",
                   disabledText: "닉네임과 휴대폰 번호를 입력해주세요!",
-                  onPressed: canSend() ? widget.onTapNext : null,
+                  // onPressed: canSend() ? widget.onTapNext : null,
+                  onPressed: showAlreadySignUpBottomSheet,
                 ),
               ),
             ],
