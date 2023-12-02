@@ -136,6 +136,7 @@ class SignUpEntryScreen extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.transparent,
                       splashFactory: NoSplash.splashFactory,
                     ),
                     child: const Text(
