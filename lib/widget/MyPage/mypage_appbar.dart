@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class DiaryWritingAppBar extends StatelessWidget {
+class MyPageAppBar extends StatelessWidget {
   final String title;
-  final void Function()? onPressedLeading;
+  final void Function() onPressedLeading;
   final void Function()? onPressedAction;
 
-  const DiaryWritingAppBar({
+  const MyPageAppBar({
     super.key,
     required this.title,
     required this.onPressedLeading,
@@ -29,37 +29,41 @@ class DiaryWritingAppBar extends StatelessWidget {
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
-      leadingWidth: 60,
-      leading: IconButton(
-        padding: EdgeInsets.zero,
-        constraints: const BoxConstraints(),
-        style: IconButton.styleFrom(
+      leadingWidth: 90,
+      leading: TextButton.icon(
+        style: TextButton.styleFrom(
           splashFactory: NoSplash.splashFactory,
+          foregroundColor: Colors.white,
         ),
         icon: SvgPicture.asset(
-          "assets/icons/arrow-left.svg",
+          "assets/icons/arrow-back.svg",
           width: 24.0,
           height: 24.0,
+        ),
+        label: const Text(
+          "뒤로",
+          style: TextStyle(
+            color: Color(0xFF434A54),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            height: 1.4,
+          ),
         ),
         onPressed: onPressedLeading,
       ),
       actions: onPressedAction == null
           ? null
           : [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  style: IconButton.styleFrom(
-                    splashFactory: NoSplash.splashFactory,
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                child: Text(
+                  "저장",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    height: 1.5,
                   ),
-                  icon: SvgPicture.asset(
-                    "assets/icons/share.svg",
-                    width: 20.0,
-                    height: 20.0,
-                  ),
-                  onPressed: onPressedAction,
                 ),
               ),
             ],

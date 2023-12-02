@@ -1,4 +1,4 @@
-import 'package:emodiary/widget/SignUp/signup_appbar.dart';
+import 'package:emodiary/widget/base/leading_appbar.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
           resizeToAvoidBottomInset: false,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: SignUpAppBar(
+            child: LeadingAppBar(
               title: "로그인",
               onPressed: () {
                 Get.offAllNamed("/login");

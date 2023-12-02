@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class SignUpAppBar extends StatelessWidget {
+class LeadingAppBar extends StatelessWidget {
   final String title;
   final void Function() onPressed;
 
-  const SignUpAppBar({
+  const LeadingAppBar({
     super.key,
     required this.title,
     required this.onPressed,

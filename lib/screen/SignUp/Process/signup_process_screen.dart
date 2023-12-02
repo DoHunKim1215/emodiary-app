@@ -2,7 +2,7 @@ import 'package:emodiary/util/enum/signup_process.dart';
 import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/viewModel/SignUp/signup_view_model.dart';
 import 'package:emodiary/widget/SignUp/animated_indexed_stack.dart';
-import 'package:emodiary/widget/SignUp/signup_appbar.dart';
+import 'package:emodiary/widget/base/leading_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +21,7 @@ class SignUpProcessScreen extends StatelessWidget {
           resizeToAvoidBottomInset: false,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: SignUpAppBar(
+            child: LeadingAppBar(
               title: "회원가입",
               onPressed: () {
                 logOnDev("BACK!");
