@@ -3,6 +3,7 @@ import 'package:emodiary/screen/MyPage/AccountManagement/Widget/user_information
 import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/widget/MyPage/mypage_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AccountManagementScreen extends StatelessWidget {
   const AccountManagementScreen({super.key});
@@ -20,7 +21,7 @@ class AccountManagementScreen extends StatelessWidget {
             child: MyPageAppBar(
               title: "계정 관리",
               onPressedLeading: () {
-                logOnDev("BACK!");
+                Get.back();
               },
             ),
           ),

@@ -92,7 +92,7 @@ class MyPageScreen extends StatelessWidget {
                       title: "계정 관리",
                       followingText: "카카오",
                       onPressed: () {
-                        logOnDev("Account Management");
+                        Get.toNamed("/mypage/account");
                       },
                     ),
                     MyPageMenuRow(

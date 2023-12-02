@@ -2,6 +2,7 @@ import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/widget/MyPage/mypage_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -40,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: MyPageAppBar(
               title: "프로필",
               onPressedLeading: () {
-                logOnDev("BACK!");
+                Get.back();
               },
               onPressedAction: () {
                 logOnDev("SAVE!");
