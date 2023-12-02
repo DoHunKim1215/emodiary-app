@@ -1,3 +1,4 @@
+import 'package:emodiary/screen/Diary/diary_calendar_screen.dart';
 import 'package:emodiary/screen/Diary/diary_read_screen.dart';
 import 'package:emodiary/screen/MyPage/AccountManagement/account_management_screen.dart';
 import 'package:emodiary/screen/MyPage/MyPage/mypage_screen.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/login",
+      initialRoute: "/writing",
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
         GetPage(name: "/login", page: () => const SignUpEntryScreen()),
@@ -62,19 +63,32 @@ class MyApp extends StatelessWidget {
           name: "/mypage/account",
           page: () => const AccountManagementScreen(),
         ),
-        GetPage(name: "/diary", page: () => const DiaryReadScreen()),
         GetPage(name: "/writing", page: () => const DiaryWritingScreen()),
         GetPage(
-          name: "/writing/loading",
-          page: () => const DiaryWritingLoadingScreen(),
-        ),
-        GetPage(
-          name: "/writing/select",
-          page: () => const DiaryWritingSelectPictureScreen(),
-        ),
-        GetPage(
-          name: "/writing/save",
-          page: () => DiaryWritingSaveScreen(),
+          name: "/diary",
+          page: () => const DiaryReadScreen(),
+          children: [
+            GetPage(name: "/calendar", page: () => const DiaryCalendarScreen()),
+            GetPage(name: "/search", page: () => const DiaryCalendarScreen()),
+            GetPage(
+              name: "/writing",
+              page: () => const DiaryWritingScreen(),
+              children: [
+                GetPage(
+                  name: "/loading",
+                  page: () => const DiaryWritingLoadingScreen(),
+                ),
+                GetPage(
+                  name: "/select",
+                  page: () => const DiaryWritingSelectPictureScreen(),
+                ),
+                GetPage(
+                  name: "/save",
+                  page: () => DiaryWritingSaveScreen(),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     );

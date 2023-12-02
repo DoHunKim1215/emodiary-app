@@ -8,8 +8,8 @@ class DiaryProvider extends GetConnect {
   void onInit() {
     super.onInit();
     httpClient
-      ..defaultContentType = "application/json"
       ..timeout = const Duration(seconds: 30)
+      ..sendUserAgent = false
       ..addRequestModifier<dynamic>((request) {
         logOnDev("🛫 [${request.method}] ${request.url} | START");
         return request;
