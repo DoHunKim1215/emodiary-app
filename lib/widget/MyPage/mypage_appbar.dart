@@ -29,7 +29,7 @@ class MyPageAppBar extends StatelessWidget {
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
-      leadingWidth: 90,
+      leadingWidth: 100,
       leading: TextButton.icon(
         style: TextButton.styleFrom(
           splashFactory: NoSplash.splashFactory,
@@ -44,7 +44,7 @@ class MyPageAppBar extends StatelessWidget {
           "뒤로",
           style: TextStyle(
             color: Color(0xFF434A54),
-            fontSize: 14,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
             height: 1.4,
           ),
@@ -54,9 +54,20 @@ class MyPageAppBar extends StatelessWidget {
       actions: onPressedAction == null
           ? null
           : [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
-                child: Text(
+              TextButton(
+                onPressed: onPressedAction,
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.white,
+                  splashFactory: NoSplash.splashFactory,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                  ),
+                ),
+                child: const Text(
                   "저장",
                   style: TextStyle(
                     color: Colors.black,

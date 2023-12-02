@@ -27,7 +27,7 @@ class LeadingAppBar extends StatelessWidget {
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
-      leadingWidth: 90,
+      leadingWidth: 100,
       leading: TextButton.icon(
         style: TextButton.styleFrom(
           splashFactory: NoSplash.splashFactory,
@@ -42,7 +42,7 @@ class LeadingAppBar extends StatelessWidget {
           "뒤로",
           style: TextStyle(
             color: Color(0xFF434A54),
-            fontSize: 14,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
             height: 1.4,
           ),

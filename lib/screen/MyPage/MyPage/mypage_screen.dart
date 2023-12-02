@@ -2,7 +2,6 @@ import 'package:emodiary/screen/MyPage/MyPage/Widget/mypage_menu_row.dart';
 import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/widget/MyPage/mypage_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MyPageScreen extends StatelessWidget {
