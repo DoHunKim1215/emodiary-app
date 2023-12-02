@@ -1,8 +1,10 @@
 import 'package:emodiary/screen/MyPage/MyPage/Widget/mypage_menu_row.dart';
+import 'package:emodiary/screen/MyPage/MyPage/Widget/withdrawal_confirm_dialog.dart';
 import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/widget/MyPage/mypage_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
@@ -83,7 +85,7 @@ class MyPageScreen extends StatelessWidget {
                     MyPageMenuRow(
                       title: "프로필 수정",
                       onPressed: () {
-                        logOnDev("Profile");
+                        Get.toNamed("/mypage/profile");
                       },
                     ),
                     MyPageMenuRow(
@@ -191,7 +193,14 @@ class MyPageScreen extends StatelessWidget {
                       title: "회원 탈퇴",
                       titleColor: const Color(0xFF878786),
                       onPressed: () {
-                        logOnDev("Delete Account");
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          barrierColor: const Color.fromRGBO(0, 0, 0, 0.3),
+                          builder: (BuildContext context) {
+                            return const WithdrawalConfirmDialog();
+                          },
+                        );
                       },
                     ),
                   ],
