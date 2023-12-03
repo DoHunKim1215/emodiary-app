@@ -8,13 +8,14 @@ class DiaryProvider extends GetConnect {
   void onInit() {
     super.onInit();
     httpClient
-      ..timeout = const Duration(seconds: 30)
+      ..baseUrl = dotenv.env["REST_API_HOST"]
+      ..timeout = const Duration(seconds: 5)
       ..sendUserAgent = false
       ..addRequestModifier<dynamic>((request) {
         logOnDev("🛫 [${request.method}] ${request.url} | START");
         return request;
       })
-      ..addResponseModifier((request, Response response) {
+      ..addResponseModifier((request, response) {
         if (response.status.hasError) {
           logOnDev(
             "🚨 [${request.method}] ${request.url} | FAILED (${response.statusCode})",
@@ -33,7 +34,7 @@ class DiaryProvider extends GetConnect {
 
   Future<DiaryModel> getDiary(int id) async {
     try {
-      final response = await get('${dotenv.env["REST_API_HOST"]}/diaries/$id');
+      final response = await get('/diaries/$id');
       return DiaryModel.fromJson(response.body["data"] as Map<String, dynamic>);
     } on Exception catch (e) {
       return Future.error(e);
@@ -54,7 +55,7 @@ class DiaryProvider extends GetConnect {
 
     try {
       await put(
-        '${dotenv.env["REST_API_HOST"]}/diaries/$id',
+        '/diaries/$id',
         requestBody,
       );
       return Future.value();
@@ -65,7 +66,7 @@ class DiaryProvider extends GetConnect {
 
   Future deleteDiary(int id) async {
     try {
-      await delete('${dotenv.env["REST_API_HOST"]}/diaries/$id');
+      await delete('/diaries/$id');
       return Future.value();
     } on Exception catch (e) {
       return Future.error(e);

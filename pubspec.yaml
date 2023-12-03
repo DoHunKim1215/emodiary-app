@@ -26,6 +26,7 @@ dependencies:
   dotted_border: ^2.1.0
   cached_network_image: ^3.3.0
   fl_chart: ^0.64.0
+  flutter_secure_storage: ^9.0.0
 
 dev_dependencies:
   flutter_test:
