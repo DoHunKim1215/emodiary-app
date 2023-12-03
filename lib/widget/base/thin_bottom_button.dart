@@ -18,6 +18,7 @@ class ThinBottomButton extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         backgroundColor: isReversed ? Colors.white : const Color(0xFF7541EF),
+        foregroundColor: const Color(0xFF7541EF),
         splashFactory: NoSplash.splashFactory,
         padding: const EdgeInsets.symmetric(
           vertical: 10.0,

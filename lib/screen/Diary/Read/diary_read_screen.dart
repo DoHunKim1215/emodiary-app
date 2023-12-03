@@ -1,5 +1,5 @@
-import 'package:emodiary/screen/Diary/Widget/diary_back_card.dart';
-import 'package:emodiary/screen/Diary/Widget/diary_card.dart';
+import 'package:emodiary/screen/Diary/Read/Widget/diary_back_card.dart';
+import 'package:emodiary/screen/Diary/Read/Widget/diary_card.dart';
 import 'package:emodiary/viewModel/Diary/diary_read_view_model.dart';
 import 'package:emodiary/widget/Writing/diary_confirm_dialog.dart';
 import 'package:emodiary/widget/Writing/diary_writing_appbar.dart';

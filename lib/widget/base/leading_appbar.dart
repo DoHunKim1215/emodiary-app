@@ -3,10 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class LeadingAppBar extends StatelessWidget {
   final String title;
+  final Color? color;
   final void Function() onPressed;
 
   const LeadingAppBar({
     super.key,
+    this.color,
     required this.title,
     required this.onPressed,
   });
@@ -23,8 +25,8 @@ class LeadingAppBar extends StatelessWidget {
         ),
       ),
       centerTitle: true,
-      surfaceTintColor: Colors.white,
-      backgroundColor: Colors.white,
+      surfaceTintColor: color ?? Colors.white,
+      backgroundColor: color ?? Colors.white,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
       leadingWidth: 100,
