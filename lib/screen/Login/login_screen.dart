@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: LeadingAppBar(
               title: "로그인",
               onPressed: () {
-                Get.offAllNamed("/login");
+                Get.back();
               },
             ),
           ),

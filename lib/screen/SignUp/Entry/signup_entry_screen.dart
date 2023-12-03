@@ -4,6 +4,7 @@ import 'package:emodiary/widget/base/no_splash_icon_button.dart';
 import 'package:emodiary/widget/base/thin_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class SignUpEntryScreen extends StatelessWidget {
   const SignUpEntryScreen({super.key});
@@ -73,15 +74,22 @@ class SignUpEntryScreen extends StatelessWidget {
                     height: 14,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       LoginEntryButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed("/signup");
+                        },
                         text: "회원가입",
                         isLogin: false,
                       ),
+                      const SizedBox(
+                        width: 24,
+                      ),
                       LoginEntryButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed("/login");
+                        },
                         text: "로그인",
                         isLogin: true,
                       ),

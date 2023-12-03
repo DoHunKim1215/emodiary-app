@@ -15,21 +15,19 @@ class SignUpProcessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          resizeToAvoidBottomInset: false,
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: LeadingAppBar(
-              title: "회원가입",
-              onPressed: () {
-                logOnDev("BACK!");
-              },
+      child: Obx(
+        () => SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            resizeToAvoidBottomInset: false,
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: LeadingAppBar(
+                title: "회원가입",
+                onPressed: loginViewModel.getOnPressBack(),
+              ),
             ),
-          ),
-          body: Obx(
-            () => Column(
+            body: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(

@@ -1,3 +1,4 @@
+import 'package:emodiary/screen/SignUp/Terms/Widget/terms_detail_screen.dart';
 import 'package:emodiary/util/enum/signup_terms.dart';
 import 'package:emodiary/viewModel/SignUp/signup_terms_view_model.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,7 @@ class TermsCheckRows extends StatelessWidget {
                         );
                       },
                       pageBuilder: (context, animation, secondaryAnimation) {
-                        return const Text("Ho~");
+                        return const TermsDetailScreen();
                       },
                     );
                   },

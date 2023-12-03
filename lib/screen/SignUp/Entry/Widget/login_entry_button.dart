@@ -20,9 +20,9 @@ class LoginEntryButton extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
+            spreadRadius: 2,
             blurRadius: 8,
-            offset: const Offset(2.5, 2.5), // changes position of shadow
+            offset: const Offset(3.5, 3.5), // changes position of shadow
           ),
         ],
       ),
