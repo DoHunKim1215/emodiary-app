@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/diary/search",
+      initialRoute: "/login",
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
         GetPage(name: "/login", page: () => const SignUpEntryScreen()),

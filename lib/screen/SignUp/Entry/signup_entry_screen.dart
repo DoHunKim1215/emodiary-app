@@ -1,5 +1,7 @@
+import 'package:emodiary/screen/SignUp/Entry/Widget/login_entry_button.dart';
 import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/widget/base/no_splash_icon_button.dart';
+import 'package:emodiary/widget/base/thin_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -71,59 +73,74 @@ class SignUpEntryScreen extends StatelessWidget {
                     height: 14,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      NoSplashIconButton(
-                        onPressed: () {
-                          logOnDev("KAKAO!");
-                        },
-                        icon: SvgPicture.asset(
-                          "assets/icons/kakao-button.svg",
-                          width: 57,
-                          height: 57,
-                        ),
+                      LoginEntryButton(
+                        onPressed: () {},
+                        text: "회원가입",
+                        isLogin: false,
                       ),
-                      const SizedBox(
-                        width: 13,
-                      ),
-                      NoSplashIconButton(
-                        onPressed: () {
-                          logOnDev("NAVER!");
-                        },
-                        icon: Image.asset(
-                          "assets/icons/naver-button.png",
-                          width: 57,
-                          height: 57,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 13,
-                      ),
-                      NoSplashIconButton(
-                        onPressed: () {
-                          logOnDev("GOOGLE!");
-                        },
-                        icon: SvgPicture.asset(
-                          "assets/icons/google-button.svg",
-                          width: 57,
-                          height: 57,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 13,
-                      ),
-                      NoSplashIconButton(
-                        onPressed: () {
-                          logOnDev("APPLE!");
-                        },
-                        icon: Image.asset(
-                          "assets/icons/apple-button.png",
-                          width: 57,
-                          height: 57,
-                        ),
+                      LoginEntryButton(
+                        onPressed: () {},
+                        text: "로그인",
+                        isLogin: true,
                       ),
                     ],
                   ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     NoSplashIconButton(
+                  //       onPressed: () {
+                  //         logOnDev("KAKAO!");
+                  //       },
+                  //       icon: SvgPicture.asset(
+                  //         "assets/icons/kakao-button.svg",
+                  //         width: 57,
+                  //         height: 57,
+                  //       ),
+                  //     ),
+                  //     const SizedBox(
+                  //       width: 13,
+                  //     ),
+                  //     NoSplashIconButton(
+                  //       onPressed: () {
+                  //         logOnDev("NAVER!");
+                  //       },
+                  //       icon: Image.asset(
+                  //         "assets/icons/naver-button.png",
+                  //         width: 57,
+                  //         height: 57,
+                  //       ),
+                  //     ),
+                  //     const SizedBox(
+                  //       width: 13,
+                  //     ),
+                  //     NoSplashIconButton(
+                  //       onPressed: () {
+                  //         logOnDev("GOOGLE!");
+                  //       },
+                  //       icon: SvgPicture.asset(
+                  //         "assets/icons/google-button.svg",
+                  //         width: 57,
+                  //         height: 57,
+                  //       ),
+                  //     ),
+                  //     const SizedBox(
+                  //       width: 13,
+                  //     ),
+                  //     NoSplashIconButton(
+                  //       onPressed: () {
+                  //         logOnDev("APPLE!");
+                  //       },
+                  //       icon: Image.asset(
+                  //         "assets/icons/apple-button.png",
+                  //         width: 57,
+                  //         height: 57,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   const SizedBox(
                     height: 28,
                   ),
@@ -135,8 +152,8 @@ class SignUpEntryScreen extends StatelessWidget {
                       minimumSize: Size.zero,
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.transparent,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.white,
                       splashFactory: NoSplash.splashFactory,
                     ),
                     child: const Text(
