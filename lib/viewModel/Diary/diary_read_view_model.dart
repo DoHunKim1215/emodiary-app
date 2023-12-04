@@ -22,9 +22,10 @@ class DiaryReadViewModel extends GetxController {
   Future<void> getDiary(int id) async {
     try {
       diaryModel.value = await diaryProvider.getDiary(id);
-      diaryModel.refresh();
     } on Exception catch (e) {
-      return Future.error(e);
+      diaryModel.value = null;
+    } finally {
+      diaryModel.refresh();
     }
   }
 

@@ -1,7 +1,7 @@
 import 'package:emodiary/screen/Writing/SelectPicture/Widget/picture_box.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
-import 'package:emodiary/widget/Writing/diary_writing_appbar.dart';
+import 'package:emodiary/widget/Writing/diary_appbar.dart';
 import 'package:emodiary/widget/base/loading_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -91,7 +91,7 @@ class _DiaryWritingSelectPictureScreenState
           resizeToAvoidBottomInset: false,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: DiaryWritingAppBar(
+            child: DiaryAppBar(
               title: '나의 하루 그림일기',
               onPressedLeading: isLoading ? null : onTapBack,
             ),

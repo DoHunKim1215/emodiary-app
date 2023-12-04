@@ -2,7 +2,7 @@ import 'package:emodiary/screen/Writing/Saved/Widget/diary_writing_save_back_car
 import 'package:emodiary/screen/Writing/Saved/Widget/diary_writing_save_card.dart';
 import 'package:emodiary/viewModel/Writing/diary_writing_save_view_model.dart';
 import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
-import 'package:emodiary/widget/Writing/diary_writing_appbar.dart';
+import 'package:emodiary/widget/Writing/diary_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -25,7 +25,7 @@ class DiaryWritingSaveScreen extends StatelessWidget {
           resizeToAvoidBottomInset: false,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: DiaryWritingAppBar(
+            child: DiaryAppBar(
               title: '나의 하루 그림일기',
               onPressedLeading: () {
                 Get.delete<DiaryWritingViewModel>(force: true);

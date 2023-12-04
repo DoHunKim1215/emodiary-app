@@ -1,4 +1,5 @@
 import 'package:emodiary/provider/Writing/diary_writing_provider.dart';
+import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -52,6 +53,9 @@ class DiaryWritingViewModel extends GetxController {
     try {
       final prompt =
           await diaryWritingProvider.tokenize(_contentEditingController.text);
+
+      logOnDev("🏞️ Processed Prompt : $prompt");
+
       final pictures = await diaryWritingProvider.getPictures(prompt);
 
       this.pictures.value = pictures;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class DiaryWritingAppBar extends StatelessWidget {
+class DiaryAppBar extends StatelessWidget {
   final String title;
   final void Function()? onPressedLeading;
   final void Function()? onPressedAction;
 
-  const DiaryWritingAppBar({
+  const DiaryAppBar({
     super.key,
     required this.title,
     required this.onPressedLeading,

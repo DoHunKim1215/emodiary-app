@@ -151,7 +151,7 @@ class _MyPageHasDataScreenState extends State<MyPageHasDataScreen> {
                 onPressed: isLoading
                     ? null
                     : () {
-                        Get.toNamed("/mypage/account");
+                        logOnDev("Account Management");
                       },
               ),
               MyPageMenuRow(

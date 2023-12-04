@@ -73,31 +73,30 @@ class MyApp extends StatelessWidget {
           name: "/mypage/account",
           page: () => const AccountManagementScreen(),
         ),
-        GetPage(name: "/writing", page: () => const DiaryWritingScreen()),
+        GetPage(
+          name: "/writing",
+          page: () => const DiaryWritingScreen(),
+          children: [
+            GetPage(
+              name: "/loading",
+              page: () => const DiaryWritingLoadingScreen(),
+            ),
+            GetPage(
+              name: "/select",
+              page: () => const DiaryWritingSelectPictureScreen(),
+            ),
+            GetPage(
+              name: "/save",
+              page: () => DiaryWritingSaveScreen(),
+            ),
+          ],
+        ),
         GetPage(
           name: "/diary",
           page: () => const DiaryReadScreen(),
           children: [
             GetPage(name: "/calendar", page: () => const DiaryCalendarScreen()),
             GetPage(name: "/search", page: () => const DiarySearchScreen()),
-            GetPage(
-              name: "/writing",
-              page: () => const DiaryWritingScreen(),
-              children: [
-                GetPage(
-                  name: "/loading",
-                  page: () => const DiaryWritingLoadingScreen(),
-                ),
-                GetPage(
-                  name: "/select",
-                  page: () => const DiaryWritingSelectPictureScreen(),
-                ),
-                GetPage(
-                  name: "/save",
-                  page: () => DiaryWritingSaveScreen(),
-                ),
-              ],
-            ),
           ],
         ),
       ],

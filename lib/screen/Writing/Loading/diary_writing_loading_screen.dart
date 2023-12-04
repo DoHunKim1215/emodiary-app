@@ -1,5 +1,4 @@
 import 'package:emodiary/screen/Writing/Loading/Widget/diary_writing_loading_text.dart';
-import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,8 +24,9 @@ class _DiaryWritingLoadingScreenState extends State<DiaryWritingLoadingScreen> {
       },
     ).onError(
       (error, stackTrace) {
+        Get.back();
         Get.snackbar(
-          '🥲 그림을 불러오는데 실패했습니다',
+          '그림을 불러오는데 실패했습니다',
           '일기 내용이 적거나 의미가 분명하지 않으면 감정을 파악하기 힘들어요',
           margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           duration: const Duration(milliseconds: 1500),
@@ -34,9 +34,6 @@ class _DiaryWritingLoadingScreenState extends State<DiaryWritingLoadingScreen> {
           backgroundColor: const Color(0xFFF5F5F9),
           colorText: Colors.black,
         );
-
-        Get.delete<DiaryWritingViewModel>(force: true);
-        Get.toNamed("/");
       },
     );
   }
