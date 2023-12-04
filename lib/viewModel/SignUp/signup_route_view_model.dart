@@ -35,7 +35,7 @@ class SignUpRouteViewModel extends GetxController {
       case 2:
         return gotoIdentify;
       case 3:
-        return gotoInputPassword;
+        return gotoInputId;
       default:
         assert(false, "🚨 [Assertion Error] Invalid Login Screen Index Value.");
     }
@@ -52,13 +52,5 @@ class SignUpRouteViewModel extends GetxController {
 
   void gotoInputId() {
     currentIndex.value = ESignUpProcess.inputId.index;
-  }
-
-  void gotoInputPassword() {
-    currentIndex.value = ESignUpProcess.inputPassword.index;
-  }
-
-  void gotoHome() {
-    Get.offAllNamed("/");
   }
 }

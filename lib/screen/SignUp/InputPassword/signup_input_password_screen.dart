@@ -7,12 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignUpInputPasswordScreen extends StatefulWidget {
-  final void Function() gotoNext;
   final SignUpViewModel viewModel;
 
   const SignUpInputPasswordScreen({
     super.key,
-    required this.gotoNext,
     required this.viewModel,
   });
 

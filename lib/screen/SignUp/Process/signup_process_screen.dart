@@ -71,7 +71,6 @@ class SignUpProcessScreen extends StatelessWidget {
                           : Container(),
                       signUpRouteViewModel.currentIndex.value == 3
                           ? SignUpInputPasswordScreen(
-                              gotoNext: signUpRouteViewModel.gotoHome,
                               viewModel: signUpViewModel,
                             )
                           : Container(),
