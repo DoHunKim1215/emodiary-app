@@ -97,7 +97,7 @@ class HttpUtil {
     );
 
     if (accessToken == null) {
-      logOnDev("🔑 Access Token Not Found");
+      logOnDev("🔑 [Dio Interceptor] Access Token Not Found");
       Get.offAllNamed("/entry");
       return;
     }
@@ -140,7 +140,7 @@ class HttpUtil {
     );
 
     if (error.response?.statusCode == HttpStatus.unauthorized) {
-      logOnDev("♻️ Token Refresh Occurred");
+      logOnDev("♻️ [Dio Interceptor] Token Refresh Occurred");
 
       final refreshToken =
           await _secureStorage.read(key: AuthToken.refreshToken.key);
@@ -150,7 +150,7 @@ class HttpUtil {
       try {
         final refreshResponse = await _refreshDio.post('/auth/reissue');
 
-        logOnDev("🎉 Token Refresh Successes");
+        logOnDev("🎉 [Dio Interceptor] Token Refresh Successes");
 
         final newAccessToken =
             refreshResponse.data["data"][AuthToken.accessToken.jsonKey];
@@ -169,7 +169,8 @@ class HttpUtil {
         error.requestOptions.headers[HttpHeaders.authorizationHeader] =
             'Bearer $newAccessToken';
 
-        logOnDev("🔑 New Token Set | Access Token: $newAccessToken");
+        logOnDev(
+            "🔑 [Dio Interceptor] New Token Set | Access Token: $newAccessToken");
 
         final reRequestedResponse = await _reRequestDio.request(
           error.requestOptions.path,
@@ -194,7 +195,7 @@ class HttpUtil {
     DioException error,
     ErrorInterceptorHandler handler,
   ) async {
-    logOnDev("🚨️ Token Refresh Failed");
+    logOnDev("🚨️ [Dio Interceptor] Token Refresh Failed");
 
     if (error.response?.statusCode == 401 ||
         error.response?.statusCode == 404) {

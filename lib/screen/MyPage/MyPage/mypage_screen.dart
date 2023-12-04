@@ -12,7 +12,10 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
-  final UserViewModel userViewModel = Get.put(UserViewModel());
+  final UserViewModel userViewModel = Get.put(
+    UserViewModel(),
+    permanent: true,
+  );
 
   bool isLoading = false;
 

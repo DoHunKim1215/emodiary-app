@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class MyPageAppBar extends StatelessWidget {
   final String title;
+  final String? actionText;
   final void Function() onPressedLeading;
   final void Function()? onPressedAction;
 
@@ -10,6 +11,7 @@ class MyPageAppBar extends StatelessWidget {
     super.key,
     required this.title,
     required this.onPressedLeading,
+    this.actionText,
     this.onPressedAction,
   });
 
@@ -51,7 +53,7 @@ class MyPageAppBar extends StatelessWidget {
         ),
         onPressed: onPressedLeading,
       ),
-      actions: onPressedAction == null
+      actions: onPressedAction == null || actionText == null
           ? null
           : [
               TextButton(
@@ -67,9 +69,9 @@ class MyPageAppBar extends StatelessWidget {
                     horizontal: 20.0,
                   ),
                 ),
-                child: const Text(
-                  "저장",
-                  style: TextStyle(
+                child: Text(
+                  actionText!,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.w600,

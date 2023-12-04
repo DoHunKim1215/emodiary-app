@@ -51,6 +51,7 @@ class _DiaryWritingSelectPictureScreenState
     vm.diaryWritingProvider
         .createDiary(
       vm.titleCtrl.text,
+      DateTime.now(),
       vm.contentCtrl.text,
       vm.pictures[vm.getSelectedPicture()!],
     )

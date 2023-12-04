@@ -1,19 +1,23 @@
+import 'package:dio/dio.dart';
+import 'package:emodiary/provider/Base/http_util.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class DiaryWritingProvider extends GetConnect {
+class DiaryWritingProvider {
+  static final authDio = HttpUtil().authDio;
+
   Future<String> tokenize(String content) async {
     final requestBody = <String, dynamic>{
       "content": content,
     };
 
     try {
-      final response = await post(
-        '${dotenv.env["REST_API_HOST"]}/diaries/tokenize',
-        requestBody,
+      final response = await authDio.post(
+        '/diaries/tokenize',
+        data: requestBody,
       );
 
-      return response.body["data"] as String;
+      return response.data["data"] as String;
     } on Exception catch (e) {
       return Future.error(e);
     }
@@ -36,17 +40,18 @@ class DiaryWritingProvider extends GetConnect {
     };
 
     try {
-      final response = await post(
+      final dio = Dio();
+      final response = await dio.post(
         'https://api.kakaobrain.com/v2/inference/karlo/t2i',
-        requestBody,
-        headers: headers,
+        data: requestBody,
+        options: Options(headers: headers),
       );
 
-      if (response.body == null) {
+      if (response.data == null) {
         return [];
       }
 
-      final images = response.body["images"] as List<dynamic>;
+      final images = response.data["images"] as List<dynamic>;
 
       return List.generate(
         images.length,
@@ -59,22 +64,19 @@ class DiaryWritingProvider extends GetConnect {
 
   Future createDiary(
     String title,
+    DateTime createdDate,
     String content,
     String base64Image,
   ) async {
     final requestBody = {
-      "which_date": "2023-11-27",
+      "which_date": DateFormat("yyyy-MM-dd").format(createdDate),
       "title": title,
       "content": content,
       "image_base64": base64Image,
     };
 
     try {
-      await post(
-        '${dotenv.env["REST_API_HOST"]}/diaries',
-        requestBody,
-      );
-
+      await authDio.post('/diaries', data: requestBody);
       return Future.value(null);
     } on Exception catch (e) {
       return Future.error(e);
