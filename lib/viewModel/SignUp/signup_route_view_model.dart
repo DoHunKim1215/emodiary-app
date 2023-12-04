@@ -53,4 +53,8 @@ class SignUpRouteViewModel extends GetxController {
   void gotoInputId() {
     currentIndex.value = ESignUpProcess.inputId.index;
   }
+
+  void gotoInputPassword() {
+    currentIndex.value = ESignUpProcess.inputPassword.index;
+  }
 }

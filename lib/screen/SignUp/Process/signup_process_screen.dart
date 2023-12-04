@@ -2,6 +2,7 @@ import 'package:emodiary/screen/SignUp/Identify/signup_identify_screen.dart';
 import 'package:emodiary/screen/SignUp/InputId/signup_input_id_screen.dart';
 import 'package:emodiary/screen/SignUp/InputPassword/signup_input_password_screen.dart';
 import 'package:emodiary/screen/SignUp/Terms/signup_terms_screen.dart';
+import 'package:emodiary/util/enum/signup_process.dart';
 import 'package:emodiary/viewModel/SignUp/signup_route_view_model.dart';
 import 'package:emodiary/viewModel/SignUp/signup_view_model.dart';
 import 'package:emodiary/widget/SignUp/animated_indexed_stack.dart';
@@ -52,24 +53,28 @@ class SignUpProcessScreen extends StatelessWidget {
                   child: AnimatedIndexedStack(
                     index: signUpRouteViewModel.currentIndex.value,
                     children: [
-                      signUpRouteViewModel.currentIndex.value == 0
+                      signUpRouteViewModel.currentIndex.value ==
+                              ESignUpProcess.terms.index
                           ? SignUpTermsScreen(
                               gotoNext: signUpRouteViewModel.gotoIdentify,
                             )
                           : Container(),
-                      signUpRouteViewModel.currentIndex.value == 1
+                      signUpRouteViewModel.currentIndex.value ==
+                              ESignUpProcess.identify.index
                           ? SignUpIdentifyScreen(
                               gotoNext: signUpRouteViewModel.gotoInputId,
                               viewModel: signUpViewModel,
                             )
                           : Container(),
-                      signUpRouteViewModel.currentIndex.value == 2
+                      signUpRouteViewModel.currentIndex.value ==
+                              ESignUpProcess.inputId.index
                           ? SignUpInputIdScreen(
                               gotoNext: signUpRouteViewModel.gotoInputPassword,
                               viewModel: signUpViewModel,
                             )
                           : Container(),
-                      signUpRouteViewModel.currentIndex.value == 3
+                      signUpRouteViewModel.currentIndex.value ==
+                              ESignUpProcess.inputPassword.index
                           ? SignUpInputPasswordScreen(
                               viewModel: signUpViewModel,
                             )

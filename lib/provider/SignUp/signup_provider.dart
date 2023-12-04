@@ -3,6 +3,7 @@ import 'package:emodiary/provider/Base/http_util.dart';
 import 'package:emodiary/util/enum/secure_token_key.dart';
 import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SignUpProvider {
@@ -79,6 +80,38 @@ class SignUpProvider {
       return false;
     } on PlatformException catch (error) {
       logOnDev("🚨 [Flutter Secure Storage Error] Message : ${error.message}");
+      return false;
+    }
+  }
+
+  Future<bool> refresh(String refreshToken) async {
+    try {
+      final refreshDio = Dio(BaseOptions(
+        baseUrl: '${dotenv.env['REST_API_HOST']}',
+        connectTimeout: const Duration(milliseconds: 5000),
+        receiveTimeout: const Duration(milliseconds: 3000),
+        contentType: 'application/json; charset=utf-8',
+        responseType: ResponseType.json,
+        headers: <String, dynamic>{"Authentication": "Bearer $refreshToken"},
+      ));
+
+      final response = await refreshDio.post("/auth/reissue");
+      final newAccessToken = response.data["data"][AuthToken.accessToken.key];
+      final newRefreshToken = response.data["data"][AuthToken.refreshToken.key];
+
+      const secureStorage = FlutterSecureStorage();
+      await secureStorage.deleteAll();
+      await secureStorage.write(
+        key: AuthToken.accessToken.key,
+        value: newAccessToken,
+      );
+      await secureStorage.write(
+        key: AuthToken.refreshToken.key,
+        value: newRefreshToken,
+      );
+
+      return true;
+    } on DioException catch (_) {
       return false;
     }
   }
