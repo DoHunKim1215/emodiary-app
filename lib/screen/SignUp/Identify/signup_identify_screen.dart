@@ -17,7 +17,8 @@ class SignUpIdentifyScreen extends StatefulWidget {
 }
 
 class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
-  static const int nickNameMaxLength = 20;
+  static const int nickNameMinLength = 4;
+  static const int nickNameMaxLength = 10;
   static const int telMaxLength = 13;
 
   late TextEditingController _nickNameCtrl;
@@ -39,7 +40,8 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
   }
 
   bool canSend() {
-    return _nickNameCtrl.text.isNotEmpty && _telCtrl.text.isNotEmpty;
+    return _nickNameCtrl.text.length >= nickNameMinLength &&
+        _telCtrl.text.isNotEmpty;
   }
 
   void showAlreadySignUpBottomSheet() {
@@ -96,7 +98,7 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
                 ),
                 decoration: InputDecoration(
                   counterText: "",
-                  hintText: '닉네임 입력 (최대 20자)',
+                  hintText: '닉네임 입력 (4~10자)',
                   hintStyle: const TextStyle(
                     color: Color(0xFFCCD1D9),
                     fontSize: 16,
@@ -164,7 +166,7 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
                 ),
                 decoration: InputDecoration(
                   counterText: "",
-                  hintText: '휴대폰번호 입력',
+                  hintText: '휴대폰번호 입력 (xxx-xxxx-xxxx)',
                   hintStyle: const TextStyle(
                     color: Color(0xFFCCD1D9),
                     fontSize: 16,
@@ -210,8 +212,8 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
                 child: CommonBottomButton(
                   text: "다음",
                   disabledText: "닉네임과 휴대폰 번호를 입력해주세요!",
-                  // onPressed: canSend() ? widget.onTapNext : null,
-                  onPressed: showAlreadySignUpBottomSheet,
+                  onPressed: canSend() ? widget.onTapNext : null,
+                  // onPressed: showAlreadySignUpBottomSheet,
                 ),
               ),
             ],

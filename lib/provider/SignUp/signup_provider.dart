@@ -9,7 +9,7 @@ class SignUpProvider {
   static final Dio dio = HttpUtil().dio;
   static final Dio authDio = HttpUtil().authDio;
 
-  static Future<bool> signIn(String serialID, String password) async {
+  Future<bool> signIn(String serialID, String password) async {
     final formData = FormData.fromMap({
       "serial_id": serialID,
       "password": password,
@@ -46,7 +46,7 @@ class SignUpProvider {
     }
   }
 
-  static Future<bool> signUp(
+  Future<bool> signUp(
     String serialID,
     String password,
     String nickname,
@@ -67,7 +67,7 @@ class SignUpProvider {
     }
   }
 
-  static Future<bool> signOut() async {
+  Future<bool> signOut() async {
     try {
       await authDio.post("/auth/sign-out");
 
