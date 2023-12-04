@@ -1,23 +1,68 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:emodiary/model/User/user_model.dart';
 import 'package:emodiary/screen/MyPage/MyPage/Widget/mypage_menu_row.dart';
+import 'package:emodiary/screen/MyPage/MyPage/Widget/signout_confirm_dialog.dart';
 import 'package:emodiary/screen/MyPage/MyPage/Widget/withdrawal_confirm_dialog.dart';
 import 'package:emodiary/util/function/log_on_dev.dart';
+import 'package:emodiary/viewModel/MyPage/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class MyPageHasDataScreen extends StatelessWidget {
-  final UserModel userModel;
+class MyPageHasDataScreen extends StatefulWidget {
+  final UserViewModel userViewModel;
 
   const MyPageHasDataScreen({
     super.key,
-    required this.userModel,
+    required this.userViewModel,
   });
 
   @override
+  State<MyPageHasDataScreen> createState() => _MyPageHasDataScreenState();
+}
+
+class _MyPageHasDataScreenState extends State<MyPageHasDataScreen> {
+  bool isLoading = false;
+
+  void onTapSignOut() {
+    setState(() {
+      isLoading = true;
+    });
+
+    widget.userViewModel.signOut().then((isSuccess) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (isSuccess) {
+        Get.snackbar(
+          '로그아웃 성공',
+          '성공적으로 로그아웃되었습니다.',
+          margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          duration: const Duration(milliseconds: 1500),
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: const Color(0xFFF5F5F9),
+          colorText: Colors.black,
+        );
+        Get.offAllNamed("/entry");
+      } else {
+        Get.snackbar(
+          '로그아웃 실패',
+          '로그아웃에 실패했습니다.',
+          margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          duration: const Duration(milliseconds: 1500),
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: const Color(0xFFF5F5F9),
+          colorText: Colors.black,
+        );
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final userModel = widget.userViewModel.userModel.value!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -94,22 +139,28 @@ class MyPageHasDataScreen extends StatelessWidget {
             children: [
               MyPageMenuRow(
                 title: "프로필 수정",
-                onPressed: () {
-                  Get.toNamed("/mypage/profile");
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        Get.toNamed("/mypage/profile");
+                      },
               ),
               MyPageMenuRow(
                 title: "계정 관리",
                 followingText: userModel.loginProvider.displayName,
-                onPressed: () {
-                  Get.toNamed("/mypage/account");
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        Get.toNamed("/mypage/account");
+                      },
               ),
               MyPageMenuRow(
                 title: "알림 설정",
-                onPressed: () {
-                  logOnDev("Alert Setting");
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        logOnDev("Alert Setting");
+                      },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -122,21 +173,27 @@ class MyPageHasDataScreen extends StatelessWidget {
               ),
               MyPageMenuRow(
                 title: "공지 사항",
-                onPressed: () {
-                  logOnDev("Notice");
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        logOnDev("Notice");
+                      },
               ),
               MyPageMenuRow(
                 title: "고객센터",
-                onPressed: () {
-                  logOnDev("Customer Service");
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        logOnDev("Customer Service");
+                      },
               ),
               MyPageMenuRow(
                 title: "이용약관",
-                onPressed: () {
-                  logOnDev("Terms");
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        logOnDev("Terms");
+                      },
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(
@@ -195,23 +252,36 @@ class MyPageHasDataScreen extends StatelessWidget {
               MyPageMenuRow(
                 title: "로그아웃",
                 titleColor: const Color(0xFFEB4E3D),
-                onPressed: () {
-                  logOnDev("Logout");
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          barrierColor: const Color.fromRGBO(0, 0, 0, 0.3),
+                          builder: (BuildContext context) {
+                            return SignOutConfirmDialog(
+                              onPressConfirm: onTapSignOut,
+                            );
+                          },
+                        );
+                      },
               ),
               MyPageMenuRow(
                 title: "회원 탈퇴",
                 titleColor: const Color(0xFF878786),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    barrierColor: const Color.fromRGBO(0, 0, 0, 0.3),
-                    builder: (BuildContext context) {
-                      return const WithdrawalConfirmDialog();
-                    },
-                  );
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          barrierColor: const Color.fromRGBO(0, 0, 0, 0.3),
+                          builder: (BuildContext context) {
+                            return const WithdrawalConfirmDialog();
+                          },
+                        );
+                      },
               ),
             ],
           ),

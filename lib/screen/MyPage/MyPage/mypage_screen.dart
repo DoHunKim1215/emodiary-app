@@ -1,11 +1,7 @@
 import 'package:emodiary/screen/MyPage/MyPage/Widget/mypage_has_data_screen.dart';
 import 'package:emodiary/screen/MyPage/MyPage/Widget/mypage_has_not_data_screen.dart';
-import 'package:emodiary/screen/MyPage/MyPage/Widget/mypage_menu_row.dart';
-import 'package:emodiary/screen/MyPage/MyPage/Widget/withdrawal_confirm_dialog.dart';
-import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:emodiary/viewModel/MyPage/user_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class MyPageScreen extends StatefulWidget {
@@ -47,16 +43,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
           backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
           body: isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? const Center(child: CircularProgressIndicator())
               : userViewModel.userModel.value == null
-                  ? MyPageHasNotDataScreen(
-                      onPressRetry: getUserInfo,
-                    )
-                  : MyPageHasDataScreen(
-                      userModel: userViewModel.userModel.value!,
-                    ),
+                  ? MyPageHasNotDataScreen(onPressRetry: getUserInfo)
+                  : MyPageHasDataScreen(userViewModel: userViewModel),
         ),
       ),
     );

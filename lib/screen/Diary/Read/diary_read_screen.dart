@@ -48,7 +48,7 @@ class _DiaryReadScreenState extends State<DiaryReadScreen> {
               Get.offAllNamed("/");
             }).onError((error, stackTrace) {
               Get.snackbar(
-                '🥲 일기를 삭제하는데 실패했습니다.',
+                '일기를 삭제하는데 실패했습니다.',
                 '알 수 없는 이유로 일기 삭제에 실패했습니다.',
                 margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                 duration: const Duration(milliseconds: 1500),
