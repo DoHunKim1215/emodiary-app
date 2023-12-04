@@ -1,5 +1,10 @@
+import 'package:emodiary/screen/Diary/Search/diary_search_screen.dart';
 import 'package:emodiary/screen/Diary/diary_calendar_screen.dart';
-import 'package:emodiary/screen/Diary/diary_read_screen.dart';
+import 'package:emodiary/screen/Diary/Read/diary_read_screen.dart';
+import 'package:emodiary/screen/Login/login_screen.dart';
+import 'package:emodiary/screen/MyPage/AccountManagement/account_management_screen.dart';
+import 'package:emodiary/screen/MyPage/MyPage/mypage_screen.dart';
+import 'package:emodiary/screen/MyPage/Profile/profile_screen.dart';
 import 'package:emodiary/screen/SignUp/Entry/signup_entry_screen.dart';
 import 'package:emodiary/screen/SignUp/Process/signup_process_screen.dart';
 import 'package:emodiary/screen/Writing/Loading/diary_writing_loading_screen.dart';
@@ -47,17 +52,25 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/",
+      initialRoute: "/entry",
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
-        GetPage(name: "/login", page: () => const SignUpEntryScreen()),
-        GetPage(name: "/login/process", page: () => SignUpProcessScreen()),
+        GetPage(name: "/entry", page: () => const SignUpEntryScreen()),
+        GetPage(name: "/login", page: () => const LoginScreen()),
+        GetPage(name: "/signup", page: () => SignUpProcessScreen()),
+        GetPage(name: "/mypage", page: () => const MyPageScreen()),
+        GetPage(name: "/mypage/profile", page: () => const ProfileScreen()),
+        GetPage(
+          name: "/mypage/account",
+          page: () => const AccountManagementScreen(),
+        ),
+        GetPage(name: "/writing", page: () => const DiaryWritingScreen()),
         GetPage(
           name: "/diary",
           page: () => const DiaryReadScreen(),
           children: [
             GetPage(name: "/calendar", page: () => const DiaryCalendarScreen()),
-            GetPage(name: "/search", page: () => const DiaryCalendarScreen()),
+            GetPage(name: "/search", page: () => const DiarySearchScreen()),
             GetPage(
               name: "/writing",
               page: () => const DiaryWritingScreen(),

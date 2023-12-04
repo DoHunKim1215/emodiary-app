@@ -1,13 +1,13 @@
 import 'package:emodiary/util/enum/signup_process.dart';
-import 'package:emodiary/util/function/log_on_dev.dart';
-import 'package:emodiary/viewModel/SignUp/signup_view_model.dart';
+import 'package:emodiary/viewModel/SignUp/signup_route_view_model.dart';
 import 'package:emodiary/widget/SignUp/animated_indexed_stack.dart';
-import 'package:emodiary/widget/SignUp/signup_appbar.dart';
+import 'package:emodiary/widget/base/leading_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpProcessScreen extends StatelessWidget {
-  final SignUpViewModel loginViewModel = Get.put(SignUpViewModel());
+  final SignUpRouteViewModel signUpRouteViewModel =
+      Get.put(SignUpRouteViewModel());
 
   SignUpProcessScreen({super.key});
 
@@ -15,20 +15,19 @@ class SignUpProcessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          resizeToAvoidBottomInset: false,
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: SignUpAppBar(
-              onPressed: () {
-                logOnDev("BACK!");
-              },
+      child: Obx(
+        () => SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            resizeToAvoidBottomInset: false,
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: LeadingAppBar(
+                title: "회원가입",
+                onPressed: signUpRouteViewModel.getOnPressBack(),
+              ),
             ),
-          ),
-          body: Obx(
-            () => Column(
+            body: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -36,7 +35,7 @@ class SignUpProcessScreen extends StatelessWidget {
                     vertical: 20,
                   ),
                   child: LinearProgressIndicator(
-                    value: loginViewModel.getProgressPercent(),
+                    value: signUpRouteViewModel.getProgressPercent(),
                     color: const Color(0xFF7541EF),
                     backgroundColor: const Color(0xFFE6E9ED),
                     minHeight: 2,
@@ -44,12 +43,12 @@ class SignUpProcessScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: AnimatedIndexedStack(
-                    index: loginViewModel.currentIndex.value,
+                    index: signUpRouteViewModel.currentIndex.value,
                     children: List.generate(
                       ESignUpProcess.values.length,
                       (index) {
-                        return loginViewModel.currentIndex.value == index
-                            ? loginViewModel.getCurrentScreen()
+                        return signUpRouteViewModel.currentIndex.value == index
+                            ? signUpRouteViewModel.getCurrentScreen()
                             : Container();
                       },
                     ),

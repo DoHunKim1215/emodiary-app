@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class SignUpAppBar extends StatelessWidget {
+class LeadingAppBar extends StatelessWidget {
+  final String title;
+  final Color? color;
   final void Function() onPressed;
 
-  const SignUpAppBar({
+  const LeadingAppBar({
     super.key,
+    this.color,
+    required this.title,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text(
-        "회원가입",
-        style: TextStyle(
+      title: Text(
+        title,
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: Color(0xFF434A54),
         ),
       ),
       centerTitle: true,
-      surfaceTintColor: Colors.white,
-      backgroundColor: Colors.white,
+      surfaceTintColor: color ?? Colors.white,
+      backgroundColor: color ?? Colors.white,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
-      leadingWidth: 90,
+      leadingWidth: 100,
       leading: TextButton.icon(
         style: TextButton.styleFrom(
           splashFactory: NoSplash.splashFactory,
@@ -40,7 +44,7 @@ class SignUpAppBar extends StatelessWidget {
           "뒤로",
           style: TextStyle(
             color: Color(0xFF434A54),
-            fontSize: 14,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
             height: 1.4,
           ),

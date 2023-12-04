@@ -1,3 +1,5 @@
+import 'package:emodiary/screen/SignUp/Identify/Widget/already_signup_bottom_sheet.dart';
+import 'package:emodiary/util/class/tel_formatter.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,8 +17,9 @@ class SignUpIdentifyScreen extends StatefulWidget {
 }
 
 class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
-  static const int nickNameMaxLength = 20;
-  static const int telMaxLength = 11;
+  static const int nickNameMinLength = 4;
+  static const int nickNameMaxLength = 10;
+  static const int telMaxLength = 13;
 
   late TextEditingController _nickNameCtrl;
   late TextEditingController _telCtrl;
@@ -37,7 +40,17 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
   }
 
   bool canSend() {
-    return _nickNameCtrl.text.isNotEmpty && _telCtrl.text.isNotEmpty;
+    return _nickNameCtrl.text.length >= nickNameMinLength &&
+        _telCtrl.text.isNotEmpty;
+  }
+
+  void showAlreadySignUpBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlreadySignUpBottomSheet();
+      },
+    );
   }
 
   @override
@@ -73,7 +86,7 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
               ),
               TextField(
                 controller: _nickNameCtrl,
-                onChanged: (_) {
+                onChanged: (value) {
                   setState(() {});
                 },
                 maxLength: nickNameMaxLength,
@@ -85,7 +98,7 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
                 ),
                 decoration: InputDecoration(
                   counterText: "",
-                  hintText: '닉네임 입력 (최대 20자)',
+                  hintText: '닉네임 입력 (4~10자)',
                   hintStyle: const TextStyle(
                     color: Color(0xFFCCD1D9),
                     fontSize: 16,
@@ -137,6 +150,9 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
               ),
               TextField(
                 controller: _telCtrl,
+                inputFormatters: [
+                  TelFormatter(masks: ["xxx-xxxx-xxxx"], separator: "-"),
+                ],
                 onChanged: (_) {
                   setState(() {});
                 },
@@ -150,7 +166,7 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
                 ),
                 decoration: InputDecoration(
                   counterText: "",
-                  hintText: '휴대폰번호 입력 (하이픈(\'-\') 없이)',
+                  hintText: '휴대폰번호 입력 (xxx-xxxx-xxxx)',
                   hintStyle: const TextStyle(
                     color: Color(0xFFCCD1D9),
                     fontSize: 16,
@@ -197,6 +213,7 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
                   text: "다음",
                   disabledText: "닉네임과 휴대폰 번호를 입력해주세요!",
                   onPressed: canSend() ? widget.onTapNext : null,
+                  // onPressed: showAlreadySignUpBottomSheet,
                 ),
               ),
             ],

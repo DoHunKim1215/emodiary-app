@@ -4,14 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class DiaryWritingAppBar extends StatelessWidget {
   final String title;
   final void Function()? onPressedLeading;
-  final bool enableShare;
   final void Function()? onPressedAction;
 
   const DiaryWritingAppBar({
     super.key,
     required this.title,
     required this.onPressedLeading,
-    this.enableShare = false,
     this.onPressedAction,
   });
 

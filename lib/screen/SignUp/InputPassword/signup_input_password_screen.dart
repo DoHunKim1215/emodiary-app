@@ -1,3 +1,5 @@
+import 'package:emodiary/screen/SignUp/InputPassword/Widget/validate_password_confirm_row.dart';
+import 'package:emodiary/screen/SignUp/InputPassword/Widget/validate_password_row.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,7 +39,13 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
 
   bool canSend() {
     return _passwordCtrl.text.isNotEmpty &&
-        _passwordConfirmCtrl.text.isNotEmpty;
+        _passwordConfirmCtrl.text.isNotEmpty &&
+        _passwordCtrl.text == _passwordConfirmCtrl.text &&
+        _passwordCtrl.text.contains(RegExp(r'[a-zA-Z]')) &&
+        _passwordCtrl.text.contains(RegExp(r'[0-9]')) &&
+        _passwordCtrl.text
+            .contains(RegExp(r"[~!@#$%^&*()_+\-=\[\]{};:\\|,.<>/?]")) &&
+        _passwordCtrl.text.length >= 8;
   }
 
   @override
@@ -76,6 +84,9 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
                 onChanged: (_) {
                   setState(() {});
                 },
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
                 maxLength: passwordMaxLength,
                 style: const TextStyle(
                   color: Colors.black,
@@ -126,13 +137,7 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
               const SizedBox(
                 height: 13,
               ),
-              Row(
-                children: [
-                  Row(
-                    children: [],
-                  )
-                ],
-              ),
+              ValidatePasswordRow(controller: _passwordCtrl),
               const SizedBox(
                 height: 40,
               ),
@@ -150,8 +155,10 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
                 onChanged: (_) {
                   setState(() {});
                 },
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
                 maxLength: passwordMaxLength,
-                keyboardType: TextInputType.number,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16.0,
@@ -160,7 +167,7 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
                 ),
                 decoration: InputDecoration(
                   counterText: "",
-                  hintText: '영문, 숫자, 특수문자 조합 8자리 이상',
+                  hintText: '비밀번호를 다시 입력해주세요.',
                   hintStyle: const TextStyle(
                     color: Color(0xFFCCD1D9),
                     fontSize: 16,
@@ -197,6 +204,13 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
                     ),
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 13,
+              ),
+              ValidatePasswordConfirmRow(
+                passwordCtrl: _passwordCtrl,
+                passwordConfirmCtrl: _passwordConfirmCtrl,
               ),
             ],
           ),
