@@ -1,13 +1,16 @@
+import 'package:emodiary/viewModel/SignUp/signup_view_model.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignUpInputIdScreen extends StatefulWidget {
-  final void Function() onTapNext;
+  final void Function() gotoNext;
+  final SignUpViewModel viewModel;
 
   const SignUpInputIdScreen({
     super.key,
-    required this.onTapNext,
+    required this.gotoNext,
+    required this.viewModel,
   });
 
   @override
@@ -15,7 +18,8 @@ class SignUpInputIdScreen extends StatefulWidget {
 }
 
 class _SignUpInputIdScreenState extends State<SignUpInputIdScreen> {
-  static const int idMaxLength = 100;
+  static const int idMinLength = 4;
+  static const int idMaxLength = 20;
 
   late TextEditingController _idCtrl;
 
@@ -76,7 +80,7 @@ class _SignUpInputIdScreenState extends State<SignUpInputIdScreen> {
                 ),
                 decoration: InputDecoration(
                   counterText: "",
-                  hintText: 'emodiary@emodiary.com',
+                  hintText: '아이디 입력 (4~20자)',
                   hintStyle: const TextStyle(
                     color: Color(0xFFCCD1D9),
                     fontSize: 16,
@@ -122,7 +126,12 @@ class _SignUpInputIdScreenState extends State<SignUpInputIdScreen> {
                 child: CommonBottomButton(
                   text: "다음",
                   disabledText: "아이디를 입력해주세요!",
-                  onPressed: _idCtrl.text.isNotEmpty ? widget.onTapNext : null,
+                  onPressed: _idCtrl.text.length >= idMinLength
+                      ? () {
+                          widget.viewModel.setSerialID(_idCtrl.text);
+                          widget.gotoNext();
+                        }
+                      : null,
                 ),
               ),
             ],

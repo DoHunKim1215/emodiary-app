@@ -1,15 +1,18 @@
 import 'package:emodiary/screen/SignUp/Identify/Widget/already_signup_bottom_sheet.dart';
 import 'package:emodiary/util/class/tel_formatter.dart';
+import 'package:emodiary/viewModel/SignUp/signup_view_model.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignUpIdentifyScreen extends StatefulWidget {
-  final void Function() onTapNext;
+  final void Function() gotoNext;
+  final SignUpViewModel viewModel;
 
   const SignUpIdentifyScreen({
     super.key,
-    required this.onTapNext,
+    required this.gotoNext,
+    required this.viewModel,
   });
 
   @override
@@ -212,7 +215,13 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
                 child: CommonBottomButton(
                   text: "다음",
                   disabledText: "닉네임과 휴대폰 번호를 입력해주세요!",
-                  onPressed: canSend() ? widget.onTapNext : null,
+                  onPressed: canSend()
+                      ? () {
+                          widget.viewModel.setNickname(_nickNameCtrl.text);
+                          widget.viewModel.setPhoneNumber(_telCtrl.text);
+                          widget.gotoNext();
+                        }
+                      : null,
                   // onPressed: showAlreadySignUpBottomSheet,
                 ),
               ),
