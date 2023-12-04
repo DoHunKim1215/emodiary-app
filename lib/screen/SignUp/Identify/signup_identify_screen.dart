@@ -1,4 +1,5 @@
 import 'package:emodiary/screen/SignUp/Identify/Widget/already_signup_bottom_sheet.dart';
+import 'package:emodiary/util/class/tel_formatter.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,7 +18,7 @@ class SignUpIdentifyScreen extends StatefulWidget {
 
 class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
   static const int nickNameMaxLength = 20;
-  static const int telMaxLength = 11;
+  static const int telMaxLength = 13;
 
   late TextEditingController _nickNameCtrl;
   late TextEditingController _telCtrl;
@@ -83,7 +84,7 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
               ),
               TextField(
                 controller: _nickNameCtrl,
-                onChanged: (_) {
+                onChanged: (value) {
                   setState(() {});
                 },
                 maxLength: nickNameMaxLength,
@@ -147,6 +148,9 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
               ),
               TextField(
                 controller: _telCtrl,
+                inputFormatters: [
+                  TelFormatter(masks: ["xxx-xxxx-xxxx"], separator: "-"),
+                ],
                 onChanged: (_) {
                   setState(() {});
                 },
@@ -160,7 +164,7 @@ class _SignUpIdentifyScreenState extends State<SignUpIdentifyScreen> {
                 ),
                 decoration: InputDecoration(
                   counterText: "",
-                  hintText: '휴대폰번호 입력 (하이픈(\'-\') 없이)',
+                  hintText: '휴대폰번호 입력',
                   hintStyle: const TextStyle(
                     color: Color(0xFFCCD1D9),
                     fontSize: 16,
