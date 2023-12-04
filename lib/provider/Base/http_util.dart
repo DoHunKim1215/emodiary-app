@@ -77,7 +77,6 @@ class HttpUtil {
     RequestInterceptorHandler handler,
   ) {
     logOnDev("🛫 [${options.method}] ${options.path} | START");
-
     return handler.next(options);
   }
 
