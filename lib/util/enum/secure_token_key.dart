@@ -15,4 +15,16 @@ extension SecureTokenKeyExtension on AuthToken {
         return "";
     }
   }
+
+  String get jsonKey {
+    switch (this) {
+      case AuthToken.accessToken:
+        return "access_token";
+      case AuthToken.refreshToken:
+        return "refresh_token";
+      default:
+        assert(false, "Reached On Inaccessible Default In Enum Switch");
+        return "";
+    }
+  }
 }
