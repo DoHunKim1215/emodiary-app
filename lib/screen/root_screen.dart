@@ -1,4 +1,4 @@
-import 'package:emodiary/screen/profile_screen.dart';
+import 'package:emodiary/screen/MyPage/MyPage/mypage_screen.dart';
 import 'package:emodiary/viewModel/Root/root_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,7 +26,7 @@ class RootScreen extends StatelessWidget {
                       index: viewModel.selectedIndex,
                       children: const [
                         HomeScreen(),
-                        ProfileScreen(),
+                        MyPageScreen(),
                       ],
                     )),
                 floatingActionButton: ClipRRect(

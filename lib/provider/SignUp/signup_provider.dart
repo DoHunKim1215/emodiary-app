@@ -90,7 +90,6 @@ class SignUpProvider {
       final response = await dio.post("/auth/reissue",
           options: Options(headers: {
             HttpHeaders.authorizationHeader: 'Bearer $refreshToken',
-            HttpHeaders.userAgentHeader: null,
           }));
 
       final newAccessToken = response.data["data"][AuthToken.accessToken.key];

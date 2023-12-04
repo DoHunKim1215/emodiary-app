@@ -11,9 +11,16 @@ Future<String> getInitialRoute() async {
   final refreshToken =
       await secureStorage.read(key: AuthToken.refreshToken.key);
 
+  logOnDev(
+    "🔑 [Initial Route] accessToken : $accessToken",
+  );
+  logOnDev(
+    "🔑 [Initial Route] refreshToken : $refreshToken",
+  );
+
   if (accessToken == null || refreshToken == null) {
     logOnDev(
-      "🚨 Access Token Or Refresh Token Not Found => Login Entry Screen",
+      "🚨 [Initial Route] Access Token Or Refresh Token Not Found => Login Entry Screen",
     );
     const secureStorage = FlutterSecureStorage();
     await secureStorage.deleteAll();
@@ -23,10 +30,10 @@ Future<String> getInitialRoute() async {
   bool isSuccess = await signUpProvider.refresh(refreshToken);
 
   if (isSuccess) {
-    logOnDev("🎉 Token Refresh Successes => Home Screen");
+    logOnDev("🎉 [Initial Route] Token Refresh Successes => Home Screen");
     return "/";
   } else {
-    logOnDev("🚨 Token Refresh Failed => Login Entry Screen");
+    logOnDev("🚨 [Initial Route] Token Refresh Failed => Login Entry Screen");
     const secureStorage = FlutterSecureStorage();
     await secureStorage.deleteAll();
     return "/entry";
