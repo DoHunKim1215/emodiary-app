@@ -19,6 +19,9 @@ class DiaryWritingViewModel extends GetxController {
   RxList<String> pictures = RxList<String>([]);
   RxnInt selectedPictureIdx = RxnInt(null);
 
+  /* Created Date */
+  Rx<DateTime> createdDate = DateTime.now().obs;
+
   /* Providers */
   final DiaryWritingProvider diaryWritingProvider = DiaryWritingProvider();
 
@@ -66,6 +69,14 @@ class DiaryWritingViewModel extends GetxController {
     }
 
     selectedPictureIdx.value = selected;
+  }
+
+  void setCreatedDate(DateTime createdDate) {
+    this.createdDate.value = DateTime(
+      createdDate.year,
+      createdDate.month,
+      createdDate.day,
+    );
   }
 
   bool isSelected() {

@@ -67,7 +67,7 @@ class _DiaryWritingSelectPictureScreenState
       });
 
       Get.snackbar(
-        '🥲 일기를 저장하는데 실패했습니다.',
+        '일기를 저장하는데 실패했습니다.',
         '일기 내용이 적거나 의미가 분명하지 않으면 감정을 파악하기 힘들어요',
         margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
         duration: const Duration(milliseconds: 1500),
