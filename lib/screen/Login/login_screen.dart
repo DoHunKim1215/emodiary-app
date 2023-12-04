@@ -1,11 +1,15 @@
+import 'package:emodiary/provider/SignUp/signup_provider.dart';
 import 'package:emodiary/widget/base/leading_appbar.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
+import 'package:emodiary/widget/base/loading_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final SignUpProvider signUpProvider = SignUpProvider();
+
+  LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -16,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late TextEditingController _idCtrl;
   late TextEditingController _passwordCtrl;
+
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -35,8 +41,31 @@ class _LoginScreenState extends State<LoginScreen> {
     return _idCtrl.text.isNotEmpty && _passwordCtrl.text.isNotEmpty;
   }
 
-  void onTapNext() {
-    Get.offAllNamed("/");
+  void onTapNext() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final isSuccess =
+        await widget.signUpProvider.signIn(_idCtrl.text, _passwordCtrl.text);
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (isSuccess) {
+      Get.offAllNamed("/");
+    } else {
+      Get.snackbar(
+        '로그인 실패',
+        '아이디나 비밀번호를 다시 입력해주세요.',
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        duration: const Duration(milliseconds: 1500),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFF5F5F9),
+        colorText: Colors.black,
+      );
+    }
   }
 
   @override
@@ -51,9 +80,11 @@ class _LoginScreenState extends State<LoginScreen> {
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: LeadingAppBar(
               title: "로그인",
-              onPressed: () {
-                Get.back();
-              },
+              onPressed: isLoading
+                  ? null
+                  : () {
+                      Get.back();
+                    },
             ),
           ),
           body: Padding(
@@ -76,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       TextField(
+                        readOnly: isLoading,
                         controller: _idCtrl,
                         onChanged: (_) {
                           setState(() {});
@@ -89,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         decoration: InputDecoration(
                           counterText: "",
-                          hintText: 'emodiary@emodiary.com',
+                          hintText: '아이디 입력',
                           hintStyle: const TextStyle(
                             color: Color(0xFFCCD1D9),
                             fontSize: 16,
@@ -140,6 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       TextField(
+                        readOnly: isLoading,
                         controller: _passwordCtrl,
                         onChanged: (_) {
                           setState(() {});
@@ -156,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         decoration: InputDecoration(
                           counterText: "",
-                          hintText: '비밀번호를 다시 입력해주세요.',
+                          hintText: '비밀번호 입력',
                           hintStyle: const TextStyle(
                             color: Color(0xFFCCD1D9),
                             fontSize: 16,
@@ -241,11 +274,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: CommonBottomButton(
-                        text: "다음",
-                        disabledText: "아이디와 비밀번호를 입력해주세요!",
-                        onPressed: canSend() ? onTapNext : null,
-                      ),
+                      child: isLoading
+                          ? const LoadingBottomButton()
+                          : CommonBottomButton(
+                              text: "다음",
+                              disabledText: "아이디와 비밀번호를 입력해주세요!",
+                              onPressed: canSend() ? onTapNext : null,
+                            ),
                     ),
                   ],
                 ),

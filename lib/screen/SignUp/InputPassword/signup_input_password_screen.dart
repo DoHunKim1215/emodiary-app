@@ -89,6 +89,7 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
                 ),
               ),
               TextField(
+                readOnly: widget.viewModel.isLoading.value,
                 controller: _passwordCtrl,
                 onChanged: (_) {
                   setState(() {});
@@ -160,6 +161,7 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
                 ),
               ),
               TextField(
+                readOnly: widget.viewModel.isLoading.value,
                 controller: _passwordConfirmCtrl,
                 onChanged: (_) {
                   setState(() {});

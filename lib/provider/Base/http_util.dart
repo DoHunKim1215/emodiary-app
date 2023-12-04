@@ -47,7 +47,15 @@ class HttpUtil {
       );
 
     httpUtil._reRequestDio = Dio(_baseOption);
-    httpUtil._reRequestDio.interceptors.clear();
+    httpUtil._reRequestDio.interceptors
+      ..clear()
+      ..add(
+        InterceptorsWrapper(
+          onRequest: httpUtil._onRequest,
+          onResponse: httpUtil._onResponse,
+          onError: httpUtil._onError,
+        ),
+      );
 
     httpUtil._refreshDio = Dio(_baseOption);
     httpUtil._refreshDio.interceptors
@@ -94,7 +102,7 @@ class HttpUtil {
       return;
     }
 
-    options.headers['Authorization'] = 'Bearer $accessToken';
+    options.headers[HttpHeaders.authorizationHeader] = 'Bearer $accessToken';
 
     logOnDev("🛫 [${options.method}] ${options.path} | START");
 
@@ -136,7 +144,8 @@ class HttpUtil {
 
       final refreshToken =
           await _secureStorage.read(key: AuthToken.refreshToken.key);
-      _refreshDio.options.headers['Authorization'] = 'Bearer $refreshToken';
+      _refreshDio.options.headers[HttpHeaders.authorizationHeader] =
+          'Bearer $refreshToken';
 
       try {
         final refreshResponse = await _refreshDio.post('/auth/reissue');
@@ -157,7 +166,7 @@ class HttpUtil {
           value: newRefreshToken,
         );
 
-        error.requestOptions.headers['Authorization'] =
+        error.requestOptions.headers[HttpHeaders.authorizationHeader] =
             'Bearer $newAccessToken';
 
         logOnDev("🔑 New Token Set | Access Token: $newAccessToken");
