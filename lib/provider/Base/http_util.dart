@@ -125,7 +125,7 @@ class HttpUtil {
     ErrorInterceptorHandler handler,
   ) {
     logOnDev(
-      "🚨 [${error.requestOptions.method}] ${error.requestOptions.path} | ERROR : ${error.message}",
+      "🚨 [${error.requestOptions.method}] ${error.requestOptions.path} | ERROR : ${error.response!.data != null ? error.response!.data["error"]["message"] : error.message}",
     );
 
     return handler.next(error);

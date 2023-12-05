@@ -1,4 +1,4 @@
-import 'package:emodiary/provider/Writing/diary_writing_provider.dart';
+import 'package:emodiary/provider/Diary/diary_writing_provider.dart';
 import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

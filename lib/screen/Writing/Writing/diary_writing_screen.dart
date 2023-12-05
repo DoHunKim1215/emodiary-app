@@ -29,8 +29,7 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
     if (Get.arguments == null) {
       vm.setCreatedDate(DateTime.now());
     } else {
-      vm.setCreatedDate(
-          DateFormat("yyyy-MM-dd").parse(Get.arguments["createdDate"]));
+      vm.setCreatedDate(DateFormat("yyyy-MM-dd").parse(Get.arguments["date"]));
     }
   }
 

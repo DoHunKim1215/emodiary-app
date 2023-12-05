@@ -7,7 +7,7 @@ import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class SignUpProvider {
+class AuthProvider {
   static final Dio dio = HttpUtil().dio;
   static final Dio authDio = HttpUtil().authDio;
 

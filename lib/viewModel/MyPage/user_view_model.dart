@@ -1,18 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:emodiary/model/User/user_model.dart';
-import 'package:emodiary/provider/MyPage/mypage_provider.dart';
-import 'package:emodiary/provider/SignUp/signup_provider.dart';
+import 'package:emodiary/provider/User/user_provider.dart';
+import 'package:emodiary/provider/Auth/auth_provider.dart';
 import 'package:get/get.dart';
 
 class UserViewModel extends GetxController {
-  final MyPageProvider myPageProvider = MyPageProvider();
-  final SignUpProvider signUpProvider = SignUpProvider();
+  final UserProvider userProvider = UserProvider();
+  final AuthProvider authProvider = AuthProvider();
 
   Rxn<UserModel> userModel = Rxn<UserModel>(null);
 
   Future<void> getUserInfo() async {
     try {
-      userModel.value = await myPageProvider.getUserInfo();
+      userModel.value = await userProvider.getUserInfo();
     } on DioException catch (_) {
       userModel.value = null;
     } finally {
@@ -21,7 +21,7 @@ class UserViewModel extends GetxController {
   }
 
   Future<bool> signOut() async {
-    final isSuccess = await signUpProvider.signOut();
+    final isSuccess = await authProvider.signOut();
     return isSuccess;
   }
 }

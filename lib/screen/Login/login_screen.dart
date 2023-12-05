@@ -1,4 +1,4 @@
-import 'package:emodiary/provider/SignUp/signup_provider.dart';
+import 'package:emodiary/provider/Auth/auth_provider.dart';
 import 'package:emodiary/widget/base/leading_appbar.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
 import 'package:emodiary/widget/base/loading_bottom_button.dart';
@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
-  final SignUpProvider signUpProvider = SignUpProvider();
+  final AuthProvider signUpProvider = AuthProvider();
 
   LoginScreen({super.key});
 

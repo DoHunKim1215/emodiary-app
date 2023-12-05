@@ -1,10 +1,10 @@
-import 'package:emodiary/provider/SignUp/signup_provider.dart';
+import 'package:emodiary/provider/Auth/auth_provider.dart';
 import 'package:emodiary/util/enum/secure_token_key.dart';
 import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 Future<String> getInitialRoute() async {
-  final SignUpProvider signUpProvider = SignUpProvider();
+  final AuthProvider signUpProvider = AuthProvider();
 
   const secureStorage = FlutterSecureStorage();
   final accessToken = await secureStorage.read(key: AuthToken.accessToken.key);

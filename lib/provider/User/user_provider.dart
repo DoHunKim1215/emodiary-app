@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:emodiary/model/User/user_model.dart';
 import 'package:emodiary/provider/Base/http_util.dart';
 
-class MyPageProvider {
+class UserProvider {
   static final authDio = HttpUtil().authDio;
 
   Future<UserModel> getUserInfo() async {

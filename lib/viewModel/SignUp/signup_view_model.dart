@@ -1,9 +1,9 @@
-import 'package:emodiary/provider/SignUp/signup_provider.dart';
+import 'package:emodiary/provider/Auth/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpViewModel extends GetxController {
-  final SignUpProvider signUpProvider = SignUpProvider();
+  final AuthProvider signUpProvider = AuthProvider();
 
   RxBool isLoading = false.obs;
   RxString serialID = "".obs;
