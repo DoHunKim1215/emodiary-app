@@ -85,11 +85,7 @@ class _DiaryHasDataScreenState extends State<DiaryHasDataScreen> {
         child: DiaryAppBar(
           title: DateFormat("yyyy년 MM월 dd일")
               .format(widget.diaryReadViewModel.diaryModel.value!.createdDate),
-          onPressedLeading: isLoading
-              ? null
-              : () {
-                  Get.offAllNamed("/");
-                },
+          onPressedLeading: isLoading ? null : Get.back,
           onPressedAction: isLoading
               ? null
               : () {

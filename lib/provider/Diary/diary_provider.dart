@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:emodiary/model/Diary/diary_model.dart';
+import 'package:emodiary/model/Diary/diary_search_item_model.dart';
 import 'package:emodiary/provider/Base/http_util.dart';
 
 class DiaryProvider {
@@ -39,6 +41,28 @@ class DiaryProvider {
       return Future.value();
     } on Exception catch (e) {
       return Future.error(e);
+    }
+  }
+
+  Future<List<DiarySearchItemModel>> searchDiaries(
+    String keyword,
+    int pageSize,
+    int pageNumber,
+  ) async {
+    try {
+      final response = await authDio.get(
+        "/diaries/search?token=$keyword&size=$pageSize&page=$pageNumber",
+      );
+      final jsonList = response.data["data"]["diaries"];
+
+      return List.generate(
+        jsonList.length,
+        (index) => DiarySearchItemModel.fromJson(
+          jsonList[index] as Map<String, dynamic>,
+        ),
+      );
+    } on DioException catch (_) {
+      return [];
     }
   }
 }
