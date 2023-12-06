@@ -99,11 +99,11 @@ class _DiarySearchScreenState extends State<DiarySearchScreen> {
                 onPressed: Get.back,
               ),
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  TextField(
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: TextField(
                     controller: _searchKeywordCtrl,
                     focusNode: focusNode,
                     onChanged: (_) {
@@ -156,10 +156,13 @@ class _DiarySearchScreenState extends State<DiarySearchScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  Row(
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
                     children: [
                       Expanded(
                         child: ThinBottomButton(
@@ -170,61 +173,61 @@ class _DiarySearchScreenState extends State<DiarySearchScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Expanded(
-                    child: isFirstSearch
-                        ? const Center(
-                            child: Text(
-                              "키워드로 일기를 검색해보세요.",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Color(0xFF656D78),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          )
-                        : RefreshIndicator(
-                            child: PagedListView<int,
-                                DiarySearchItemModel>.separated(
-                              pagingController: pagingController,
-                              builderDelegate: PagedChildBuilderDelegate<
-                                  DiarySearchItemModel>(
-                                animateTransitions: true,
-                                itemBuilder: (context, item, index) =>
-                                    SearchResultItemRow(model: item),
-                                firstPageErrorIndicatorBuilder: (_) =>
-                                    FirstPageErrorIndicator(
-                                  onTryAgain: () => pagingController.refresh(),
-                                ),
-                                newPageErrorIndicatorBuilder: (_) =>
-                                    NewPageErrorIndicator(
-                                  onTryAgain: () =>
-                                      pagingController.retryLastFailedRequest(),
-                                ),
-                                noItemsFoundIndicatorBuilder: (_) =>
-                                    const NoItemsFoundIndicator(),
-                                noMoreItemsIndicatorBuilder: (_) =>
-                                    const NoMoreItemsIndicator(),
-                                // <Loading Spinner Customizer>
-                                // firstPageProgressIndicatorBuilder: (_) =>
-                                //     FirstPageProgressIndicator(),
-                                // newPageProgressIndicatorBuilder: (_) =>
-                                //     NewPageProgressIndicator(),
-                              ),
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      const SizedBox(height: 16),
-                            ),
-                            onRefresh: () => Future.sync(
-                              () => pagingController.refresh(),
+                ),
+                SizedBox(
+                  height: isFirstSearch ? 0 : 10,
+                ),
+                Expanded(
+                  child: isFirstSearch
+                      ? const Center(
+                          child: Text(
+                            "키워드로 일기를 검색해보세요.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Color(0xFF656D78),
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                  )
-                ],
-              ),
+                        )
+                      : RefreshIndicator(
+                          child: PagedListView<int,
+                              DiarySearchItemModel>.separated(
+                            pagingController: pagingController,
+                            builderDelegate:
+                                PagedChildBuilderDelegate<DiarySearchItemModel>(
+                              animateTransitions: true,
+                              itemBuilder: (context, item, index) =>
+                                  SearchResultItemRow(model: item),
+                              firstPageErrorIndicatorBuilder: (_) =>
+                                  FirstPageErrorIndicator(
+                                onTryAgain: () => pagingController.refresh(),
+                              ),
+                              newPageErrorIndicatorBuilder: (_) =>
+                                  NewPageErrorIndicator(
+                                onTryAgain: () =>
+                                    pagingController.retryLastFailedRequest(),
+                              ),
+                              noItemsFoundIndicatorBuilder: (_) =>
+                                  const NoItemsFoundIndicator(),
+                              noMoreItemsIndicatorBuilder: (_) =>
+                                  const NoMoreItemsIndicator(),
+                              // <Loading Spinner Customizer>
+                              // firstPageProgressIndicatorBuilder: (_) =>
+                              //     FirstPageProgressIndicator(),
+                              // newPageProgressIndicatorBuilder: (_) =>
+                              //     NewPageProgressIndicator(),
+                            ),
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const SizedBox(height: 0),
+                          ),
+                          onRefresh: () => Future.sync(
+                            () => pagingController.refresh(),
+                          ),
+                        ),
+                )
+              ],
             ),
           ),
         ),
