@@ -8,7 +8,7 @@ class SharedDiaryProvider {
   Future<SharedDiaryModel> shareDiary(int diaryID) async {
     final requestBody = <String, dynamic>{
       "diary_id": diaryID,
-      "accessible_time": "24:00",
+      "accessible_time": "01:00",
     };
 
     try {

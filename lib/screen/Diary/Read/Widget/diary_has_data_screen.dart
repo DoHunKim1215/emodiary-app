@@ -117,7 +117,7 @@ class _DiaryHasDataScreenState extends State<DiaryHasDataScreen> {
           "[Emodiary]\n"
           "${userViewModel.userModel.value!.nickname}님이 "
           "${DateFormat("yyyy년 MM월 dd일").format(widget.diaryReadViewModel.diaryModel.value!.whichDate)} 일기를 공유했어요!\n"
-          "링크 : ${dotenv.env["WEB_HOST"]}/diary/${value.uuid}/unauthorized\n"
+          "링크 : ${dotenv.env["WEB_HOST"]}/diary/${value.uuid}\n"
           "보안 코드 : ${value.authCode}\n"
           "유효 기간 : 하루 (24시간)",
         );
