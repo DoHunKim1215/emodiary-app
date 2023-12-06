@@ -53,8 +53,8 @@ class LoginEntryButton extends StatelessWidget {
                 bottom: -20,
                 child: SvgPicture.asset(
                   isLogin
-                      ? "assets/icons/emotion-happy.svg"
-                      : "assets/icons/emotion-love.svg",
+                      ? "assets/icons/emotion-home-good.svg"
+                      : "assets/icons/emotion-home-soso.svg",
                   width: 90,
                   height: 90,
                 ),

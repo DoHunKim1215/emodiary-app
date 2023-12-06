@@ -7,24 +7,11 @@ import 'Widget/home_diary_card.dart';
 import 'Widget/emotion_chart_card.dart';
 import 'Widget/home_notice_card.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  final HomeViewModel _viewModel =
+      Get.put(HomeViewModel(repository: HomeRepository()));
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  late final HomeViewModel _viewModel;
-  @override
-  void initState() {
-    super.initState();
-    _viewModel = Get.put(
-      HomeViewModel(
-        repository: HomeRepository(),
-      ),
-    );
-  }
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../widget/base/custom_bottom_navigation_bar.dart';
-import '../widget/base/diary_floating_action_buttom.dart';
+import '../widget/base/diary_floating_action_button.dart';
 import 'Home/home_screen.dart';
 
 class RootScreen extends StatelessWidget {
@@ -24,9 +24,9 @@ class RootScreen extends StatelessWidget {
                 backgroundColor: const Color(0xFFFFFFFF),
                 body: Obx(() => IndexedStack(
                       index: viewModel.selectedIndex,
-                      children: const [
+                      children: [
                         HomeScreen(),
-                        MyPageScreen(),
+                        const MyPageScreen(),
                       ],
                     )),
                 floatingActionButton: ClipRRect(
