@@ -1,4 +1,5 @@
 import 'package:emodiary/screen/Home/Widget/home_under_card.dart';
+import 'package:emodiary/viewModel/MyPage/user_view_model.dart';
 import 'package:emodiary/viewModel/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
