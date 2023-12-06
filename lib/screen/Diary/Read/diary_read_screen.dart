@@ -15,8 +15,8 @@ class DiaryReadScreen extends StatefulWidget {
 
 class _DiaryReadScreenState extends State<DiaryReadScreen> {
   final DiaryReadViewModel diaryReadViewModel = Get.put(DiaryReadViewModel());
+  late final int id;
 
-  late int id;
   bool isShownPicture = true;
   bool isLoading = false;
 
@@ -24,6 +24,8 @@ class _DiaryReadScreenState extends State<DiaryReadScreen> {
     setState(() {
       isLoading = true;
     });
+
+    id = Get.arguments["id"];
 
     diaryReadViewModel.getDiary(id).then((_) {
       setState(() {

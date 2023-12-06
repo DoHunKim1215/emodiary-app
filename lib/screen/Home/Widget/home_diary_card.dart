@@ -79,8 +79,15 @@ class _HomeDiaryCardState extends State<HomeDiaryCard> {
                     ? viewModel.todayDiary.imageUrl.isNotEmpty
                     : viewModel.yesterdayDiary.imageUrl.isNotEmpty;
 
+                var id = title == "오늘"
+                    ? viewModel.todayDiary.id
+                    : viewModel.yesterdayDiary.id;
+
                 if (isNotEmpty) {
-                  Get.toNamed("/diary/detail");
+                  Get.toNamed(
+                    '/diary',
+                    arguments: {'id': id},
+                  );
                 } else {
                   Get.toNamed("/diary/writing");
                 }

@@ -1,43 +1,52 @@
+import 'package:emodiary/model/Diary/diary_small_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 
-import '../../calendar/datetime_util.dart';
-import '../../model/Diary/calendar_diary_model.dart';
+import '../../provider/Diary/diary_calendar_provider.dart';
+import '../../util/class/datetime_util.dart';
 
 class DiaryCalendarRepository {
-  Map<String, String> getCalendarImages(DateTime focusedDate) {
-    DateTime firstDayOfMonth = DateTimeUtil.getFirstDayOfCalendar(focusedDate);
-    DateTime lastDayOfMonth = DateTimeUtil.getLastDayOfCalendar(focusedDate);
+  static final String SERVER_URL = dotenv.env['SERVER_HOST']!;
+
+  final DiaryCalendarProvider _diaryCalendarProvider;
+
+  DiaryCalendarRepository({
+    required DiaryCalendarProvider diaryCalendarProvider,
+  }) : _diaryCalendarProvider = diaryCalendarProvider;
+
+  Future<Map<String, String>> fetchCalendarImages(DateTime focusedDate) async {
+    DateTime firstDayOfCalendar =
+        DateTimeUtil.getFirstDayOfCalendar(focusedDate);
+    DateTime lastDayOfCalendar = DateTimeUtil.getLastDayOfCalendar(focusedDate);
+
+    List<dynamic> data =
+        await _diaryCalendarProvider.getDiariesByStartDateAndEndDate(
+      firstDayOfCalendar,
+      lastDayOfCalendar,
+    );
 
     Map<String, String> result = {};
 
-    for (DateTime date = firstDayOfMonth;
-        date.isBefore(lastDayOfMonth);
-        date = date.add(const Duration(days: 1))) {
-      if (date.day % 3 == 0) {
-        result[DateFormat("yyyy-MM-dd").format(date)] =
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwmJDU6pQfsJLENRbU7UyxAL5O4sewnbo80WfQTuWI0w&s";
-      } else if (date.day % 5 == 0) {
-        result[DateFormat("yyyy-MM-dd").format(date)] =
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQijnpaljet5Rxk83NpjZLPxCIo40R5nVko3bvHWgzQ&s";
-      } else {
-        result[DateFormat("yyyy-MM-dd").format(date)] = "";
-      }
+    for (var item in data) {
+      DateTime date = DateTime.parse(item['date']);
+      String imageUrl = item['image_url'] != null
+          ? "$SERVER_URL/images/${item['image_url']}"
+          : "";
+
+      result[DateFormat("yyyy-MM-dd").format(date)] = imageUrl;
     }
 
     return result;
   }
 
-  List<CalendarDiaryModel> fetchDiaries(DateTime selectedDate) {
-    List<CalendarDiaryModel> result = [];
+  Future<List<DiarySmallModel>> fetchDiaries(DateTime selectedDate) async {
+    List<dynamic> data =
+        await _diaryCalendarProvider.getDiariesByWhichDate(selectedDate);
 
-    if (selectedDate.day % 3 == 0) {
-      for (int i = 0; i < 5; i++) {
-        result.add(CalendarDiaryModel(
-          id: i,
-          imageUrl:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQijnpaljet5Rxk83NpjZLPxCIo40R5nVko3bvHWgzQ&s",
-        ));
-      }
+    List<DiarySmallModel> result = [];
+
+    for (var item in data) {
+      result.add(DiarySmallModel.fromJson(item, SERVER_URL));
     }
 
     return result;
