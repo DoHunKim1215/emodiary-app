@@ -12,6 +12,7 @@ import 'package:emodiary/screen/Writing/Saved/diary_writing_save_screen.dart';
 import 'package:emodiary/screen/Writing/SelectPicture/diary_writing_select_picture_screen.dart';
 import 'package:emodiary/screen/Writing/Writing/diary_writing_screen.dart';
 import 'package:emodiary/screen/root_screen.dart';
+import 'package:emodiary/util/function/get_initial_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -24,11 +25,19 @@ void main() async {
   /* Open .env file */
   await dotenv.load(fileName: "assets/config/.env");
 
-  initializeDateFormatting().then((_) => runApp(const MyApp()));
+  final initialRoute = await getInitialRoute();
+
+  initializeDateFormatting()
+      .then((_) => runApp(MyApp(initialRoute: initialRoute)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+
+  const MyApp({
+    super.key,
+    required this.initialRoute,
+  });
 
   // This widget is the root of your application.
   @override
@@ -52,43 +61,42 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: "/entry",
+      initialRoute: initialRoute,
       getPages: [
         GetPage(name: '/', page: () => const RootScreen()),
         GetPage(name: "/entry", page: () => const SignUpEntryScreen()),
-        GetPage(name: "/login", page: () => const LoginScreen()),
+        GetPage(name: "/login", page: () => LoginScreen()),
         GetPage(name: "/signup", page: () => SignUpProcessScreen()),
         GetPage(name: "/mypage", page: () => const MyPageScreen()),
-        GetPage(name: "/mypage/profile", page: () => const ProfileScreen()),
+        GetPage(name: "/mypage/profile", page: () => ProfileScreen()),
         GetPage(
           name: "/mypage/account",
           page: () => const AccountManagementScreen(),
         ),
-        GetPage(name: "/writing", page: () => const DiaryWritingScreen()),
+        GetPage(
+          name: "/writing",
+          page: () => const DiaryWritingScreen(),
+          children: [
+            GetPage(
+              name: "/loading",
+              page: () => const DiaryWritingLoadingScreen(),
+            ),
+            GetPage(
+              name: "/select",
+              page: () => const DiaryWritingSelectPictureScreen(),
+            ),
+            GetPage(
+              name: "/save",
+              page: () => DiaryWritingSaveScreen(),
+            ),
+          ],
+        ),
         GetPage(
           name: "/diary",
           page: () => const DiaryReadScreen(),
           children: [
             GetPage(name: "/calendar", page: () => const DiaryCalendarScreen()),
             GetPage(name: "/search", page: () => const DiarySearchScreen()),
-            GetPage(
-              name: "/writing",
-              page: () => const DiaryWritingScreen(),
-              children: [
-                GetPage(
-                  name: "/loading",
-                  page: () => const DiaryWritingLoadingScreen(),
-                ),
-                GetPage(
-                  name: "/select",
-                  page: () => const DiaryWritingSelectPictureScreen(),
-                ),
-                GetPage(
-                  name: "/save",
-                  page: () => DiaryWritingSaveScreen(),
-                ),
-              ],
-            ),
           ],
         ),
       ],

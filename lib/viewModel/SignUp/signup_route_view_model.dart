@@ -8,11 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpRouteViewModel extends GetxController {
-  RxString serialID = "".obs;
-  RxString password = "".obs;
-  RxString nickname = "".obs;
-  RxString phoneNumber = "".obs;
-
   RxInt currentIndex = 0.obs;
 
   double getProgressPercent() {
@@ -31,22 +26,6 @@ class SignUpRouteViewModel extends GetxController {
     return 0.0;
   }
 
-  Widget getCurrentScreen() {
-    switch (currentIndex.value) {
-      case 0:
-        return SignUpTermsScreen(onTapNext: gotoIdentify);
-      case 1:
-        return SignUpIdentifyScreen(onTapNext: gotoInputId);
-      case 2:
-        return SignUpInputIdScreen(onTapNext: gotoInputPassword);
-      case 3:
-        return SignUpInputPasswordScreen(onTapNext: gotoHome);
-      default:
-        assert(false, "🚨 [Assertion Error] Invalid Login Screen Index Value.");
-    }
-    return Container();
-  }
-
   void Function() getOnPressBack() {
     switch (currentIndex.value) {
       case 0:
@@ -56,7 +35,7 @@ class SignUpRouteViewModel extends GetxController {
       case 2:
         return gotoIdentify;
       case 3:
-        return gotoInputPassword;
+        return gotoInputId;
       default:
         assert(false, "🚨 [Assertion Error] Invalid Login Screen Index Value.");
     }
@@ -78,26 +57,4 @@ class SignUpRouteViewModel extends GetxController {
   void gotoInputPassword() {
     currentIndex.value = ESignUpProcess.inputPassword.index;
   }
-
-  void gotoHome() {
-    Get.offAllNamed("/");
-  }
-
-  void setSerialID(String newNickname) {
-    serialID.value = newNickname;
-  }
-
-  void setPassword(String newPassword) {
-    password.value = newPassword;
-  }
-
-  void setNickname(String newNickname) {
-    nickname.value = newNickname;
-  }
-
-  void setPhoneNumber(String newPhoneNumber) {
-    phoneNumber.value = newPhoneNumber;
-  }
-
-  void signUp() {}
 }

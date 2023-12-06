@@ -1,5 +1,10 @@
+import 'package:emodiary/screen/SignUp/Identify/signup_identify_screen.dart';
+import 'package:emodiary/screen/SignUp/InputId/signup_input_id_screen.dart';
+import 'package:emodiary/screen/SignUp/InputPassword/signup_input_password_screen.dart';
+import 'package:emodiary/screen/SignUp/Terms/signup_terms_screen.dart';
 import 'package:emodiary/util/enum/signup_process.dart';
 import 'package:emodiary/viewModel/SignUp/signup_route_view_model.dart';
+import 'package:emodiary/viewModel/SignUp/signup_view_model.dart';
 import 'package:emodiary/widget/SignUp/animated_indexed_stack.dart';
 import 'package:emodiary/widget/base/leading_appbar.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +13,7 @@ import 'package:get/get.dart';
 class SignUpProcessScreen extends StatelessWidget {
   final SignUpRouteViewModel signUpRouteViewModel =
       Get.put(SignUpRouteViewModel());
+  final SignUpViewModel signUpViewModel = Get.put(SignUpViewModel());
 
   SignUpProcessScreen({super.key});
 
@@ -24,7 +30,9 @@ class SignUpProcessScreen extends StatelessWidget {
               preferredSize: const Size.fromHeight(kToolbarHeight),
               child: LeadingAppBar(
                 title: "회원가입",
-                onPressed: signUpRouteViewModel.getOnPressBack(),
+                onPressed: signUpViewModel.isLoading.value
+                    ? null
+                    : signUpRouteViewModel.getOnPressBack(),
               ),
             ),
             body: Column(
@@ -44,14 +52,34 @@ class SignUpProcessScreen extends StatelessWidget {
                 Expanded(
                   child: AnimatedIndexedStack(
                     index: signUpRouteViewModel.currentIndex.value,
-                    children: List.generate(
-                      ESignUpProcess.values.length,
-                      (index) {
-                        return signUpRouteViewModel.currentIndex.value == index
-                            ? signUpRouteViewModel.getCurrentScreen()
-                            : Container();
-                      },
-                    ),
+                    children: [
+                      signUpRouteViewModel.currentIndex.value ==
+                              ESignUpProcess.terms.index
+                          ? SignUpTermsScreen(
+                              gotoNext: signUpRouteViewModel.gotoIdentify,
+                            )
+                          : Container(),
+                      signUpRouteViewModel.currentIndex.value ==
+                              ESignUpProcess.identify.index
+                          ? SignUpIdentifyScreen(
+                              gotoNext: signUpRouteViewModel.gotoInputId,
+                              viewModel: signUpViewModel,
+                            )
+                          : Container(),
+                      signUpRouteViewModel.currentIndex.value ==
+                              ESignUpProcess.inputId.index
+                          ? SignUpInputIdScreen(
+                              gotoNext: signUpRouteViewModel.gotoInputPassword,
+                              viewModel: signUpViewModel,
+                            )
+                          : Container(),
+                      signUpRouteViewModel.currentIndex.value ==
+                              ESignUpProcess.inputPassword.index
+                          ? SignUpInputPasswordScreen(
+                              viewModel: signUpViewModel,
+                            )
+                          : Container(),
+                    ],
                   ),
                 ),
               ],

@@ -9,9 +9,9 @@ import 'package:get/get.dart';
 class SignUpTermsScreen extends StatelessWidget {
   final SignUpTermsViewModel viewModel = Get.put(SignUpTermsViewModel());
 
-  final void Function() onTapNext;
+  final void Function() gotoNext;
 
-  SignUpTermsScreen({super.key, required this.onTapNext});
+  SignUpTermsScreen({super.key, required this.gotoNext});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class SignUpTermsScreen extends StatelessWidget {
                     text: "다음",
                     disabledText: "필수 항목에 동의해주세요!",
                     onPressed:
-                        viewModel.isCheckedRequiredAll() ? onTapNext : null,
+                        viewModel.isCheckedRequiredAll() ? gotoNext : null,
                   ),
                 ),
               ),

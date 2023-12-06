@@ -53,7 +53,7 @@ class DiaryFloatingActionButton extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _floatItem('/diary/writing', '일기 쓰기',
+                          _floatItem('/writing', '일기 쓰기',
                               'assets/icons/diary-writing.svg'),
                           Container(
                             width: double.infinity,

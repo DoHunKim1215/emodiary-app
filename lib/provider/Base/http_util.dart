@@ -19,7 +19,7 @@ class HttpUtil {
   static final _baseOption = BaseOptions(
     baseUrl: '${dotenv.env['REST_API_HOST']}',
     connectTimeout: const Duration(milliseconds: 5000),
-    receiveTimeout: const Duration(milliseconds: 3000),
+    receiveTimeout: const Duration(milliseconds: 30000),
     contentType: 'application/json; charset=utf-8',
     responseType: ResponseType.json,
     headers: <String, dynamic>{},
@@ -47,7 +47,15 @@ class HttpUtil {
       );
 
     httpUtil._reRequestDio = Dio(_baseOption);
-    httpUtil._reRequestDio.interceptors.clear();
+    httpUtil._reRequestDio.interceptors
+      ..clear()
+      ..add(
+        InterceptorsWrapper(
+          onRequest: httpUtil._onRequest,
+          onResponse: httpUtil._onResponse,
+          onError: httpUtil._onError,
+        ),
+      );
 
     httpUtil._refreshDio = Dio(_baseOption);
     httpUtil._refreshDio.interceptors
@@ -89,12 +97,12 @@ class HttpUtil {
     );
 
     if (accessToken == null) {
-      logOnDev("🔑 Access Token Not Found");
+      logOnDev("🔑 [Dio Interceptor] Access Token Not Found");
       Get.offAllNamed("/entry");
       return;
     }
 
-    options.headers['Authorization'] = 'Bearer $accessToken';
+    options.headers[HttpHeaders.authorizationHeader] = 'Bearer $accessToken';
 
     logOnDev("🛫 [${options.method}] ${options.path} | START");
 
@@ -117,7 +125,7 @@ class HttpUtil {
     ErrorInterceptorHandler handler,
   ) {
     logOnDev(
-      "🚨 [${error.requestOptions.method}] ${error.requestOptions.path} | ERROR : ${error.message}",
+      "🚨 [${error.requestOptions.method}] ${error.requestOptions.path} | ERROR : ${error.response!.data != null ? error.response!.data["error"]["message"] : error.message}",
     );
 
     return handler.next(error);
@@ -132,16 +140,17 @@ class HttpUtil {
     );
 
     if (error.response?.statusCode == HttpStatus.unauthorized) {
-      logOnDev("♻️ Token Refresh Occurred");
+      logOnDev("♻️ [Dio Interceptor] Token Refresh Occurred");
 
       final refreshToken =
           await _secureStorage.read(key: AuthToken.refreshToken.key);
-      _refreshDio.options.headers['Authorization'] = 'Bearer $refreshToken';
+      _refreshDio.options.headers[HttpHeaders.authorizationHeader] =
+          'Bearer $refreshToken';
 
       try {
         final refreshResponse = await _refreshDio.post('/auth/reissue');
 
-        logOnDev("🎉 Token Refresh Successes");
+        logOnDev("🎉 [Dio Interceptor] Token Refresh Successes");
 
         final newAccessToken =
             refreshResponse.data["data"][AuthToken.accessToken.jsonKey];
@@ -157,10 +166,11 @@ class HttpUtil {
           value: newRefreshToken,
         );
 
-        error.requestOptions.headers['Authorization'] =
+        error.requestOptions.headers[HttpHeaders.authorizationHeader] =
             'Bearer $newAccessToken';
 
-        logOnDev("🔑 New Token Set | Access Token: $newAccessToken");
+        logOnDev(
+            "🔑 [Dio Interceptor] New Token Set | Access Token: $newAccessToken");
 
         final reRequestedResponse = await _reRequestDio.request(
           error.requestOptions.path,
@@ -185,7 +195,7 @@ class HttpUtil {
     DioException error,
     ErrorInterceptorHandler handler,
   ) async {
-    logOnDev("🚨️ Token Refresh Failed");
+    logOnDev("🚨️ [Dio Interceptor] Token Refresh Failed");
 
     if (error.response?.statusCode == 401 ||
         error.response?.statusCode == 404) {

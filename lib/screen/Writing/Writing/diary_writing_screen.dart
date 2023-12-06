@@ -3,10 +3,11 @@ import 'package:emodiary/screen/Writing/Writing/Widget/diary_writing_back_card.d
 import 'package:emodiary/screen/Writing/Writing/Widget/diary_writing_card.dart';
 import 'package:emodiary/viewModel/Writing/diary_writing_view_model.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
-import 'package:emodiary/widget/Writing/diary_writing_appbar.dart';
+import 'package:emodiary/widget/Writing/diary_appbar.dart';
 import 'package:emodiary/widget/Writing/diary_confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class DiaryWritingScreen extends StatefulWidget {
   const DiaryWritingScreen({super.key});
@@ -20,6 +21,17 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
     DiaryWritingViewModel(),
     permanent: true,
   );
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (Get.arguments == null) {
+      vm.setCreatedDate(DateTime.now());
+    } else {
+      vm.setCreatedDate(DateFormat("yyyy-MM-dd").parse(Get.arguments["date"]));
+    }
+  }
 
   void refresh(String _) {
     setState(() {});
@@ -35,9 +47,7 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
           question: "일기를 그만 작성하시겠습니까?",
           cancel: "취소",
           confirm: "그만쓰기",
-          cancelAction: () {
-            Get.back();
-          },
+          cancelAction: Get.back,
           confirmAction: () {
             Get.back();
             Get.delete<DiaryWritingViewModel>(force: true);
@@ -58,11 +68,22 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
           question: "일기를 전송하시겠습니까?",
           cancel: "취소하기",
           confirm: "전송하기",
-          cancelAction: () {
-            Get.back();
-          },
+          cancelAction: Get.back,
           confirmAction: () {
-            Get.toNamed("/writing/loading");
+            if (vm.contentCtrl.text.length < 50) {
+              Get.back();
+              Get.snackbar(
+                '일기 길이가 너무 짧아요!',
+                '일기가 짧으면 감정을 분석하거나 그림을 그리기 어려워요.',
+                margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                duration: const Duration(milliseconds: 2500),
+                snackPosition: SnackPosition.TOP,
+                backgroundColor: const Color(0xFFF5F5F9),
+                colorText: Colors.black,
+              );
+            } else {
+              Get.toNamed("/writing/loading");
+            }
           },
         );
       },
@@ -79,9 +100,11 @@ class _DiaryWritingScreenState extends State<DiaryWritingScreen> {
           resizeToAvoidBottomInset: false,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: DiaryWritingAppBar(
-              title: '2023.11.19',
-              onPressedLeading: onTapBack,
+            child: Obx(
+              () => DiaryAppBar(
+                title: DateFormat("yyyy년 MM월 dd일").format(vm.createdDate.value),
+                onPressedLeading: onTapBack,
+              ),
             ),
           ),
           body: Padding(

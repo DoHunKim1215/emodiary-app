@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emodiary/model/Diary/diary_search_item_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class SearchResultItemRow extends StatelessWidget {
@@ -25,7 +28,7 @@ class SearchResultItemRow extends StatelessWidget {
       ),
       child: TextButton(
         onPressed: () {
-          // Get.toNamed("/diary", arguments: {"id": model.id});
+          Get.toNamed("/diary", arguments: {"id": model.id});
         },
         style: TextButton.styleFrom(
           backgroundColor: Colors.white,
@@ -42,9 +45,17 @@ class SearchResultItemRow extends StatelessWidget {
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
+                color: const Color(0xFF656D78),
               ),
-              child: Image.asset(
-                model.imageUrl,
+              child: CachedNetworkImage(
+                placeholder: (context, url) {
+                  return Container();
+                },
+                errorWidget: (context, url, error) {
+                  return Container();
+                },
+                imageUrl:
+                    '${dotenv.env["SERVER_HOST"]}/images/${model.imageUrl}',
                 width: 60,
                 height: 60,
               ),

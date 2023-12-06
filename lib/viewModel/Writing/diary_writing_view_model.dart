@@ -1,4 +1,5 @@
-import 'package:emodiary/provider/Writing/diary_writing_provider.dart';
+import 'package:emodiary/provider/Diary/diary_writing_provider.dart';
+import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +19,9 @@ class DiaryWritingViewModel extends GetxController {
   /* Pictures */
   RxList<String> pictures = RxList<String>([]);
   RxnInt selectedPictureIdx = RxnInt(null);
+
+  /* Created Date */
+  Rx<DateTime> createdDate = DateTime.now().obs;
 
   /* Providers */
   final DiaryWritingProvider diaryWritingProvider = DiaryWritingProvider();
@@ -49,6 +53,9 @@ class DiaryWritingViewModel extends GetxController {
     try {
       final prompt =
           await diaryWritingProvider.tokenize(_contentEditingController.text);
+
+      logOnDev("🏞️ Processed Prompt : $prompt");
+
       final pictures = await diaryWritingProvider.getPictures(prompt);
 
       this.pictures.value = pictures;
@@ -66,6 +73,14 @@ class DiaryWritingViewModel extends GetxController {
     }
 
     selectedPictureIdx.value = selected;
+  }
+
+  void setCreatedDate(DateTime createdDate) {
+    this.createdDate.value = DateTime(
+      createdDate.year,
+      createdDate.month,
+      createdDate.day,
+    );
   }
 
   bool isSelected() {

@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class LeadingAppBar extends StatelessWidget {
   final String title;
   final Color? color;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   const LeadingAppBar({
     super.key,

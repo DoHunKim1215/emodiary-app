@@ -1,15 +1,17 @@
 import 'package:emodiary/screen/SignUp/InputPassword/Widget/validate_password_confirm_row.dart';
 import 'package:emodiary/screen/SignUp/InputPassword/Widget/validate_password_row.dart';
+import 'package:emodiary/viewModel/SignUp/signup_view_model.dart';
 import 'package:emodiary/widget/base/common_bottom_button.dart';
+import 'package:emodiary/widget/base/loading_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignUpInputPasswordScreen extends StatefulWidget {
-  final void Function() onTapNext;
+  final SignUpViewModel viewModel;
 
   const SignUpInputPasswordScreen({
     super.key,
-    required this.onTapNext,
+    required this.viewModel,
   });
 
   @override
@@ -18,7 +20,8 @@ class SignUpInputPasswordScreen extends StatefulWidget {
 }
 
 class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
-  static const int passwordMaxLength = 100;
+  static const int passwordMinLength = 10;
+  static const int passwordMaxLength = 20;
 
   late TextEditingController _passwordCtrl;
   late TextEditingController _passwordConfirmCtrl;
@@ -38,14 +41,20 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
   }
 
   bool canSend() {
-    return _passwordCtrl.text.isNotEmpty &&
-        _passwordConfirmCtrl.text.isNotEmpty &&
+    return _passwordConfirmCtrl.text.isNotEmpty &&
         _passwordCtrl.text == _passwordConfirmCtrl.text &&
-        _passwordCtrl.text.contains(RegExp(r'[a-zA-Z]')) &&
+        _passwordCtrl.text.contains(RegExp(r'[a-z]')) &&
+        _passwordCtrl.text.contains(RegExp(r'[A-Z]')) &&
         _passwordCtrl.text.contains(RegExp(r'[0-9]')) &&
-        _passwordCtrl.text
-            .contains(RegExp(r"[~!@#$%^&*()_+\-=\[\]{};:\\|,.<>/?]")) &&
-        _passwordCtrl.text.length >= 8;
+        _passwordCtrl.text.contains(RegExp(r"[!@#%$]")) &&
+        _passwordCtrl.text.length >= passwordMinLength;
+  }
+
+  void onTapNext() {
+    widget.viewModel.setPassword(
+      _passwordCtrl.text,
+    );
+    widget.viewModel.signUp();
   }
 
   @override
@@ -80,6 +89,7 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
                 ),
               ),
               TextField(
+                readOnly: widget.viewModel.isLoading.value,
                 controller: _passwordCtrl,
                 onChanged: (_) {
                   setState(() {});
@@ -96,7 +106,7 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
                 ),
                 decoration: InputDecoration(
                   counterText: "",
-                  hintText: '영문, 숫자, 특수문자 조합 8자리 이상',
+                  hintText: '영문, 숫자, 특수문자 조합 10 ~ 20자리',
                   hintStyle: const TextStyle(
                     color: Color(0xFFCCD1D9),
                     fontSize: 16,
@@ -151,6 +161,7 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
                 ),
               ),
               TextField(
+                readOnly: widget.viewModel.isLoading.value,
                 controller: _passwordConfirmCtrl,
                 onChanged: (_) {
                   setState(() {});
@@ -217,11 +228,13 @@ class _SignUpInputPasswordScreenState extends State<SignUpInputPasswordScreen> {
           Row(
             children: [
               Expanded(
-                child: CommonBottomButton(
-                  text: "다음",
-                  disabledText: "닉네임과 휴대폰 번호를 입력해주세요!",
-                  onPressed: canSend() ? widget.onTapNext : null,
-                ),
+                child: widget.viewModel.isLoading.value
+                    ? const LoadingBottomButton()
+                    : CommonBottomButton(
+                        text: "다음",
+                        disabledText: "비밀번호를 입력해주세요!",
+                        onPressed: canSend() ? onTapNext : null,
+                      ),
               ),
             ],
           ),
