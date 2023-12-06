@@ -10,7 +10,7 @@ class DateTimeUtil {
   static DateTime getLastDayOfCalendar(DateTime date) {
     DateTime lastDay = getLastDayOfMonth(date);
     int difference = lastDay.weekday == 7 ? 6 : 6 - lastDay.weekday;
-    DateTime endOfCalendar = lastDay.add(Duration(days: difference + 1));
+    DateTime endOfCalendar = lastDay.add(Duration(days: difference));
 
     return endOfCalendar;
   }

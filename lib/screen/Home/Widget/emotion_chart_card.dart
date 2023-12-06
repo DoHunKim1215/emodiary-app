@@ -1,3 +1,4 @@
+import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,17 +50,18 @@ class _EmotionChartCardState extends State<EmotionChartCard> {
         padding:
             const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
         child: Obx(
-          () => _viewModel.isLoadingEmotionScore
+          () => _viewModel.isLoadingEmotionScore ||
+                  _viewModel.isLoadingContinuousDiaryCount
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Center(
+                    Center(
                       child: Text(
-                        "7일째 일기 작성 중",
-                        style: TextStyle(
+                        "${_viewModel.continuousDiaryCount}일째 일기 작성 중",
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.grey,
                         ),

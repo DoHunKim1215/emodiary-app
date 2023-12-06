@@ -1,15 +1,20 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_connect/connect.dart';
 
 import '../../util/function/log_on_dev.dart';
 
-class BaseConnect extends GetConnect {
+abstract class BaseConnect extends GetConnect {
   @override
   void onInit() {
     super.onInit();
     httpClient
+      ..baseUrl = dotenv.env['REST_API_HOST']
       ..defaultContentType = "application/json"
       ..timeout = const Duration(seconds: 30)
       ..addRequestModifier<dynamic>((request) {
+        request.headers['Authorization'] =
+            'Bearer eyJKV1QiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1aWQiOjEsInJvbCI6IkFETUlOIiwiaWF0IjoxNzAxNzAzOTM5LCJleHAiOjE3MDE3MTExMzl9.s9ipaAqiPNPqtMx0hkOilxfTnj7D941VlktW_pepLDBymDDL5xdAAlzJraUcRvoVbzi1TnSlnRYUjYiyNrg5CA';
+
         logOnDev("🛫 [${request.method}] ${request.url} | START");
         return request;
       })

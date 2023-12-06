@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../widget/base/custom_bottom_navigation_bar.dart';
 import '../widget/base/diary_floating_action_button.dart';
 import 'Home/home_screen.dart';
+import 'MyPage/Profile/profile_screen.dart';
 
 class RootScreen extends StatelessWidget {
   const RootScreen({super.key});
@@ -22,13 +23,15 @@ class RootScreen extends StatelessWidget {
             children: [
               Scaffold(
                 backgroundColor: const Color(0xFFFFFFFF),
-                body: Obx(() => IndexedStack(
-                      index: viewModel.selectedIndex,
-                      children: [
-                        HomeScreen(),
-                        const MyPageScreen(),
-                      ],
-                    )),
+                body: Obx(
+                  () => IndexedStack(
+                    index: viewModel.selectedIndex,
+                    children: [
+                      const HomeScreen(),
+                      ProfileScreen(),
+                    ],
+                  ),
+                ),
                 floatingActionButton: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Container(

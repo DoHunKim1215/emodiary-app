@@ -1,6 +1,7 @@
 import 'package:emodiary/viewModel/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../model/e_emotion.dart';
@@ -63,23 +64,34 @@ class _HomeUnderCardState extends State<HomeUnderCard> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
-                  Text(
-                    "\"${_viewModel.emotionScore.keys.reduce((a, b) => _viewModel.emotionScore[a]!.value > _viewModel.emotionScore[b]!.value ? a : b).valueStr}\"",
-                    style: const TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
+                  Obx(() => _viewModel.isLoadingEmotionScore
+                      ? const SizedBox(
+                          height: 57,
+                        )
+                      : Text(
+                          "\"${_viewModel.emotionScore.keys.reduce((a, b) => _viewModel.emotionScore[a]!.value > _viewModel.emotionScore[b]!.value ? a : b).valueStr}\"",
+                          style: const TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        )),
                 ],
               ),
             ),
             const Spacer(),
-            _EmotionEmojiSvg(
-              emotion: _viewModel.emotionScore.keys.reduce((a, b) =>
-                  _viewModel.emotionScore[a]!.value >
-                          _viewModel.emotionScore[b]!.value
-                      ? a
-                      : b),
+            Obx(
+              () => _viewModel.isLoadingEmotionScore
+                  ? const SizedBox(
+                      width: 100,
+                      height: 100,
+                    )
+                  : _EmotionEmojiSvg(
+                      emotion: _viewModel.emotionScore.keys.reduce((a, b) =>
+                          _viewModel.emotionScore[a]!.value >
+                                  _viewModel.emotionScore[b]!.value
+                              ? a
+                              : b),
+                    ),
             ),
           ],
         ),
