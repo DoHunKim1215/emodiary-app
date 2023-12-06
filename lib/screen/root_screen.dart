@@ -1,4 +1,5 @@
 import 'package:emodiary/screen/MyPage/MyPage/mypage_screen.dart';
+import 'package:emodiary/viewModel/MyPage/user_view_model.dart';
 import 'package:emodiary/viewModel/Root/root_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,10 +7,14 @@ import 'package:get/get.dart';
 import '../widget/base/custom_bottom_navigation_bar.dart';
 import '../widget/base/diary_floating_action_button.dart';
 import 'Home/home_screen.dart';
-import 'MyPage/Profile/profile_screen.dart';
 
 class RootScreen extends StatelessWidget {
-  const RootScreen({super.key});
+  final UserViewModel userViewModel = Get.put(
+    UserViewModel(),
+    permanent: true,
+  );
+
+  RootScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,7 @@ class RootScreen extends StatelessWidget {
                     index: viewModel.selectedIndex,
                     children: [
                       const HomeScreen(),
-                      ProfileScreen(),
+                      MyPageScreen(userViewModel: userViewModel),
                     ],
                   ),
                 ),
