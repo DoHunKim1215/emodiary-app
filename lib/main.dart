@@ -1,5 +1,5 @@
 import 'package:emodiary/screen/Diary/Search/diary_search_screen.dart';
-import 'package:emodiary/screen/Diary/diary_calendar_screen.dart';
+import 'package:emodiary/screen/Diary/Calendar/diary_calendar_screen.dart';
 import 'package:emodiary/screen/Diary/Read/diary_read_screen.dart';
 import 'package:emodiary/screen/Login/login_screen.dart';
 import 'package:emodiary/screen/MyPage/AccountManagement/account_management_screen.dart';

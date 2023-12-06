@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final UserViewModel userViewModel = Get.find<UserViewModel>();
+  final UserViewModel userViewModel = Get.put(UserViewModel());
 
   ProfileScreen({super.key});
 

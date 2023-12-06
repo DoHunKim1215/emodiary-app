@@ -1,21 +1,21 @@
-class CalendarInfoModel {
+class DiaryCalendarInfoModel {
   DateTime selectedDate;
   DateTime focusedDate;
 
-  CalendarInfoModel({
+  DiaryCalendarInfoModel({
     required this.selectedDate,
     required this.focusedDate,
   });
 
-  CalendarInfoModel.selectedDate({
+  DiaryCalendarInfoModel.selectedDate({
     required this.selectedDate,
   }) : focusedDate = selectedDate;
 
-  CalendarInfoModel copyWith({
+  DiaryCalendarInfoModel copyWith({
     DateTime? selectedDate,
     DateTime? focusedDate,
   }) {
-    return CalendarInfoModel(
+    return DiaryCalendarInfoModel(
       selectedDate: selectedDate ?? this.selectedDate,
       focusedDate: focusedDate ?? this.focusedDate,
     );

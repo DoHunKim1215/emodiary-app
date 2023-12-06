@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:emodiary/model/Diary/diary_model.dart';
-import 'package:emodiary/model/Diary/diary_search_item_model.dart';
-import 'package:emodiary/provider/Base/http_util.dart';
+
+import '../../model/Diary/diary_search_item_model.dart';
+import '../Base/http_util.dart';
 
 class DiaryProvider {
   static final authDio = HttpUtil().authDio;

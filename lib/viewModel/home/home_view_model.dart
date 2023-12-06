@@ -1,7 +1,7 @@
+import 'package:emodiary/model/Diary/diary_small_model.dart';
 import 'package:emodiary/repository/home/home_repository.dart';
 import 'package:get/get.dart';
 
-import '../../model/Diary/calendar_diary_model.dart';
 import '../../model/e_emotion.dart';
 
 class HomeViewModel extends GetxController {
@@ -29,15 +29,15 @@ class HomeViewModel extends GetxController {
   bool get isLoadingEmotionScore => _isLoadingEmotionScore.value;
 
   /* diaries info */
-  late final RxList<CalendarDiaryModel> _todayDiaries;
+  late final Rx<DiarySmallModel> _todayDiary;
   late final RxBool _isLoadingTodayDiaries;
-  List<CalendarDiaryModel> get todayDiaries => _todayDiaries;
-  bool get isLoadingTodayDiaries => _isLoadingTodayDiaries.value;
+  DiarySmallModel get todayDiary => _todayDiary.value;
+  bool get isLoadingTodayDiary => _isLoadingTodayDiaries.value;
 
-  late final RxList<CalendarDiaryModel> _yesterdayDiaries;
+  late final Rx<DiarySmallModel> _yesterdayDiary;
   late final RxBool _isLoadingYesterdayDiaries;
-  List<CalendarDiaryModel> get yesterdayDiaries => _yesterdayDiaries;
-  bool get isLoadingYesterdayDiaries => _isLoadingYesterdayDiaries.value;
+  DiarySmallModel get yesterdayDiary => _yesterdayDiary.value;
+  bool get isLoadingYesterdayDiary => _isLoadingYesterdayDiaries.value;
 
   @override
   void onInit() {
@@ -48,8 +48,8 @@ class HomeViewModel extends GetxController {
 
     initContinuousDiaryCount();
     initEmotionScore();
-    // initTodayDiaries();
-    // initYesterdayDiaries();
+    initTodayDiaries();
+    initYesterdayDiaries();
   }
 
   /* init */
@@ -66,49 +66,72 @@ class HomeViewModel extends GetxController {
 
   void initContinuousDiaryCount() {
     _isLoadingContinuousDiaryCount.value = true;
-    _continuousDiaryCount = _repository.getContinuousDiaryCount(todayDate).obs;
-    _isLoadingContinuousDiaryCount.value = false;
+    _repository
+        .readContinuousDiaryCount()
+        .then((value) => _continuousDiaryCount = value.obs)
+        .then((value) => _isLoadingContinuousDiaryCount.value = false);
   }
 
   void initEmotionScore() {
     _isLoadingEmotionScore.value = true;
-    _emotionScore = _repository
-        .getEmotionScore(todayDate)
-        .map((key, value) => MapEntry(key, value.obs))
-        .obs;
-    _isLoadingEmotionScore.value = false;
+    _repository
+        .readEmotionScore(todayDate)
+        .then((value) => {
+              _emotionScore =
+                  value.map((key, value) => MapEntry(key, value.obs)).obs
+            })
+        .then((value) => _isLoadingEmotionScore.value = false);
   }
 
-  // void initTodayDiaries() {
-  //   _isLoadingTodayDiaries.value = true;
-  //   _todayDiaries = _repository.getTodayDiaries(todayDate).obs;
-  //   _isLoadingTodayDiaries.value = false;
-  // }
-  //
-  // void initYesterdayDiaries() {
-  //   _isLoadingYesterdayDiaries.value = true;
-  //   _yesterdayDiaries = _repository.getYesterdayDiaries(todayDate).obs;
-  //   _isLoadingYesterdayDiaries.value = false;
-  // }
+  void initTodayDiaries() {
+    _isLoadingTodayDiaries.value = true;
+    _repository
+        .readDiaryByDate(todayDate)
+        .then((value) => _todayDiary = value.obs)
+        .then((value) => _isLoadingTodayDiaries.value = false);
+  }
+
+  void initYesterdayDiaries() {
+    _isLoadingYesterdayDiaries.value = true;
+    _repository
+        .readDiaryByDate(todayDate.subtract(const Duration(days: 1)))
+        .then((value) => _yesterdayDiary = value.obs)
+        .then((value) => _isLoadingYesterdayDiaries.value = false);
+  }
 
   /* update */
-  void fetchEmotionScore() {
-    _isLoadingEmotionScore.value = true;
-    _emotionScore.value = _repository
-        .getEmotionScore(todayDate)
-        .map((key, value) => MapEntry(key, value.obs));
-    _isLoadingEmotionScore.value = false;
+  void fetchContinuousDiaryCount() {
+    _isLoadingContinuousDiaryCount.value = true;
+    _repository
+        .readContinuousDiaryCount()
+        .then((value) => _continuousDiaryCount.value = value)
+        .then((value) => _isLoadingContinuousDiaryCount.value = false);
   }
 
-  // void fetchTodayDiaries() {
-  //   _isLoadingTodayDiaries.value = true;
-  //   _todayDiaries.value = _repository.getTodayDiaries(todayDate);
-  //   _isLoadingTodayDiaries.value = false;
-  // }
-  //
-  // void fetchYesterdayDiaries() {
-  //   _isLoadingYesterdayDiaries.value = true;
-  //   _yesterdayDiaries.value = _repository.getYesterdayDiaries(todayDate);
-  //   _isLoadingYesterdayDiaries.value = false;
-  // }
+  void fetchEmotionScore() {
+    _isLoadingEmotionScore.value = true;
+    _repository
+        .readEmotionScore(todayDate)
+        .then((value) => {
+              _emotionScore.value =
+                  value.map((key, value) => MapEntry(key, value.obs))
+            })
+        .then((value) => _isLoadingEmotionScore.value = false);
+  }
+
+  void fetchTodayDiaries() {
+    _isLoadingTodayDiaries.value = true;
+    _repository
+        .readDiaryByDate(todayDate)
+        .then((value) => _todayDiary.value = value)
+        .then((value) => _isLoadingTodayDiaries.value = false);
+  }
+
+  void fetchYesterdayDiaries() {
+    _isLoadingYesterdayDiaries.value = true;
+    _repository
+        .readDiaryByDate(todayDate.subtract(const Duration(days: 1)))
+        .then((value) => _yesterdayDiary.value = value)
+        .then((value) => _isLoadingYesterdayDiaries.value = false);
+  }
 }
