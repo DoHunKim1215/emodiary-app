@@ -1,24 +1,29 @@
+import 'package:dio/dio.dart';
 import 'package:emodiary/provider/base/base_connect.dart';
 import 'package:emodiary/util/function/log_on_dev.dart';
 import 'package:intl/intl.dart';
 
-class HomeProvider extends BaseConnect {
+import '../Base/http_util.dart';
+
+class HomeProvider {
+  static final Dio authDio = HttpUtil().authDio;
+
   Future<List<dynamic>> getDiariesByStartDateAndEndDate(
       DateTime startDate, DateTime endDate) async {
     try {
-      final response = await get(
+      final response = await authDio.get(
         "/diaries",
-        query: {
+        queryParameters: {
           "startDate": DateFormat("yyyy-MM-dd").format(startDate),
           "endDate": DateFormat("yyyy-MM-dd").format(endDate),
         },
       );
 
-      if (response.status.isOk) {
-        return response.body["data"];
+      if (response.statusCode == 200) {
+        return response.data["data"];
       } else {
         return throw Exception(
-            "API 요청이 실패했습니다. - ${response.body["error"]["code"]} ${response.body["error"]["message"]}");
+            "API 요청이 실패했습니다. - ${response.data["error"]["code"]} ${response.data["error"]["message"]}");
       }
     } catch (e) {
       logOnDev("오류 발생: $e");
@@ -28,15 +33,15 @@ class HomeProvider extends BaseConnect {
 
   Future<Map<String, dynamic>> getContinuousDiaryCount() async {
     try {
-      final response = await get(
+      final response = await authDio.get(
         "/diaries/continuous-count",
       );
 
-      if (response.status.isOk) {
-        return response.body["data"];
+      if (response.statusCode == 200) {
+        return response.data["data"];
       } else {
         return throw Exception(
-            "API 요청이 실패했습니다. - ${response.body["error"]["code"]} ${response.body["error"]["message"]}");
+            "API 요청이 실패했습니다. - ${response.data["error"]["code"]} ${response.data["error"]["message"]}");
       }
     } catch (e) {
       logOnDev("오류 발생: $e");
@@ -47,19 +52,19 @@ class HomeProvider extends BaseConnect {
   Future<List<dynamic>> getEmotionScore(
       DateTime startDate, DateTime endDate) async {
     try {
-      final response = await get(
+      final response = await authDio.get(
         "/diaries/emotion-scores",
-        query: {
+        queryParameters: {
           "startDate": DateFormat("yyyy-MM-dd").format(startDate),
           "endDate": DateFormat("yyyy-MM-dd").format(endDate),
         },
       );
 
-      if (response.status.isOk) {
-        return response.body["data"];
+      if (response.statusCode == 200) {
+        return response.data["data"];
       } else {
         return throw Exception(
-            "API 요청이 실패했습니다. - ${response.body["error"]["code"]} ${response.body["error"]["message"]}");
+            "API 요청이 실패했습니다. - ${response.data["error"]["code"]} ${response.data["error"]["message"]}");
       }
     } catch (e) {
       logOnDev("오류 발생: $e");
