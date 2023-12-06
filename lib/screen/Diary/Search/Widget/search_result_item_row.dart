@@ -16,13 +16,14 @@ class SearchResultItemRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(2.0, 2.0), // changes position of shadow
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 1,
+            spreadRadius: 0,
+            offset: const Offset(0, 1), // changes position of shadow
           ),
         ],
       ),

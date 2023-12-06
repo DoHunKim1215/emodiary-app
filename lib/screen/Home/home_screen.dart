@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F1F1),
+      backgroundColor: const Color(0xFFF8F8F8),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -1,4 +1,5 @@
 import 'package:emodiary/model/Diary/diary_small_model.dart';
+import 'package:emodiary/model/User/user_model.dart';
 import 'package:emodiary/provider/home/home_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -75,5 +76,11 @@ class HomeRepository {
     }
 
     return result;
+  }
+
+  Future<UserModel> readUserInfo() async {
+    Map<String, dynamic> data = await _homeProvider.getUserInfo();
+
+    return UserModel.fromJson(data);
   }
 }
