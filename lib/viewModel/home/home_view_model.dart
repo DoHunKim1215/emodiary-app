@@ -1,4 +1,5 @@
 import 'package:emodiary/model/Diary/diary_small_model.dart';
+import 'package:emodiary/model/User/user_model.dart';
 import 'package:emodiary/repository/home/home_repository.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,11 @@ class HomeViewModel extends GetxController {
   /* home info */
   late final Rx<DateTime> _todayDate;
   DateTime get todayDate => _todayDate.value;
+
+  late final Rx<UserModel> _userModel;
+  late final RxBool _isLoadingUserModel;
+  UserModel get userModel => _userModel.value;
+  bool get isLoadingUserModel => _isLoadingUserModel.value;
 
   /* continuous diary count info */
   late final RxInt _continuousDiaryCount;
@@ -46,6 +52,7 @@ class HomeViewModel extends GetxController {
     initTodayDate();
     initLoading();
 
+    initUserModel();
     initContinuousDiaryCount();
     initEmotionScore();
     initTodayDiaries();
@@ -58,10 +65,19 @@ class HomeViewModel extends GetxController {
   }
 
   void initLoading() {
+    _isLoadingUserModel = false.obs;
     _isLoadingContinuousDiaryCount = false.obs;
     _isLoadingEmotionScore = false.obs;
     _isLoadingTodayDiaries = false.obs;
     _isLoadingYesterdayDiaries = false.obs;
+  }
+
+  void initUserModel() {
+    _isLoadingUserModel.value = true;
+    _repository
+        .readUserInfo()
+        .then((value) => _userModel = value.obs)
+        .then((value) => _isLoadingUserModel.value = false);
   }
 
   void initContinuousDiaryCount() {

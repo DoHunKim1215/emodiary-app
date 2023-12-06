@@ -71,4 +71,22 @@ class HomeProvider {
       rethrow; // 현재 예외를 다시 던져서 상위 호출자에게 전달
     }
   }
+
+  Future<Map<String, dynamic>> getUserInfo() async {
+    try {
+      final response = await authDio.get(
+        "/users",
+      );
+
+      if (response.statusCode == 200) {
+        return response.data["data"];
+      } else {
+        return throw Exception(
+            "API 요청이 실패했습니다. - ${response.data["error"]["code"]} ${response.data["error"]["message"]}");
+      }
+    } catch (e) {
+      logOnDev("오류 발생: $e");
+      rethrow; // 현재 예외를 다시 던져서 상위 호출자에게 전달
+    }
+  }
 }

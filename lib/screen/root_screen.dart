@@ -9,15 +9,15 @@ import '../widget/base/diary_floating_action_button.dart';
 import 'Home/home_screen.dart';
 
 class RootScreen extends StatelessWidget {
-  final UserViewModel userViewModel = Get.put(
-    UserViewModel(),
-    permanent: true,
-  );
-
-  RootScreen({super.key});
+  const RootScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final UserViewModel userViewModel = Get.put(
+      UserViewModel(),
+      permanent: true,
+    );
+
     final RootViewModel viewModel = Get.put(RootViewModel());
 
     return Container(

@@ -19,14 +19,12 @@ class HomeUnderCard extends StatefulWidget {
 
 class _HomeUnderCardState extends State<HomeUnderCard> {
   late final HomeViewModel _viewModel;
-  late final String _name;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _viewModel = widget.viewModel;
-    _name = "형준";
   }
 
   @override
@@ -57,24 +55,32 @@ class _HomeUnderCardState extends State<HomeUnderCard> {
                       color: Colors.grey,
                     ),
                   ),
-                  Text(
-                    "이번 달의 $_name님의 감정은",
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                  Obx(
+                    () => _viewModel.isLoadingUserModel
+                        ? const SizedBox(
+                            height: 26,
+                          )
+                        : Text(
+                            "이번 달의 ${_viewModel.userModel.nickname}님의 감정은",
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
                   ),
-                  Obx(() => _viewModel.isLoadingEmotionScore
-                      ? const SizedBox(
-                          height: 57,
-                        )
-                      : Text(
-                          "\"${_viewModel.emotionScore.keys.reduce((a, b) => _viewModel.emotionScore[a]!.value > _viewModel.emotionScore[b]!.value ? a : b).valueStr}\"",
-                          style: const TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        )),
+                  Obx(
+                    () => _viewModel.isLoadingEmotionScore
+                        ? const SizedBox(
+                            height: 57,
+                          )
+                        : Text(
+                            "\"${_viewModel.emotionScore.keys.reduce((a, b) => _viewModel.emotionScore[a]!.value > _viewModel.emotionScore[b]!.value ? a : b).valueStr}\"",
+                            style: const TextStyle(
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                  ),
                 ],
               ),
             ),
